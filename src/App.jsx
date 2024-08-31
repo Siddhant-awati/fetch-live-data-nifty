@@ -6,13 +6,13 @@ import { useEffect, useState } from "react";
 import axios from 'axios';
 
 // const dataSet = response.resultData.opDatas;
-const dataSet = bankNiftyResponse.resultData.opDatas;
+//const dataSet = bankNiftyResponse.resultData.opDatas;
+const dataSet = [];
 
 export default function App() {
-  const [currentNiftyStrikePrice, setcurrentNiftyStrikePrice] = useState(51300);
-  const [niftyDataState, setNiftyDataState] = useState([]);
+  const [currentNiftyStrikePrice, setcurrentNiftyStrikePrice] = useState(25200);
   const [niftyLiveData, setNiftyLiveData] = useState(dataSet);
-  
+
   const getLiveData = () => {
     axios.get(`./src/DATA/hello.txt`)
       .then(res => {
@@ -22,48 +22,51 @@ export default function App() {
       })
   }
   const refreshThePage = () => {
-    const lowerLimit = 1 * currentNiftyStrikePrice - 1000;
-    const upperLimit = 1 * currentNiftyStrikePrice + 1000;
+    const lowerLimit = 1 * currentNiftyStrikePrice - 500;
+    const upperLimit = 1 * currentNiftyStrikePrice + 500;
     const niftyTableData = [];
 
-    niftyLiveData.filter((d, index) => {
-      const currentStrike = d['strike_price'];
-      const callPrice = d['calls_ltp'];
-      const callVwap = d['calls_average_price'];
-      const callDirection = d['calls_builtup'];
-      const putDirection = d['puts_builtup'];
-      const putPrice = d['puts_ltp'];
-      const putVwap = d['puts_average_price'];
+    if (niftyLiveData.length > 0) {
 
-      if (currentStrike > lowerLimit && currentStrike < upperLimit) {
-        const callBuildup = callPrice > callVwap ? 'BULLISH' : 'BEARISH';
-        const putBuildup = putPrice > putVwap ? 'BEARISH' : 'BULLISH';
-        const singleRow = {
-          STRIKE: currentStrike,
-          CALL_LTP: callPrice,
-          CALL_VWAP: callVwap,
-          CALL_DIR: callDirection,
-          CALL_BUILD: callBuildup,
-          PUT_LTP: putPrice,
-          PUT_VWAP: putVwap,
-          PUT_DIR: putDirection,
-          PUT_BUILD: putBuildup
+      niftyLiveData.filter((d, index) => {
+        const currentStrike = d['strike_price'];
+        const callPrice = d['calls_ltp'];
+        const callVwap = d['calls_average_price'];
+        const callDirection = d['calls_builtup'];
+        const putDirection = d['puts_builtup'];
+        const putPrice = d['puts_ltp'];
+        const putVwap = d['puts_average_price'];
+
+        if (currentStrike > lowerLimit && currentStrike < upperLimit) {
+          const callBuildup = callPrice > callVwap ? 'BULLISH' : 'BEARISH';
+          const putBuildup = putPrice > putVwap ? 'BEARISH' : 'BULLISH';
+          const singleRow = {
+            STRIKE: currentStrike,
+            CALL_LTP: callPrice,
+            CALL_VWAP: callVwap,
+            CALL_DIR: callDirection,
+            CALL_BUILD: callBuildup,
+            PUT_LTP: putPrice,
+            PUT_VWAP: putVwap,
+            PUT_DIR: putDirection,
+            PUT_BUILD: putBuildup
+          }
+          niftyTableData.push(singleRow);
         }
-        niftyTableData.push(singleRow);
-      }
-    });
-    setNiftyDataState(niftyTableData);
+      });
+      setNiftyLiveData(niftyTableData);
+    }
   }
 
-  useEffect(()=> {
-    const interValConfig = setInterval(getLiveData, 5000);
-    const refreshInterval = setInterval(refreshThePage, 2000);
-    
+  useEffect(() => {
+    const interValConfig = setInterval(getLiveData, 3000);
+    const refreshInterval = setInterval(refreshThePage, 1000);
+
     return () => {
       clearInterval(interValConfig);
       clearInterval(refreshInterval);
     };
-  },[])
+  }, [])
 
   return (
     <div>
@@ -72,7 +75,7 @@ export default function App() {
       <p><label htmlFor="nifty">
         NIFTY Current Strike Price:
         <input type="number" name="nifty" id="nifty" onChange={(e) => setcurrentNiftyStrikePrice(e.target.value)} /></label><button onClick={refreshThePage} className="btn btn-primary">REFRESH</button></p>
-      <table className="table table-bordered table-sm">
+      {niftyLiveData.length > 0 && <table className="table table-bordered table-sm">
         <thead>
           <tr>
             <th scope="col">STRIKE PRICE</th>
@@ -87,7 +90,7 @@ export default function App() {
           </tr>
         </thead>
         <tbody>
-          {niftyDataState.map((item, index) => {
+          {niftyLiveData.map((item, index) => {
             const callLabels = ['Call Buying', 'Call Short Covering', 'Put Writing',];
             const putLabels = ['Put Buying', 'Put Short Covering', 'Call Writing',];
             const cellColorPut = item.PUT_BUILD == 'BULLISH' ? 'table-success' : 'table-danger';
@@ -132,7 +135,7 @@ export default function App() {
             )
           })}
         </tbody>
-      </table>
+      </table>}
     </div>
   );
 }
