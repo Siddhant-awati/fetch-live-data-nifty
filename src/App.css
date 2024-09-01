@@ -5,14 +5,18 @@
 body {
   padding: 10px;
   margin: 10px;
+  background-color: #03045e;
 }
 
 h3 {
   text-align: center;
+  margin: 0;
+  padding-bottom: 20px;
+  color: #caf0f8;
 }
 
 .table-bordered thead th {
-  background: black;
+  background: #0077b6;
   color: white;
   padding: 10px;
   text-align: center;
@@ -23,11 +27,11 @@ h3 {
 }
 
 .table-bordered td {
-  border: 1px solid #ffc107;
+  border: 1px solid #90e0ef;
 }
 
 .table-bordered tr.active {
-  border: 4px solid #ffbf00;
+  border: 3px solid #00b4d8;
 }
 
 button.btn {
@@ -38,4 +42,9 @@ button.btn {
 
 td.bold {
   font-weight: bold;
+}
+
+button.accordion-button {
+  font-weight: bold;
+  font-size: 1.4rem;
 }
