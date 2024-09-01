@@ -10,71 +10,70 @@ import axios from 'axios';
 const dataSet = [];
 
 export default function App() {
-  const [currentNiftyStrikePrice, setcurrentNiftyStrikePrice] = useState(25200);
+  const [intervalIndex, setIntervalIndex] = useState(0);
+  const [currentNiftyStrikePrice, setcurrentNiftyStrikePrice] = useState(0);
   const [niftyLiveData, setNiftyLiveData] = useState(dataSet);
 
   const getLiveData = () => {
+    const niftyTableDataTemp = [];
+    const lowerLimit = currentNiftyStrikePrice - 500;
+    const upperLimit = currentNiftyStrikePrice + 500;
+    console.log('lowerLimit, upperLimit : ', currentNiftyStrikePrice, lowerLimit, upperLimit)
     axios.get(`./src/DATA/hello.txt`)
       .then(res => {
         const jsonData = res.data;
-        console.log(jsonData);
-        setNiftyLiveData(jsonData)
+        if (jsonData.length > 0) {
+
+          jsonData.filter((d, index) => {
+            const currentStrike = d['strike_price'];
+            const callPrice = d['calls_ltp'];
+            const callVwap = d['calls_average_price'];
+            const callDirection = d['calls_builtup'];
+            const putDirection = d['puts_builtup'];
+            const putPrice = d['puts_ltp'];
+            const putVwap = d['puts_average_price'];
+
+            if (currentStrike > lowerLimit && currentStrike < upperLimit) {
+              const callBuildup = callPrice > callVwap ? 'BULLISH' : 'BEARISH';
+              const putBuildup = putPrice > putVwap ? 'BEARISH' : 'BULLISH';
+              const singleRow = {
+                STRIKE: currentStrike,
+                CALL_LTP: callPrice,
+                CALL_VWAP: callVwap,
+                CALL_DIR: callDirection,
+                CALL_BUILD: callBuildup,
+                PUT_LTP: putPrice,
+                PUT_VWAP: putVwap,
+                PUT_DIR: putDirection,
+                PUT_BUILD: putBuildup
+              }
+              niftyTableDataTemp.push(singleRow);
+            }
+          });
+          setIntervalIndex(prev => prev + 1);
+          setNiftyLiveData(niftyTableDataTemp);
+        }
+
       })
   }
-  const refreshThePage = () => {
-    const lowerLimit = 1 * currentNiftyStrikePrice - 500;
-    const upperLimit = 1 * currentNiftyStrikePrice + 500;
-    const niftyTableData = [];
-
-    if (niftyLiveData.length > 0) {
-
-      niftyLiveData.filter((d, index) => {
-        const currentStrike = d['strike_price'];
-        const callPrice = d['calls_ltp'];
-        const callVwap = d['calls_average_price'];
-        const callDirection = d['calls_builtup'];
-        const putDirection = d['puts_builtup'];
-        const putPrice = d['puts_ltp'];
-        const putVwap = d['puts_average_price'];
-
-        if (currentStrike > lowerLimit && currentStrike < upperLimit) {
-          const callBuildup = callPrice > callVwap ? 'BULLISH' : 'BEARISH';
-          const putBuildup = putPrice > putVwap ? 'BEARISH' : 'BULLISH';
-          const singleRow = {
-            STRIKE: currentStrike,
-            CALL_LTP: callPrice,
-            CALL_VWAP: callVwap,
-            CALL_DIR: callDirection,
-            CALL_BUILD: callBuildup,
-            PUT_LTP: putPrice,
-            PUT_VWAP: putVwap,
-            PUT_DIR: putDirection,
-            PUT_BUILD: putBuildup
-          }
-          niftyTableData.push(singleRow);
-        }
-      });
-      setNiftyLiveData(niftyTableData);
-    }
+  const updateStrikePrice = (e) => {
+    setcurrentNiftyStrikePrice(1 * e.target.value);
   }
-
   useEffect(() => {
-    const interValConfig = setInterval(getLiveData, 3000);
-    const refreshInterval = setInterval(refreshThePage, 1000);
-
+    const interValConfig = setInterval(getLiveData, 10000);
     return () => {
       clearInterval(interValConfig);
-      clearInterval(refreshInterval);
     };
-  }, [])
+  })
 
   return (
     <div>
       <h3>Jay Devi Mata</h3>
-      <h3>{niftyLiveData.length}</h3>
+      <h3>{niftyLiveData.length} : {intervalIndex}</h3>
       <p><label htmlFor="nifty">
         NIFTY Current Strike Price:
-        <input type="number" name="nifty" id="nifty" onChange={(e) => setcurrentNiftyStrikePrice(e.target.value)} /></label><button onClick={refreshThePage} className="btn btn-primary">REFRESH</button></p>
+        <input type="number" name="nifty" id="nifty" onBlur={(e) => updateStrikePrice(e)} /></label>
+        <button className="btn btn-primary">REFRESH</button></p>
       {niftyLiveData.length > 0 && <table className="table table-bordered table-sm">
         <thead>
           <tr>
