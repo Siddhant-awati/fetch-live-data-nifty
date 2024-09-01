@@ -19,7 +19,8 @@ export default function NiftyComponent() {
     const lowerLimit = currentNiftyStrikePrice - 500;
     const upperLimit = currentNiftyStrikePrice + 500;
     console.log('lowerLimit, upperLimit : ', currentNiftyStrikePrice, lowerLimit, upperLimit, intervalIndex);
-    axios.get(`./src/DATA/hello.txt`)
+    const filePath = './src/DATA/nifty'+intervalIndex+'.txt';
+    axios.get(filePath)
       .then(res => {
         const jsonData = res.data;
         if (jsonData.length > 0) {

@@ -59,3 +59,53 @@ function triggerDataFetch() {
       })
 }
 setInterval(triggerDataFetch, 5000);
+
+
+
+
+
+
+
+
+﻿
+var counter = 0
+
+async function getData() {
+  var jsonData;
+    const url = "https://webapi.niftytrader.in/webapi/option/fatch-option-chain?symbol=nifty&expiryDate=";
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`Response status: ${response.status}`);
+      }
+      jsonData = await response.json();
+      return jsonData
+      
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+
+function download(filename, text) {
+      var element = document.createElement('a');
+      element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+      element.setAttribute('download', filename);
+
+      element.style.display = 'none';
+      document.body.appendChild(element);
+
+      element.click();
+
+      document.body.removeChild(element);
+    }
+
+function triggerDataFetch() {
+    counter++;
+    const fileName = 'nifty'+counter+'.txt';
+    var stringData = getData();
+      stringData.then((data)=>{
+        console.log('setTimeout stringData => ', data.resultData.opDatas);
+        download(fileName, JSON.stringify(data.resultData.opDatas));
+      })
+}
+setInterval(triggerDataFetch, 5000);
