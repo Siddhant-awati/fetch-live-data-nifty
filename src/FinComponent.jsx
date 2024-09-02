@@ -22,8 +22,8 @@ export default function FinComponent({handleFin}) {
 
   const getLiveData = () => {
     const niftyTableDataTemp = [];
-    const lowerLimit = currentNiftyStrikePrice - 600;
-    const upperLimit = currentNiftyStrikePrice + 600;
+    const lowerLimit = currentNiftyStrikePrice - 700;
+    const upperLimit = currentNiftyStrikePrice + 700;
 
   setVwapBullishCount(defaultVwapCounter);
   setVwapBearishCount(defaultVwapCounter);

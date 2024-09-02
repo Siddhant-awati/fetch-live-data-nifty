@@ -19,8 +19,8 @@ export default function NiftyComponent({handleNifty}) {
 
   const getLiveData = () => {
     const niftyTableDataTemp = [];
-    const lowerLimit = currentNiftyStrikePrice - 600;
-    const upperLimit = currentNiftyStrikePrice + 600;
+    const lowerLimit = currentNiftyStrikePrice - 700;
+    const upperLimit = currentNiftyStrikePrice + 700;
     setVwapBullishCount(defaultVwapCounter);
     setVwapBearishCount(defaultVwapCounter);
     console.log('lowerLimit, upperLimit : ', currentNiftyStrikePrice, lowerLimit, upperLimit, intervalIndex);
