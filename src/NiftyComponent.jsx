@@ -23,7 +23,6 @@ export default function NiftyComponent({handleNifty}) {
     const upperLimit = currentNiftyStrikePrice + 700;
     setVwapBullishCount(defaultVwapCounter);
     setVwapBearishCount(defaultVwapCounter);
-    console.log('lowerLimit, upperLimit : ', currentNiftyStrikePrice, lowerLimit, upperLimit, intervalIndex);
     let bears = 0;
     let bulls = 0;
     const filePath = './src/DATA/nifty' + intervalIndex + '.txt';
@@ -65,7 +64,6 @@ export default function NiftyComponent({handleNifty}) {
             }
           });
           setIntervalIndex(intervalIndex + 1);
-          console.log(intervalIndex);
           setNiftyLiveData(niftyTableDataTemp);
           setVwapBearishCount(bears);
           setVwapBullishCount(bulls);
@@ -76,14 +74,6 @@ export default function NiftyComponent({handleNifty}) {
         }
 
       })
-  }
-  const updateStrikePrice = (e) => {
-    if (e.target.value.length > 0) {
-      setcurrentNiftyStrikePrice(1 * e.target.value);
-    }
-    else {
-      setcurrentNiftyStrikePrice(constants.NIFTY_CURRENT)
-    }
   }
   useEffect(() => {
     getLiveData();

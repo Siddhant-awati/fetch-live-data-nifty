@@ -25,7 +25,6 @@ export default function BankComponent({handleBank}) {
     const upperLimit = currentNiftyStrikePrice + 1400;
     setVwapBullishCount(defaultVwapCounter);
     setVwapBearishCount(defaultVwapCounter);
-    console.log('lowerLimit, upperLimit : ', currentNiftyStrikePrice, lowerLimit, upperLimit, intervalIndex);
     const filePath = './src/DATA/bank' + intervalIndex + '.txt';
     let bears = 0;
     let bulls = 0;
@@ -65,7 +64,6 @@ export default function BankComponent({handleBank}) {
             }
           });
           setIntervalIndex(intervalIndex + 1);
-          console.log(intervalIndex)
           setNiftyLiveData(niftyTableDataTemp);
           setVwapBearishCount(bears);
           setVwapBullishCount(bulls);
@@ -76,14 +74,6 @@ export default function BankComponent({handleBank}) {
         }
 
       })
-  }
-  const updateStrikePrice = (e) => {
-    if(e.target.value.length > 0) {
-      setcurrentNiftyStrikePrice(1 * e.target.value);
-    }
-    else {
-      setcurrentNiftyStrikePrice(constants.BANK_CURRENT)
-    }
   }
   useEffect(() => {
     getLiveData();
