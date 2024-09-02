@@ -48,3 +48,37 @@ button.accordion-button {
   font-weight: bold;
   font-size: 1.4rem;
 }
+
+span.counter-wrapper {
+  position: relative;
+  top: -50px;
+  font-size: 20px;
+  left: 160px;
+}
+
+span.top.counter-wrapper {
+  left: 70%;
+  top: -40px;
+}
+
+span.top.counter-wrapper span {
+  padding: 15px;
+  margin: 0 15px;
+}
+
+span.counter-wrapper span {
+  padding: 10px;
+  color: white;
+  margin: 0 10px;
+}
+
+span.bulls {
+  background-color: #009a54;
+}
+
+span.bears {
+  background-color: #e70318;
+}
+div.accordion-body {
+  padding: 0;
+}

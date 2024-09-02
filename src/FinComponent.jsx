@@ -12,7 +12,7 @@ import { constants } from './constants';
 const dataSet = [];
 const defaultVwapCounter = 0
 
-export default function FinComponent() {
+export default function FinComponent({handleFin}) {
   const [intervalIndex, setIntervalIndex] = useState(1);
   const [currentNiftyStrikePrice, setcurrentNiftyStrikePrice] = useState(constants.FIN_CURRENT);
   const [niftyLiveData, setNiftyLiveData] = useState(dataSet);
@@ -71,6 +71,10 @@ export default function FinComponent() {
           setNiftyLiveData(niftyTableDataTemp);
           setVwapBearishCount(bears);
           setVwapBullishCount(bulls);
+          handleFin({
+            bears:bears,
+            bulls:bulls
+          })
         }
 
       })
@@ -96,12 +100,6 @@ export default function FinComponent() {
 
   return (
     <div>
-     <h5>BEARISH :: {vwapBearishCount}</h5>
-     <h5>BULLISH :: {vwapBullishCount}</h5>
-      <p><label htmlFor="nifty">
-        FIN_NIFTY Current Strike Price:
-        <input type="number" name="nifty" id="nifty" onBlur={(e) => updateStrikePrice(e)} /></label>
-        <button className="btn btn-primary">REFRESH</button></p>
       {niftyLiveData.length > 0 && <table className="table table-bordered table-sm">
         <thead>
           <tr>

@@ -10,7 +10,7 @@ import { constants } from './constants';
 //const dataSet = bankNiftyResponse.resultData.opDatas;
 const dataSet = [];
 const defaultVwapCounter = 0
-export default function NiftyComponent() {
+export default function NiftyComponent({handleNifty}) {
   const [intervalIndex, setIntervalIndex] = useState(1);
   const [currentNiftyStrikePrice, setcurrentNiftyStrikePrice] = useState(constants.NIFTY_CURRENT);
   const [niftyLiveData, setNiftyLiveData] = useState(dataSet);
@@ -69,6 +69,10 @@ export default function NiftyComponent() {
           setNiftyLiveData(niftyTableDataTemp);
           setVwapBearishCount(bears);
           setVwapBullishCount(bulls);
+          handleNifty({
+            bears:bears,
+            bulls:bulls
+          })
         }
 
       })
@@ -94,12 +98,6 @@ export default function NiftyComponent() {
 
   return (
     <div>
-      <h5>BEARISH :: {vwapBearishCount}</h5>
-      <h5>BULLISH :: {vwapBullishCount}</h5>
-      <p><label htmlFor="nifty">
-        NIFTY Current Strike Price:
-        <input type="number" name="nifty" id="nifty" onBlur={(e) => updateStrikePrice(e)} /></label>
-        <button className="btn btn-primary">REFRESH</button></p>
       {niftyLiveData.length > 0 && <table className="table table-bordered table-sm">
         <thead>
           <tr>
