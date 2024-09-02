@@ -1,4 +1,6 @@
 import NiftyComponent from './NiftyComponent';
+import BankComponent from './BankComponent';
+import FinComponent from './FinComponent';
 
 export default function App() {
 
@@ -27,7 +29,7 @@ export default function App() {
           </h2>
           <div id="panelsStayOpen-collapseTwo" className="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
             <div className="accordion-body">
-              <NiftyComponent />
+              <BankComponent />
             </div>
           </div>
         </div>
@@ -39,7 +41,7 @@ export default function App() {
           </h2>
           <div id="panelsStayOpen-collapseThree" className="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
             <div className="accordion-body">
-              <NiftyComponent />
+              <FinComponent />
             </div>
           </div>
         </div>

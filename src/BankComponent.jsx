@@ -10,17 +10,17 @@ import { constants } from './constants';
 //const dataSet = bankNiftyResponse.resultData.opDatas;
 const dataSet = [];
 
-export default function NiftyComponent() {
+export default function BankComponent() {
   const [intervalIndex, setIntervalIndex] = useState(1);
-  const [currentNiftyStrikePrice, setcurrentNiftyStrikePrice] = useState(constants.NIFTY_CURRENT);
+  const [currentNiftyStrikePrice, setcurrentNiftyStrikePrice] = useState(constants.BANK_CURRENT);
   const [niftyLiveData, setNiftyLiveData] = useState(dataSet);
 
   const getLiveData = () => {
     const niftyTableDataTemp = [];
-    const lowerLimit = currentNiftyStrikePrice - 600;
-    const upperLimit = currentNiftyStrikePrice + 600;
+    const lowerLimit = currentNiftyStrikePrice - 1200;
+    const upperLimit = currentNiftyStrikePrice + 1200;
     console.log('lowerLimit, upperLimit : ', currentNiftyStrikePrice, lowerLimit, upperLimit, intervalIndex);
-    const filePath = './src/DATA/nifty' + intervalIndex + '.txt';
+    const filePath = './src/DATA/bank' + intervalIndex + '.txt';
     axios.get(filePath)
       .then(res => {
         const jsonData = res.data;
@@ -64,7 +64,7 @@ export default function NiftyComponent() {
       setcurrentNiftyStrikePrice(1 * e.target.value);
     }
     else {
-      setcurrentNiftyStrikePrice(constants.NIFTY_CURRENT)
+      setcurrentNiftyStrikePrice(constants.BANK_CURRENT)
     }
   }
   useEffect(() => {
@@ -82,7 +82,7 @@ export default function NiftyComponent() {
     <div>
       <h5>COUNTER = {niftyLiveData.length} : {intervalIndex}</h5>
       <p><label htmlFor="nifty">
-        NIFTY Current Strike Price:
+        BANK_NIFTY Current Strike Price:
         <input type="number" name="nifty" id="nifty" onBlur={(e) => updateStrikePrice(e)} /></label>
         <button className="btn btn-primary">REFRESH</button></p>
       {niftyLiveData.length > 0 && <table className="table table-bordered table-sm">
