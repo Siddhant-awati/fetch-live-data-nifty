@@ -5,6 +5,8 @@
 body {
   padding: 10px;
   margin: 10px;
+  font-size: 12px;
+  font-family: system-ui;
   background-color: #03045e;
 }
 
@@ -19,6 +21,7 @@ h3 {
   background: #0077b6;
   color: white;
   padding: 10px;
+  font-size: 12px;
   text-align: center;
 }
 
@@ -28,6 +31,7 @@ h3 {
 
 .table-bordered td {
   border: 1px solid #90e0ef;
+  font-size: 12px;
 }
 
 .table-bordered tr.active {
@@ -46,5 +50,5 @@ td.bold {
 
 button.accordion-button {
   font-weight: bold;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
 }
