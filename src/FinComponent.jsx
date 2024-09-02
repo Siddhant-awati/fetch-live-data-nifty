@@ -10,18 +10,27 @@ import { constants } from './constants';
 // const dataSet = response.resultData.opDatas;
 //const dataSet = bankNiftyResponse.resultData.opDatas;
 const dataSet = [];
+const defaultVwapCounter = 0
 
 export default function FinComponent() {
   const [intervalIndex, setIntervalIndex] = useState(1);
   const [currentNiftyStrikePrice, setcurrentNiftyStrikePrice] = useState(constants.FIN_CURRENT);
   const [niftyLiveData, setNiftyLiveData] = useState(dataSet);
 
+  const [vwapBullishCount, setVwapBullishCount] = useState(defaultVwapCounter);
+  const [vwapBearishCount, setVwapBearishCount] = useState(defaultVwapCounter);
+
   const getLiveData = () => {
     const niftyTableDataTemp = [];
     const lowerLimit = currentNiftyStrikePrice - 600;
     const upperLimit = currentNiftyStrikePrice + 600;
+
+  setVwapBullishCount(defaultVwapCounter);
+  setVwapBearishCount(defaultVwapCounter);
     console.log('lowerLimit, upperLimit : ', currentNiftyStrikePrice, lowerLimit, upperLimit, intervalIndex);
     const filePath = './src/DATA/fin' + intervalIndex + '.txt';
+    let bears = 0;
+    let bulls = 0;
     axios.get(filePath)
       .then(res => {
         const jsonData = res.data;
@@ -51,17 +60,23 @@ export default function FinComponent() {
                 PUT_BUILD: putBuildup
               }
               niftyTableDataTemp.push(singleRow);
+              if(callBuildup == 'BEARISH') {bears++}
+              if(putBuildup == 'BEARISH') {bears++}
+              if(callBuildup == 'BULLISH') {bulls++}
+              if(putBuildup == 'BULLISH') {bulls++}
             }
           });
           setIntervalIndex(intervalIndex + 1);
           console.log(intervalIndex)
           setNiftyLiveData(niftyTableDataTemp);
+          setVwapBearishCount(bears);
+          setVwapBullishCount(bulls);
         }
 
       })
   }
   const updateStrikePrice = (e) => {
-    if(e.target.value.length > 0) {
+    if (e.target.value.length > 0) {
       setcurrentNiftyStrikePrice(1 * e.target.value);
     }
     else {
@@ -81,7 +96,8 @@ export default function FinComponent() {
 
   return (
     <div>
-      <h5>COUNTER = {niftyLiveData.length} : {intervalIndex}</h5>
+     <h5>BEARISH :: {vwapBearishCount}</h5>
+     <h5>BULLISH :: {vwapBullishCount}</h5>
       <p><label htmlFor="nifty">
         FIN_NIFTY Current Strike Price:
         <input type="number" name="nifty" id="nifty" onBlur={(e) => updateStrikePrice(e)} /></label>

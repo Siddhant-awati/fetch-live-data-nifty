@@ -157,6 +157,6 @@ function triggerDataFetchFin() {
         download(fileName, JSON.stringify(data.resultData.opDatas));
       })
 }
-setInterval(triggerDataFetchNifty, 5000);
-setInterval(triggerDataFetchFin, 5000);
-setInterval(triggerDataFetchBank, 5000);
+setInterval(triggerDataFetchNifty, 15000);
+setInterval(triggerDataFetchFin, 15000);
+setInterval(triggerDataFetchBank, 15000);

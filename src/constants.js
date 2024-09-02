@@ -1,6 +1,6 @@
 export const constants = {
     NIFTY_CURRENT: 25200,
     BANK_CURRENT: 51300,
-    FIN_CURRENT: 23600,
-    INTERVAL_TIME: 5000
+    FIN_CURRENT: 23700,
+    INTERVAL_TIME: 20000
 }
