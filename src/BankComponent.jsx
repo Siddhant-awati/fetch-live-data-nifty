@@ -21,8 +21,8 @@ export default function BankComponent() {
 
   const getLiveData = () => {
     const niftyTableDataTemp = [];
-    const lowerLimit = currentNiftyStrikePrice - 1200;
-    const upperLimit = currentNiftyStrikePrice + 1200;
+    const lowerLimit = currentNiftyStrikePrice - 1400;
+    const upperLimit = currentNiftyStrikePrice + 1400;
     setVwapBullishCount(defaultVwapCounter);
     setVwapBearishCount(defaultVwapCounter);
     console.log('lowerLimit, upperLimit : ', currentNiftyStrikePrice, lowerLimit, upperLimit, intervalIndex);
