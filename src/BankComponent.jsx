@@ -10,19 +10,35 @@ import { constants } from './constants';
 //const dataSet = bankNiftyResponse.resultData.opDatas;
 const dataSet = [];
 const defaultVwapCounter = 0
+let currentNiftyStrikePrice = 0;
 
-export default function BankComponent({handleBank}) {
+export default function BankComponent({ handleBank, liveBankIndex }) {
   const [intervalIndex, setIntervalIndex] = useState(1);
-  const [currentNiftyStrikePrice, setcurrentNiftyStrikePrice] = useState(constants.BANK_CURRENT);
   const [niftyLiveData, setNiftyLiveData] = useState(dataSet);
 
   const [vwapBullishCount, setVwapBullishCount] = useState(defaultVwapCounter);
   const [vwapBearishCount, setVwapBearishCount] = useState(defaultVwapCounter);
+  const formatIndex = (num) => {
+    if (num) {
+      const rounded = Math.round(num);
+      const nearestStrike = rounded - (rounded % 100)
+      return nearestStrike
+    }
+    return num;
+  }
+  const percentageDiff = (vwap, ltp) => {
+    if(ltp < 0.5) {ltp = 1}
 
+    const diff = (vwap / ltp) * 100;
+    return Math.round(diff) + '%';
+  }
   const getLiveData = () => {
+    currentNiftyStrikePrice = formatIndex(liveBankIndex);
     const niftyTableDataTemp = [];
     const lowerLimit = currentNiftyStrikePrice - 1400;
     const upperLimit = currentNiftyStrikePrice + 1400;
+    console.log('currentBankStrikePrice : ', currentNiftyStrikePrice);
+
     setVwapBullishCount(defaultVwapCounter);
     setVwapBearishCount(defaultVwapCounter);
     const filePath = './src/DATA/bank' + intervalIndex + '.txt';
@@ -57,10 +73,10 @@ export default function BankComponent({handleBank}) {
                 PUT_BUILD: putBuildup
               }
               niftyTableDataTemp.push(singleRow);
-              if(callBuildup == 'BEARISH') {bears++}
-              if(putBuildup == 'BEARISH') {bears++}
-              if(callBuildup == 'BULLISH') {bulls++}
-              if(putBuildup == 'BULLISH') {bulls++}
+              if (callBuildup == 'BEARISH') { bears++ }
+              if (putBuildup == 'BEARISH') { bears++ }
+              if (callBuildup == 'BULLISH') { bulls++ }
+              if (putBuildup == 'BULLISH') { bulls++ }
             }
           });
           setIntervalIndex(intervalIndex + 1);
@@ -68,8 +84,8 @@ export default function BankComponent({handleBank}) {
           setVwapBearishCount(bears);
           setVwapBullishCount(bulls);
           handleBank({
-            bears:bears,
-            bulls:bulls
+            bears: bears,
+            bulls: bulls
           })
         }
 
@@ -124,7 +140,7 @@ export default function BankComponent({handleBank}) {
                   {item.CALL_LTP}
                 </td>
                 <td className={boldVwapCall}>
-                  {item.CALL_VWAP}
+                  {item.CALL_VWAP} ({percentageDiff(item.CALL_VWAP, item.CALL_LTP)})
                 </td>
                 <td className={cellColorCall}>
                   {item.CALL_BUILD}
@@ -139,7 +155,7 @@ export default function BankComponent({handleBank}) {
                   {item.PUT_BUILD}
                 </td>
                 <td className={boldVwapPut}>
-                  {item.PUT_VWAP}
+                  {item.PUT_VWAP} ({percentageDiff(item.PUT_VWAP, item.PUT_LTP)})
                 </td>
                 <td>
                   {item.PUT_LTP}

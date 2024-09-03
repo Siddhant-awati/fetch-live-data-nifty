@@ -9,18 +9,33 @@ import { constants } from './constants';
 // const dataSet = response.resultData.opDatas;
 //const dataSet = bankNiftyResponse.resultData.opDatas;
 const dataSet = [];
-const defaultVwapCounter = 0
-export default function NiftyComponent({handleNifty}) {
+const defaultVwapCounter = 0;
+let currentNiftyStrikePrice = 0;
+
+export default function NiftyComponent({handleNifty, liveNiftyIndex}) {
   const [intervalIndex, setIntervalIndex] = useState(1);
-  const [currentNiftyStrikePrice, setcurrentNiftyStrikePrice] = useState(constants.NIFTY_CURRENT);
   const [niftyLiveData, setNiftyLiveData] = useState(dataSet);
   const [vwapBullishCount, setVwapBullishCount] = useState(defaultVwapCounter);
   const [vwapBearishCount, setVwapBearishCount] = useState(defaultVwapCounter);
-
+  const formatIndex = (num) => {
+    if(num){
+      const rounded = Math.round(num);
+      const nearestStrike = rounded - (rounded % 100)
+      return nearestStrike
+    }
+    return num;
+  }
+  const percentageDiff = (vwap, ltp) => {
+    if(ltp < 0.5) {ltp = 1}
+    const diff = (vwap / ltp) * 100;
+    return Math.round(diff) + '%';
+  }
   const getLiveData = () => {
+    currentNiftyStrikePrice = formatIndex(liveNiftyIndex);
     const niftyTableDataTemp = [];
     const lowerLimit = currentNiftyStrikePrice - 700;
     const upperLimit = currentNiftyStrikePrice + 700;
+    console.log('currentNiftyStrikePrice : ', currentNiftyStrikePrice);
     setVwapBullishCount(defaultVwapCounter);
     setVwapBearishCount(defaultVwapCounter);
     let bears = 0;
@@ -124,7 +139,7 @@ export default function NiftyComponent({handleNifty}) {
                   {item.CALL_LTP}
                 </td>
                 <td className={boldVwapCall}>
-                  {item.CALL_VWAP}
+                  {item.CALL_VWAP} ({percentageDiff(item.CALL_VWAP, item.CALL_LTP)})
                 </td>
                 <td className={cellColorCall}>
                   {item.CALL_BUILD}
@@ -139,7 +154,7 @@ export default function NiftyComponent({handleNifty}) {
                   {item.PUT_BUILD}
                 </td>
                 <td className={boldVwapPut}>
-                  {item.PUT_VWAP}
+                  {item.PUT_VWAP} ({percentageDiff(item.PUT_VWAP, item.PUT_LTP)})
                 </td>
                 <td>
                   {item.PUT_LTP}

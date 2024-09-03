@@ -40,7 +40,8 @@ export default function App() {
             }
 
           });
-          console.log('intervalIndex : ', intervalIndex, temp);
+          setIntervalIndex(intervalIndex + 1);
+
           setIndexData(temp);
         }
       })
@@ -78,7 +79,7 @@ export default function App() {
           </h2>
           <div id="panelsStayOpen-collapseOne" className="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
             <div className="accordion-body">
-              <NiftyComponent handleNifty={handleNifty} />
+              <NiftyComponent handleNifty={handleNifty} liveNiftyIndex={indexData.niftyIndex}/>
             </div>
           </div>
         </div>
@@ -94,7 +95,7 @@ export default function App() {
           </h2>
           <div id="panelsStayOpen-collapseTwo" className="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
             <div className="accordion-body">
-              <BankComponent handleBank={handleBank} />
+              <BankComponent handleBank={handleBank} liveBankIndex={indexData.bankIndex}/>
             </div>
           </div>
         </div>
@@ -110,7 +111,7 @@ export default function App() {
           </h2>
           <div id="panelsStayOpen-collapseThree" className="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
             <div className="accordion-body">
-              <FinComponent handleFin={handleFin} />
+              <FinComponent handleFin={handleFin} liveFinIndex={indexData.finIndex}/>
             </div>
           </div>
         </div>

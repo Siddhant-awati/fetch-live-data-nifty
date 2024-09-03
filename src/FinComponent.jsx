@@ -11,22 +11,32 @@ import { constants } from './constants';
 //const dataSet = bankNiftyResponse.resultData.opDatas;
 const dataSet = [];
 const defaultVwapCounter = 0
+let currentNiftyStrikePrice = 0;
 
-export default function FinComponent({handleFin}) {
+
+export default function FinComponent({ handleFin, liveFinIndex }) {
   const [intervalIndex, setIntervalIndex] = useState(1);
-  const [currentNiftyStrikePrice, setcurrentNiftyStrikePrice] = useState(constants.FIN_CURRENT);
   const [niftyLiveData, setNiftyLiveData] = useState(dataSet);
 
   const [vwapBullishCount, setVwapBullishCount] = useState(defaultVwapCounter);
   const [vwapBearishCount, setVwapBearishCount] = useState(defaultVwapCounter);
-
+  const formatIndex = (num) => {
+    if (num) {
+      const rounded = Math.round(num);
+      const nearestStrike = rounded - (rounded % 100)
+      return nearestStrike
+    }
+    return num;
+  }
   const getLiveData = () => {
+    currentNiftyStrikePrice = formatIndex(liveFinIndex);
     const niftyTableDataTemp = [];
     const lowerLimit = currentNiftyStrikePrice - 700;
     const upperLimit = currentNiftyStrikePrice + 700;
+    console.log('currentFinStrikePrice : ', currentNiftyStrikePrice);
 
-  setVwapBullishCount(defaultVwapCounter);
-  setVwapBearishCount(defaultVwapCounter);
+    setVwapBullishCount(defaultVwapCounter);
+    setVwapBearishCount(defaultVwapCounter);
     const filePath = './src/DATA/fin' + intervalIndex + '.txt';
     let bears = 0;
     let bulls = 0;
@@ -59,10 +69,10 @@ export default function FinComponent({handleFin}) {
                 PUT_BUILD: putBuildup
               }
               niftyTableDataTemp.push(singleRow);
-              if(callBuildup == 'BEARISH') {bears++}
-              if(putBuildup == 'BEARISH') {bears++}
-              if(callBuildup == 'BULLISH') {bulls++}
-              if(putBuildup == 'BULLISH') {bulls++}
+              if (callBuildup == 'BEARISH') { bears++ }
+              if (putBuildup == 'BEARISH') { bears++ }
+              if (callBuildup == 'BULLISH') { bulls++ }
+              if (putBuildup == 'BULLISH') { bulls++ }
             }
           });
           setIntervalIndex(intervalIndex + 1);
@@ -70,8 +80,8 @@ export default function FinComponent({handleFin}) {
           setVwapBearishCount(bears);
           setVwapBullishCount(bulls);
           handleFin({
-            bears:bears,
-            bulls:bulls
+            bears: bears,
+            bulls: bulls
           })
         }
 
@@ -87,7 +97,11 @@ export default function FinComponent({handleFin}) {
       clearInterval(interValConfig);
     };
   })
-
+  const percentageDiff = (vwap, ltp) => {
+    if(ltp < 0.5) {ltp = 1}
+    const diff = (vwap / ltp) * 100;
+    return Math.round(diff) + '%';
+  }
   return (
     <div>
       {niftyLiveData.length > 0 && <table className="table table-bordered table-sm">
@@ -126,7 +140,7 @@ export default function FinComponent({handleFin}) {
                   {item.CALL_LTP}
                 </td>
                 <td className={boldVwapCall}>
-                  {item.CALL_VWAP}
+                  {item.CALL_VWAP} ({percentageDiff(item.CALL_VWAP, item.CALL_LTP)})
                 </td>
                 <td className={cellColorCall}>
                   {item.CALL_BUILD}
@@ -141,7 +155,7 @@ export default function FinComponent({handleFin}) {
                   {item.PUT_BUILD}
                 </td>
                 <td className={boldVwapPut}>
-                  {item.PUT_VWAP}
+                  {item.PUT_VWAP} ({percentageDiff(item.PUT_VWAP, item.PUT_LTP)})
                 </td>
                 <td>
                   {item.PUT_LTP}
