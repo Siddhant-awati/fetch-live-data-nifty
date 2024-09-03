@@ -15,6 +15,7 @@ h3 {
   margin: 0;
   padding-bottom: 20px;
   color: #caf0f8;
+  margin-top: 10px;
 }
 
 .table-bordered thead th {
@@ -85,4 +86,16 @@ span.bears {
 }
 div.accordion-body {
   padding: 0;
+}
+h4.counter{
+  position: absolute;
+  top: 10px;
+  background-color: white;
+  width: 90px;
+  border-radius: 50%;
+  height: 90px;
+  vertical-align: middle;
+  text-align: center;
+  line-height: 90px;
+  font-size: 2.5rem;
 }

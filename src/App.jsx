@@ -62,6 +62,7 @@ export default function App() {
 
     <div>
       <h3>Jay Devi Mata</h3>
+      <h4 className="counter">{intervalIndex}</h4>
       <span className="top counter-wrapper">
         <span className="bulls">BULLISH : {niftyVwapCounter.bulls + bankVwapCounter.bulls + finVwapCounter.bulls}</span>
         <span className="bears">BEARISH : {niftyVwapCounter.bears + bankVwapCounter.bears + finVwapCounter.bears}</span>
