@@ -13,7 +13,7 @@ const defaultVwapCounter = 0
 let currentNiftyStrikePrice = 0;
 
 export default function BankComponent({ handleBank, liveBankIndex }) {
-  const [intervalIndex, setIntervalIndex] = useState(1);
+  const [intervalIndex, setIntervalIndex] = useState(0);
   const [niftyLiveData, setNiftyLiveData] = useState(dataSet);
 
   const [vwapBullishCount, setVwapBullishCount] = useState(defaultVwapCounter);
@@ -33,17 +33,18 @@ export default function BankComponent({ handleBank, liveBankIndex }) {
     return Math.round(diff) + '%';
   }
   const getLiveData = () => {
+    const filePath = './src/DATA/bank' + intervalIndex + '.txt';
     currentNiftyStrikePrice = formatIndex(liveBankIndex);
     const niftyTableDataTemp = [];
     const lowerLimit = currentNiftyStrikePrice - 1400;
     const upperLimit = currentNiftyStrikePrice + 1400;
     console.log('currentBankStrikePrice : ', currentNiftyStrikePrice);
-
     setVwapBullishCount(defaultVwapCounter);
     setVwapBearishCount(defaultVwapCounter);
-    const filePath = './src/DATA/bank' + intervalIndex + '.txt';
     let bears = 0;
     let bulls = 0;
+    setIntervalIndex(intervalIndex + 1);
+
     axios.get(filePath)
       .then(res => {
         const jsonData = res.data;
@@ -79,7 +80,6 @@ export default function BankComponent({ handleBank, liveBankIndex }) {
               if (putBuildup == 'BULLISH') { bulls++ }
             }
           });
-          setIntervalIndex(intervalIndex + 1);
           setNiftyLiveData(niftyTableDataTemp);
           setVwapBearishCount(bears);
           setVwapBullishCount(bulls);

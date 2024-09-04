@@ -10,7 +10,7 @@ export default function App() {
   const [niftyVwapCounter, setNiftyVwapCounter] = useState(tempCounter);
   const [bankVwapCounter, setBankVwapCounter] = useState(tempCounter);
   const [finVwapCounter, setFinVwapCounter] = useState(tempCounter);
-  const [intervalIndex, setIntervalIndex] = useState(1);
+  const [intervalIndex, setIntervalIndex] = useState(0);
   const [indexData, setIndexData] = useState({
     niftyIndex: 0,
     bankIndex: 0,
@@ -24,6 +24,7 @@ export default function App() {
   const getIndexData = () => {
     const filePath = './src/DATA/index' + intervalIndex + '.txt';
     const temp = {}
+    setIntervalIndex(intervalIndex + 1);
     axios.get(filePath)
       .then(res => {
         const jsonData = res.data;
@@ -40,8 +41,6 @@ export default function App() {
             }
 
           });
-          setIntervalIndex(intervalIndex + 1);
-
           setIndexData(temp);
         }
       })
@@ -71,7 +70,7 @@ export default function App() {
         <div className="accordion-item">
           <h2 className="accordion-header" id="panelsStayOpen-headingOne">
             <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-              NIFTY :: {indexData.niftyIndex}
+              NIFTY - <span className="orange">{indexData.niftyIndex}</span>
             </button>
             <span className="counter-wrapper">
               <span className="bulls">BULLISH : {niftyVwapCounter.bulls}</span>
@@ -87,7 +86,7 @@ export default function App() {
         <div className="accordion-item">
           <h2 className="accordion-header" id="panelsStayOpen-headingTwo">
             <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
-              BANK_NIFTY :: {indexData.bankIndex}
+              BANK NIFTY - <span className="orange">{indexData.bankIndex}</span>
             </button>
             <span className="counter-wrapper">
               <span className="bulls"> BULLISH : {bankVwapCounter.bulls}</span>
@@ -103,7 +102,7 @@ export default function App() {
         <div className="accordion-item">
           <h2 className="accordion-header" id="panelsStayOpen-headingThree">
             <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
-              FIN_NIFTY :: {indexData.finIndex}
+              FIN NIFTY - <span className="orange">{indexData.finIndex}</span>
             </button>
             <span className="counter-wrapper">
               <span className="bulls">BULLISH : {finVwapCounter.bulls}</span>

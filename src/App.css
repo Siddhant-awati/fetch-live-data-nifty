@@ -9,13 +9,15 @@ body {
   font-family: system-ui;
   background-color: #03045e;
 }
+h2.accordion-header{
+  height: 50px;
+  margin: 3px 0;
+}
 
 h3 {
   text-align: center;
   margin: 0;
-  padding-bottom: 20px;
   color: #caf0f8;
-  margin-top: 10px;
 }
 
 .table-bordered thead th {
@@ -51,19 +53,19 @@ td.bold {
 
 button.accordion-button {
   font-weight: bold;
-  font-size: 1.4rem;
+  font-size: 1.1rem;
 }
 
 span.counter-wrapper {
   position: relative;
   top: -50px;
-  font-size: 20px;
+  font-size: 1.1rem;
   left: 25%;
 }
 
 span.top.counter-wrapper {
-  left: 70%;
-  top: -40px;
+  left: 60px;
+  top: -26px;
 }
 
 span.top.counter-wrapper span {
@@ -91,11 +93,15 @@ h4.counter{
   position: absolute;
   top: 10px;
   background-color: white;
-  width: 90px;
+  width: 60px;
   border-radius: 50%;
-  height: 90px;
+  height: 60px;
   vertical-align: middle;
   text-align: center;
-  line-height: 90px;
-  font-size: 2.5rem;
+  line-height: 60px;
+  font-size: 1.7rem;
+}
+span.orange {
+  color: #842029;
+  padding-left: 5px;
 }

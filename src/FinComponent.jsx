@@ -15,7 +15,7 @@ let currentNiftyStrikePrice = 0;
 
 
 export default function FinComponent({ handleFin, liveFinIndex }) {
-  const [intervalIndex, setIntervalIndex] = useState(1);
+  const [intervalIndex, setIntervalIndex] = useState(0);
   const [niftyLiveData, setNiftyLiveData] = useState(dataSet);
 
   const [vwapBullishCount, setVwapBullishCount] = useState(defaultVwapCounter);
@@ -40,6 +40,7 @@ export default function FinComponent({ handleFin, liveFinIndex }) {
     const filePath = './src/DATA/fin' + intervalIndex + '.txt';
     let bears = 0;
     let bulls = 0;
+    setIntervalIndex(intervalIndex + 1);
     axios.get(filePath)
       .then(res => {
         const jsonData = res.data;
@@ -75,7 +76,6 @@ export default function FinComponent({ handleFin, liveFinIndex }) {
               if (putBuildup == 'BULLISH') { bulls++ }
             }
           });
-          setIntervalIndex(intervalIndex + 1);
           setNiftyLiveData(niftyTableDataTemp);
           setVwapBearishCount(bears);
           setVwapBullishCount(bulls);

@@ -13,7 +13,7 @@ const defaultVwapCounter = 0;
 let currentNiftyStrikePrice = 0;
 
 export default function NiftyComponent({handleNifty, liveNiftyIndex}) {
-  const [intervalIndex, setIntervalIndex] = useState(1);
+  const [intervalIndex, setIntervalIndex] = useState(0);
   const [niftyLiveData, setNiftyLiveData] = useState(dataSet);
   const [vwapBullishCount, setVwapBullishCount] = useState(defaultVwapCounter);
   const [vwapBearishCount, setVwapBearishCount] = useState(defaultVwapCounter);
@@ -31,6 +31,7 @@ export default function NiftyComponent({handleNifty, liveNiftyIndex}) {
     return Math.round(diff) + '%';
   }
   const getLiveData = () => {
+    const filePath = './src/DATA/nifty' + intervalIndex + '.txt';
     currentNiftyStrikePrice = formatIndex(liveNiftyIndex);
     const niftyTableDataTemp = [];
     const lowerLimit = currentNiftyStrikePrice - 700;
@@ -40,7 +41,7 @@ export default function NiftyComponent({handleNifty, liveNiftyIndex}) {
     setVwapBearishCount(defaultVwapCounter);
     let bears = 0;
     let bulls = 0;
-    const filePath = './src/DATA/nifty' + intervalIndex + '.txt';
+    setIntervalIndex(intervalIndex + 1);
     axios.get(filePath)
       .then(res => {
         const jsonData = res.data;
@@ -78,7 +79,6 @@ export default function NiftyComponent({handleNifty, liveNiftyIndex}) {
             
             }
           });
-          setIntervalIndex(intervalIndex + 1);
           setNiftyLiveData(niftyTableDataTemp);
           setVwapBearishCount(bears);
           setVwapBullishCount(bulls);
