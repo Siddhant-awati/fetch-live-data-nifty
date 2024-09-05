@@ -11,6 +11,7 @@ export default function App() {
   const [bankVwapCounter, setBankVwapCounter] = useState(tempCounter);
   const [finVwapCounter, setFinVwapCounter] = useState(tempCounter);
   const [intervalIndex, setIntervalIndex] = useState(0);
+  const [spinner, setSpinner] = useState(false);
   const [indexData, setIndexData] = useState({
     niftyIndex: 0,
     bankIndex: 0,
@@ -22,6 +23,7 @@ export default function App() {
   const handleFin = (data) => setFinVwapCounter(data);
 
   const getIndexData = () => {
+    setSpinner(true);
     const filePath = './src/DATA/index' + intervalIndex + '.txt';
     const temp = {}
     setIntervalIndex(intervalIndex + 1);
@@ -39,16 +41,14 @@ export default function App() {
             if (item['symbol_name'] == 'NIFTY FIN SERVICE') {
               temp.finIndex = item['last_trade_price']
             }
-
           });
+          setTimeout(() => {
+            setSpinner(false);
+          }, 1000);
           setIndexData(temp);
         }
       })
   }
-
-  useEffect(() => {
-    getIndexData();
-  }, []);
 
   useEffect(() => {
     const interValConfig = setInterval(getIndexData, constants.INTERVAL_TIME);
@@ -60,12 +60,16 @@ export default function App() {
   return (
 
     <div>
-      <h3>Jay Devi Mata</h3>
-      <h4 className="counter">{intervalIndex}</h4>
-      <span className="top counter-wrapper">
-        <span className="bulls"> {niftyVwapCounter.bulls + bankVwapCounter.bulls + finVwapCounter.bulls}</span>
-        <span className="bears"> {niftyVwapCounter.bears + bankVwapCounter.bears + finVwapCounter.bears}</span>
-      </span>
+      <header className="header">
+        <h3>Jay Devi Mata</h3>
+        <h4 className="counter">{intervalIndex}</h4>
+        <span className="top counter-wrapper">
+          <span className="bulls"> {niftyVwapCounter.bulls + bankVwapCounter.bulls + finVwapCounter.bulls}</span>
+          <span className="bears"> {niftyVwapCounter.bears + bankVwapCounter.bears + finVwapCounter.bears}</span>
+        </span>
+        {spinner && <span class="loader"></span>}
+      </header>
+
       <div className="accordion top" id="accordionPanelsStayOpenExample">
         <div className="accordion-item">
           <h2 className="accordion-header" id="panelsStayOpen-headingOne">
@@ -79,7 +83,7 @@ export default function App() {
           </h2>
           <div id="panelsStayOpen-collapseOne" className="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
             <div className="accordion-body">
-              <NiftyComponent handleNifty={handleNifty} liveNiftyIndex={indexData.niftyIndex}/>
+              <NiftyComponent handleNifty={handleNifty} liveNiftyIndex={indexData.niftyIndex} />
             </div>
           </div>
         </div>
@@ -95,7 +99,7 @@ export default function App() {
           </h2>
           <div id="panelsStayOpen-collapseTwo" className="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
             <div className="accordion-body">
-              <BankComponent handleBank={handleBank} liveBankIndex={indexData.bankIndex}/>
+              <BankComponent handleBank={handleBank} liveBankIndex={indexData.bankIndex} />
             </div>
           </div>
         </div>
@@ -111,7 +115,7 @@ export default function App() {
           </h2>
           <div id="panelsStayOpen-collapseThree" className="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
             <div className="accordion-body">
-              <FinComponent handleFin={handleFin} liveFinIndex={indexData.finIndex}/>
+              <FinComponent handleFin={handleFin} liveFinIndex={indexData.finIndex} />
             </div>
           </div>
         </div>
