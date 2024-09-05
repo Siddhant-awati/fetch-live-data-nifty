@@ -20,7 +20,7 @@ export default function NiftyComponent({handleNifty, liveNiftyIndex}) {
   const formatIndex = (num) => {
     if(num){
       const rounded = Math.round(num);
-      const nearestStrike = rounded - (rounded % 100)
+      const nearestStrike = rounded - (rounded % 50)
       return nearestStrike
     }
     return num;

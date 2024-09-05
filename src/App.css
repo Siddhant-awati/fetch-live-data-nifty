@@ -9,7 +9,8 @@ body {
   font-family: system-ui;
   background-color: #03045e;
 }
-h2.accordion-header{
+
+h2.accordion-header {
   height: 50px;
   margin: 3px 0;
 }
@@ -60,23 +61,29 @@ span.counter-wrapper {
   position: relative;
   top: -50px;
   font-size: 1.1rem;
-  left: 25%;
+  left: 40%;
+  display: inline-flex;
 }
 
 span.top.counter-wrapper {
-  left: 60px;
-  top: -26px;
+  left: 70px;
+  top: -40px;
 }
 
 span.top.counter-wrapper span {
-  padding: 15px;
+  padding: 12px 24px;
   margin: 0 15px;
+  font-weight: bold;
+  font-size: 22px;
 }
 
 span.counter-wrapper span {
   padding: 10px;
   color: white;
   margin: 0 10px;
+  display: inline-block;
+  min-width: 60px;
+  text-align: center;
 }
 
 span.bulls {
@@ -86,10 +93,12 @@ span.bulls {
 span.bears {
   background-color: #e70318;
 }
+
 div.accordion-body {
   padding: 0;
 }
-h4.counter{
+
+h4.counter {
   position: absolute;
   top: 10px;
   background-color: white;
@@ -99,9 +108,19 @@ h4.counter{
   vertical-align: middle;
   text-align: center;
   line-height: 60px;
-  font-size: 1.7rem;
+  font-size: 1.4rem;
 }
+
 span.orange {
-  color: #842029;
-  padding-left: 5px;
+  color: white;
+  padding: 10px 20px;
+  background-color: #842029;
+  position: absolute;
+  left: 150px;
+  width: 130px;
+  text-align: center;
+}
+
+.accordion.top {
+  margin-top: -20px;
 }
