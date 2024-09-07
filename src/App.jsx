@@ -10,7 +10,7 @@ export default function App() {
   const [niftyVwapCounter, setNiftyVwapCounter] = useState(tempCounter);
   const [bankVwapCounter, setBankVwapCounter] = useState(tempCounter);
   const [finVwapCounter, setFinVwapCounter] = useState(tempCounter);
-  const [intervalIndex, setIntervalIndex] = useState(0);
+  const [intervalIndex, setIntervalIndex] = useState(1);
   const [spinner, setSpinner] = useState(false);
   const [indexData, setIndexData] = useState({
     niftyIndex: 0,
@@ -67,14 +67,14 @@ export default function App() {
           <span className="bulls"> {niftyVwapCounter.bulls + bankVwapCounter.bulls + finVwapCounter.bulls}</span>
           <span className="bears"> {niftyVwapCounter.bears + bankVwapCounter.bears + finVwapCounter.bears}</span>
         </span>
-        {spinner && <span class="loader"></span>}
+        {spinner && <span className="loader"></span>}
       </header>
 
       <div className="accordion top" id="accordionPanelsStayOpenExample">
         <div className="accordion-item">
           <h2 className="accordion-header" id="panelsStayOpen-headingOne">
             <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-              NIFTY <span className="orange">{indexData.niftyIndex}</span>
+              NIFTY <span className="orange">{Math.floor(indexData.niftyIndex)}</span>
             </button>
             <span className="counter-wrapper">
               <span className="bulls"> {niftyVwapCounter.bulls}</span>
@@ -90,7 +90,7 @@ export default function App() {
         <div className="accordion-item">
           <h2 className="accordion-header" id="panelsStayOpen-headingTwo">
             <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
-              BANK NIFTY <span className="orange">{indexData.bankIndex}</span>
+              BANK NIFTY <span className="orange">{Math.floor(indexData.bankIndex)}</span>
             </button>
             <span className="counter-wrapper">
               <span className="bulls">  {bankVwapCounter.bulls}</span>
@@ -106,7 +106,7 @@ export default function App() {
         <div className="accordion-item">
           <h2 className="accordion-header" id="panelsStayOpen-headingThree">
             <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
-              FIN NIFTY <span className="orange">{indexData.finIndex}</span>
+              FIN NIFTY <span className="orange">{Math.floor(indexData.finIndex)}</span>
             </button>
             <span className="counter-wrapper">
               <span className="bulls"> {finVwapCounter.bulls}</span>

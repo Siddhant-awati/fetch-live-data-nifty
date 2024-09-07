@@ -13,7 +13,7 @@ const defaultVwapCounter = 0;
 let currentNiftyStrikePrice = 0;
 
 export default function NiftyComponent({handleNifty, liveNiftyIndex}) {
-  const [intervalIndex, setIntervalIndex] = useState(0);
+  const [intervalIndex, setIntervalIndex] = useState(1);
   const [niftyLiveData, setNiftyLiveData] = useState(dataSet);
   const [vwapBullishCount, setVwapBullishCount] = useState(defaultVwapCounter);
   const [vwapBearishCount, setVwapBearishCount] = useState(defaultVwapCounter);
@@ -90,10 +90,6 @@ export default function NiftyComponent({handleNifty, liveNiftyIndex}) {
 
       })
   }
-  useEffect(() => {
-    getLiveData();
-  }, []);
-
   useEffect(() => {
     const interValConfig = setInterval(getLiveData, constants.INTERVAL_TIME);
     return () => {

@@ -15,7 +15,7 @@ let currentNiftyStrikePrice = 0;
 
 
 export default function FinComponent({ handleFin, liveFinIndex }) {
-  const [intervalIndex, setIntervalIndex] = useState(0);
+  const [intervalIndex, setIntervalIndex] = useState(1);
   const [niftyLiveData, setNiftyLiveData] = useState(dataSet);
 
   const [vwapBullishCount, setVwapBullishCount] = useState(defaultVwapCounter);
@@ -87,9 +87,6 @@ export default function FinComponent({ handleFin, liveFinIndex }) {
 
       })
   }
-  useEffect(() => {
-    getLiveData();
-  }, []);
 
   useEffect(() => {
     const interValConfig = setInterval(getLiveData, constants.INTERVAL_TIME);

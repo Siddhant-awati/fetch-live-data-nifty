@@ -13,7 +13,7 @@ const defaultVwapCounter = 0
 let currentNiftyStrikePrice = 0;
 
 export default function BankComponent({ handleBank, liveBankIndex }) {
-  const [intervalIndex, setIntervalIndex] = useState(0);
+  const [intervalIndex, setIntervalIndex] = useState(1);
   const [niftyLiveData, setNiftyLiveData] = useState(dataSet);
 
   const [vwapBullishCount, setVwapBullishCount] = useState(defaultVwapCounter);
@@ -91,10 +91,6 @@ export default function BankComponent({ handleBank, liveBankIndex }) {
 
       })
   }
-  useEffect(() => {
-    getLiveData();
-  }, []);
-
   useEffect(() => {
     const interValConfig = setInterval(getLiveData, constants.INTERVAL_TIME);
     return () => {
