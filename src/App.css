@@ -64,16 +64,25 @@ button.accordion-button {
 
 span.counter-wrapper {
   position: relative;
-  top: -50px;
+  top: -52px;
   font-size: 1.1rem;
   left: 320px;
   display: inline-flex;
 }
 
+span.counter-wrapper.right {
+  left: 60%;
+  background-color: #004284;
+  padding: 5px;
+}
+
+
 span.top.counter-wrapper {
   left: 70px;
   top: -35px;
 }
+
+
 
 span.top.counter-wrapper span {
   padding: 12px 24px;

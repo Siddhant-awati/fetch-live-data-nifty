@@ -9,15 +9,13 @@ import { constants } from './constants';
 // const dataSet = response.resultData.opDatas;
 //const dataSet = bankNiftyResponse.resultData.opDatas;
 const dataSet = [];
-const defaultVwapCounter = 0
 let currentNiftyStrikePrice = 0;
 
-export default function BankComponent({ handleBank, liveBankIndex }) {
-  const [intervalIndex, setIntervalIndex] = useState(1);
+export default function BankComponent({ handleBank, handleBankM, liveBankIndex }) {
+  const [intervalIndex, setIntervalIndex] = useState(0);
+  const [intervalIndexM, setIntervalIndexM] = useState(0);
   const [niftyLiveData, setNiftyLiveData] = useState(dataSet);
 
-  const [vwapBullishCount, setVwapBullishCount] = useState(defaultVwapCounter);
-  const [vwapBearishCount, setVwapBearishCount] = useState(defaultVwapCounter);
   const formatIndex = (num) => {
     if (num) {
       const rounded = Math.round(num);
@@ -39,8 +37,6 @@ export default function BankComponent({ handleBank, liveBankIndex }) {
     const lowerLimit = currentNiftyStrikePrice - 1400;
     const upperLimit = currentNiftyStrikePrice + 1400;
     console.log('currentBankStrikePrice : ', currentNiftyStrikePrice);
-    setVwapBullishCount(defaultVwapCounter);
-    setVwapBearishCount(defaultVwapCounter);
     let bears = 0;
     let bulls = 0;
     setIntervalIndex(intervalIndex + 1);
@@ -81,8 +77,6 @@ export default function BankComponent({ handleBank, liveBankIndex }) {
             }
           });
           setNiftyLiveData(niftyTableDataTemp);
-          setVwapBearishCount(bears);
-          setVwapBullishCount(bulls);
           handleBank({
             bears: bears,
             bulls: bulls
@@ -91,10 +85,67 @@ export default function BankComponent({ handleBank, liveBankIndex }) {
 
       })
   }
+
+  const getLiveDataM = () => {
+    const filePath = './src/DATA/bankM' + intervalIndexM + '.txt';
+    currentNiftyStrikePrice = formatIndex(liveBankIndex);
+    const niftyTableDataTemp = [];
+    const lowerLimit = currentNiftyStrikePrice - 1400;
+    const upperLimit = currentNiftyStrikePrice + 1400;
+    let bears = 0;
+    let bulls = 0;
+    setIntervalIndexM(intervalIndexM + 1);
+
+    axios.get(filePath)
+      .then(res => {
+        const jsonData = res.data;
+        if (typeof jsonData == 'object' && jsonData.length > 0) {
+
+          jsonData.filter((d, index) => {
+            const currentStrike = d['strike_price'];
+            const callPrice = d['calls_ltp'];
+            const callVwap = d['calls_average_price'];
+            const callDirection = d['calls_builtup'];
+            const putDirection = d['puts_builtup'];
+            const putPrice = d['puts_ltp'];
+            const putVwap = d['puts_average_price'];
+
+            if (currentStrike > lowerLimit && currentStrike < upperLimit) {
+              const callBuildup = callPrice > callVwap ? 'BULLISH' : 'BEARISH';
+              const putBuildup = putPrice > putVwap ? 'BEARISH' : 'BULLISH';
+              const singleRow = {
+                STRIKE: currentStrike,
+                CALL_LTP: callPrice,
+                CALL_VWAP: callVwap,
+                CALL_DIR: callDirection,
+                CALL_BUILD: callBuildup,
+                PUT_LTP: putPrice,
+                PUT_VWAP: putVwap,
+                PUT_DIR: putDirection,
+                PUT_BUILD: putBuildup
+              }
+              niftyTableDataTemp.push(singleRow);
+              if (callBuildup == 'BEARISH') { bears++ }
+              if (putBuildup == 'BEARISH') { bears++ }
+              if (callBuildup == 'BULLISH') { bulls++ }
+              if (putBuildup == 'BULLISH') { bulls++ }
+            }
+          });
+          handleBankM({
+            bears: bears,
+            bulls: bulls
+          })
+        }
+
+      })
+  }
+
   useEffect(() => {
     const interValConfig = setInterval(getLiveData, constants.INTERVAL_TIME);
+    const interValConfigM = setInterval(getLiveDataM, constants.INTERVAL_TIME);
     return () => {
       clearInterval(interValConfig);
+      clearInterval(interValConfigM);
     };
   })
 

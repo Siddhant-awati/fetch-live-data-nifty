@@ -7,19 +7,15 @@ import axios from 'axios';
 import { constants } from './constants';
 
 
-// const dataSet = response.resultData.opDatas;
-//const dataSet = bankNiftyResponse.resultData.opDatas;
 const dataSet = [];
-const defaultVwapCounter = 0
 let currentNiftyStrikePrice = 0;
 
 
-export default function FinComponent({ handleFin, liveFinIndex }) {
-  const [intervalIndex, setIntervalIndex] = useState(1);
+export default function FinComponent({ handleFin, handleFinM, liveFinIndex }) {
+  const [intervalIndex, setIntervalIndex] = useState(0);
+  const [intervalIndexM, setIntervalIndexM] = useState(0);
   const [niftyLiveData, setNiftyLiveData] = useState(dataSet);
 
-  const [vwapBullishCount, setVwapBullishCount] = useState(defaultVwapCounter);
-  const [vwapBearishCount, setVwapBearishCount] = useState(defaultVwapCounter);
   const formatIndex = (num) => {
     if (num) {
       const rounded = Math.round(num);
@@ -33,10 +29,7 @@ export default function FinComponent({ handleFin, liveFinIndex }) {
     const niftyTableDataTemp = [];
     const lowerLimit = currentNiftyStrikePrice - 700;
     const upperLimit = currentNiftyStrikePrice + 700;
-    console.log('currentFinStrikePrice : ', currentNiftyStrikePrice);
 
-    setVwapBullishCount(defaultVwapCounter);
-    setVwapBearishCount(defaultVwapCounter);
     const filePath = './src/DATA/fin' + intervalIndex + '.txt';
     let bears = 0;
     let bulls = 0;
@@ -77,9 +70,61 @@ export default function FinComponent({ handleFin, liveFinIndex }) {
             }
           });
           setNiftyLiveData(niftyTableDataTemp);
-          setVwapBearishCount(bears);
-          setVwapBullishCount(bulls);
           handleFin({
+            bears: bears,
+            bulls: bulls
+          })
+        }
+
+      })
+  }
+
+  const getLiveDataM = () => {
+    currentNiftyStrikePrice = formatIndex(liveFinIndex);
+    const niftyTableDataTemp = [];
+    const lowerLimit = currentNiftyStrikePrice - 700;
+    const upperLimit = currentNiftyStrikePrice + 700;
+
+    const filePath = './src/DATA/finM' + intervalIndexM + '.txt';
+    let bears = 0;
+    let bulls = 0;
+    setIntervalIndexM(intervalIndexM + 1);
+    axios.get(filePath)
+      .then(res => {
+        const jsonData = res.data;
+        if (typeof jsonData == 'object' && jsonData.length > 0) {
+
+          jsonData.filter((d, index) => {
+            const currentStrike = d['strike_price'];
+            const callPrice = d['calls_ltp'];
+            const callVwap = d['calls_average_price'];
+            const callDirection = d['calls_builtup'];
+            const putDirection = d['puts_builtup'];
+            const putPrice = d['puts_ltp'];
+            const putVwap = d['puts_average_price'];
+
+            if (currentStrike > lowerLimit && currentStrike < upperLimit) {
+              const callBuildup = callPrice > callVwap ? 'BULLISH' : 'BEARISH';
+              const putBuildup = putPrice > putVwap ? 'BEARISH' : 'BULLISH';
+              const singleRow = {
+                STRIKE: currentStrike,
+                CALL_LTP: callPrice,
+                CALL_VWAP: callVwap,
+                CALL_DIR: callDirection,
+                CALL_BUILD: callBuildup,
+                PUT_LTP: putPrice,
+                PUT_VWAP: putVwap,
+                PUT_DIR: putDirection,
+                PUT_BUILD: putBuildup
+              }
+              niftyTableDataTemp.push(singleRow);
+              if (callBuildup == 'BEARISH') { bears++ }
+              if (putBuildup == 'BEARISH') { bears++ }
+              if (callBuildup == 'BULLISH') { bulls++ }
+              if (putBuildup == 'BULLISH') { bulls++ }
+            }
+          });
+          handleFinM({
             bears: bears,
             bulls: bulls
           })
@@ -90,12 +135,15 @@ export default function FinComponent({ handleFin, liveFinIndex }) {
 
   useEffect(() => {
     const interValConfig = setInterval(getLiveData, constants.INTERVAL_TIME);
+    const interValConfigM = setInterval(getLiveDataM, constants.INTERVAL_TIME);
     return () => {
       clearInterval(interValConfig);
+      clearInterval(interValConfigM);
     };
   })
+
   const percentageDiff = (vwap, ltp) => {
-    if(ltp < 0.5) {ltp = 1}
+    if (ltp < 0.5) { ltp = 1 }
     const diff = (vwap / ltp) * 100;
     return Math.round(diff) + '%';
   }
