@@ -82,7 +82,17 @@ span.top.counter-wrapper {
   top: -35px;
 }
 
+span.top-right.counter-wrapper {
+  left: 54%;
+  top: -35px;
+}
 
+span.top-right.counter-wrapper span {
+  padding: 12px 24px;
+  margin: 0 15px;
+  font-weight: bold;
+  font-size: 22px;
+}
 
 span.top.counter-wrapper span {
   padding: 12px 24px;

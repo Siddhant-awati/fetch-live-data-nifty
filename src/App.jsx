@@ -5,7 +5,8 @@ import BankComponent from './BankComponent';
 import FinComponent from './FinComponent';
 import { constants } from './constants';
 
-const tempCounter = { bears: 0, bulls: 0 }
+const tempCounter = { bears: 0, bulls: 0 };
+
 export default function App() {
   const [niftyVwapCounter, setNiftyVwapCounter] = useState(tempCounter);
   const [bankVwapCounter, setBankVwapCounter] = useState(tempCounter);
@@ -76,6 +77,11 @@ export default function App() {
           <span className="bears"> {niftyVwapCounter.bears + bankVwapCounter.bears + finVwapCounter.bears}</span>
         </span>
         {spinner && <span className="loader"></span>}
+
+        <span className="top-right counter-wrapper">
+          <span className="bulls"> {niftyVwapCounterM.bulls + bankVwapCounterM.bulls + finVwapCounterM.bulls}</span>
+          <span className="bears"> {niftyVwapCounterM.bears + bankVwapCounterM.bears + finVwapCounterM.bears}</span>
+        </span>
       </header>
 
       <div className="accordion top" id="accordionPanelsStayOpenExample">
