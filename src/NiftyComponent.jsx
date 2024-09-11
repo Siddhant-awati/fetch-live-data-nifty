@@ -1,11 +1,7 @@
-
-import { response } from "./response";
-import { bankNiftyResponse } from "./bankNiftyResponse";
 import './App.css'
 import { useEffect, useState } from "react";
 import axios from 'axios';
 import { constants } from './constants';
-
 
 const dataSet = [];
 let currentNiftyStrikePrice = 0;
@@ -28,20 +24,19 @@ export default function NiftyComponent({handleNifty, handleNiftyM, liveNiftyInde
     return Math.round(diff) + '%';
   }
   const getLiveData = () => {
-    const filePath = './src/DATA/nifty' + intervalIndex + '.txt';
     currentNiftyStrikePrice = formatIndex(liveNiftyIndex);
     const niftyTableDataTemp = [];
     const lowerLimit = currentNiftyStrikePrice - 700;
     const upperLimit = currentNiftyStrikePrice + 700;
-    console.log('currentNiftyStrikePrice : ', currentNiftyStrikePrice);
+    console.log('current Nifty Strike Price : ', currentNiftyStrikePrice);
     let bears = 0;
     let bulls = 0;
     setIntervalIndexM(intervalIndex + 1);
-    axios.get(filePath)
+    const niftyUrl = constants.PROXY_URL+constants.NIFTY_W;
+    axios.get(niftyUrl)
       .then(res => {
-        const jsonData = res.data;
-        if (typeof jsonData == 'object' && jsonData.length > 0) {
-
+        const jsonData = res.data.resultData.opDatas;
+        if (jsonData.length > 0) {
           jsonData.filter((d, index) => {
             const currentStrike = d['strike_price'];
             const callPrice = d['calls_ltp'];
@@ -66,13 +61,12 @@ export default function NiftyComponent({handleNifty, handleNiftyM, liveNiftyInde
                 PUT_BUILD: putBuildup
               }
               niftyTableDataTemp.push(singleRow);
-
               if(callBuildup == 'BEARISH') {bears++}
               if(putBuildup == 'BEARISH') {bears++}
               if(callBuildup == 'BULLISH') {bulls++}
               if(putBuildup == 'BULLISH') {bulls++}
-            
             }
+          
           });
           setNiftyLiveData(niftyTableDataTemp);
           handleNifty({
@@ -84,7 +78,6 @@ export default function NiftyComponent({handleNifty, handleNiftyM, liveNiftyInde
       })
   }
   const getLiveDataM = () => {
-    const filePath = './src/DATA/niftyM' + intervalIndexM + '.txt';
     currentNiftyStrikePrice = formatIndex(liveNiftyIndex);
     const niftyTableDataTemp = [];
     const lowerLimit = currentNiftyStrikePrice - 700;
@@ -92,9 +85,9 @@ export default function NiftyComponent({handleNifty, handleNiftyM, liveNiftyInde
     let bears = 0;
     let bulls = 0;
     setIntervalIndex(intervalIndexM + 1);
-    axios.get(filePath)
+    axios.get(constants.PROXY_URL+constants.NIFTY_M)
       .then(res => {
-        const jsonData = res.data;
+        const jsonData = res.data.resultData.opDatas;
         if (typeof jsonData == 'object' && jsonData.length > 0) {
 
           jsonData.filter((d, index) => {

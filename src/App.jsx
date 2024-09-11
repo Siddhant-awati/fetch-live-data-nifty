@@ -33,12 +33,11 @@ export default function App() {
 
   const getIndexData = () => {
     setSpinner(true);
-    const filePath = './src/DATA/index' + intervalIndex + '.txt';
     const temp = {}
     setIntervalIndex(intervalIndex + 1);
-    axios.get(filePath)
+    axios.get(constants.PROXY_URL+constants.INDEX)
       .then(res => {
-        const jsonData = res.data;
+        const jsonData = res.data.resultData;
         if (typeof jsonData == 'object' && jsonData.length > 0) {
           jsonData.filter((item) => {
             if (item['symbol_name'] == 'NIFTY 50') {

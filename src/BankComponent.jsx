@@ -1,13 +1,8 @@
-
-import { response } from "./response";
-import { bankNiftyResponse } from "./bankNiftyResponse";
 import './App.css'
 import { useEffect, useState } from "react";
 import axios from 'axios';
 import { constants } from './constants';
 
-// const dataSet = response.resultData.opDatas;
-//const dataSet = bankNiftyResponse.resultData.opDatas;
 const dataSet = [];
 let currentNiftyStrikePrice = 0;
 
@@ -31,21 +26,20 @@ export default function BankComponent({ handleBank, handleBankM, liveBankIndex }
     return Math.round(diff) + '%';
   }
   const getLiveData = () => {
-    const filePath = './src/DATA/bank' + intervalIndex + '.txt';
     currentNiftyStrikePrice = formatIndex(liveBankIndex);
     const niftyTableDataTemp = [];
     const lowerLimit = currentNiftyStrikePrice - 1400;
     const upperLimit = currentNiftyStrikePrice + 1400;
-    console.log('currentBankStrikePrice : ', currentNiftyStrikePrice);
+    console.log('current BANK Strike Price : ', currentNiftyStrikePrice);
+
     let bears = 0;
     let bulls = 0;
     setIntervalIndex(intervalIndex + 1);
 
-    axios.get(filePath)
+    axios.get(constants.PROXY_URL+constants.BANK_W)
       .then(res => {
-        const jsonData = res.data;
+        const jsonData = res.data.resultData.opDatas;
         if (typeof jsonData == 'object' && jsonData.length > 0) {
-
           jsonData.filter((d, index) => {
             const currentStrike = d['strike_price'];
             const callPrice = d['calls_ltp'];
@@ -87,7 +81,6 @@ export default function BankComponent({ handleBank, handleBankM, liveBankIndex }
   }
 
   const getLiveDataM = () => {
-    const filePath = './src/DATA/bankM' + intervalIndexM + '.txt';
     currentNiftyStrikePrice = formatIndex(liveBankIndex);
     const niftyTableDataTemp = [];
     const lowerLimit = currentNiftyStrikePrice - 1400;
@@ -95,10 +88,10 @@ export default function BankComponent({ handleBank, handleBankM, liveBankIndex }
     let bears = 0;
     let bulls = 0;
     setIntervalIndexM(intervalIndexM + 1);
-
-    axios.get(filePath)
+    const niftyUrl = constants.PROXY_URL+constants.BANK_M;
+    axios.get(niftyUrl)
       .then(res => {
-        const jsonData = res.data;
+        const jsonData = res.data.resultData.opDatas;
         if (typeof jsonData == 'object' && jsonData.length > 0) {
 
           jsonData.filter((d, index) => {

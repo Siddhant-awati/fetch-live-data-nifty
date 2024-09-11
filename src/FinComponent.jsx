@@ -1,15 +1,10 @@
-
-import { response } from "./response";
-import { bankNiftyResponse } from "./bankNiftyResponse";
 import './App.css'
 import { useEffect, useState } from "react";
 import axios from 'axios';
 import { constants } from './constants';
 
-
 const dataSet = [];
 let currentNiftyStrikePrice = 0;
-
 
 export default function FinComponent({ handleFin, handleFinM, liveFinIndex }) {
   const [intervalIndex, setIntervalIndex] = useState(0);
@@ -29,14 +24,16 @@ export default function FinComponent({ handleFin, handleFinM, liveFinIndex }) {
     const niftyTableDataTemp = [];
     const lowerLimit = currentNiftyStrikePrice - 700;
     const upperLimit = currentNiftyStrikePrice + 700;
+    console.log('current FIN Strike Price : ', currentNiftyStrikePrice);
 
-    const filePath = './src/DATA/fin' + intervalIndex + '.txt';
     let bears = 0;
     let bulls = 0;
     setIntervalIndex(intervalIndex + 1);
-    axios.get(filePath)
+    const niftyUrl = constants.PROXY_URL+constants.FIN_W;
+
+    axios.get(niftyUrl)
       .then(res => {
-        const jsonData = res.data;
+        const jsonData = res.data.resultData.opDatas;
         if (typeof jsonData == 'object' && jsonData.length > 0) {
 
           jsonData.filter((d, index) => {
@@ -84,16 +81,13 @@ export default function FinComponent({ handleFin, handleFinM, liveFinIndex }) {
     const niftyTableDataTemp = [];
     const lowerLimit = currentNiftyStrikePrice - 700;
     const upperLimit = currentNiftyStrikePrice + 700;
-
-    const filePath = './src/DATA/finM' + intervalIndexM + '.txt';
     let bears = 0;
     let bulls = 0;
     setIntervalIndexM(intervalIndexM + 1);
-    axios.get(filePath)
+    axios.get(constants.PROXY_URL+constants.FIN_M)
       .then(res => {
-        const jsonData = res.data;
+        const jsonData = res.data.resultData.opDatas;
         if (typeof jsonData == 'object' && jsonData.length > 0) {
-
           jsonData.filter((d, index) => {
             const currentStrike = d['strike_price'];
             const callPrice = d['calls_ltp'];
