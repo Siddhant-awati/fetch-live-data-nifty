@@ -11,11 +11,7 @@ export default function App() {
   const [niftyVwapCounter, setNiftyVwapCounter] = useState(tempCounter);
   const [bankVwapCounter, setBankVwapCounter] = useState(tempCounter);
   const [finVwapCounter, setFinVwapCounter] = useState(tempCounter);
-  const [niftyVwapCounterM, setNiftyVwapCounterM] = useState(tempCounter);
-  const [bankVwapCounterM, setBankVwapCounterM] = useState(tempCounter);
-  const [finVwapCounterM, setFinVwapCounterM] = useState(tempCounter);
-  
-  const [intervalIndex, setIntervalIndex] = useState(0);
+
   const [spinner, setSpinner] = useState(false);
   const [indexData, setIndexData] = useState({
     niftyIndex: 0,
@@ -27,15 +23,10 @@ export default function App() {
   const handleBank = (data) => setBankVwapCounter(data);
   const handleFin = (data) => setFinVwapCounter(data);
 
-  const handleNiftyM = (data) => setNiftyVwapCounterM(data);
-  const handleBankM = (data) => setBankVwapCounterM(data);
-  const handleFinM = (data) => setFinVwapCounterM(data);
-
   const getIndexData = () => {
     setSpinner(true);
     const temp = {}
-    setIntervalIndex(intervalIndex + 1);
-    axios.get(constants.PROXY_URL+constants.INDEX)
+    axios.get(constants.PROXY_URL + constants.INDEX)
       .then(res => {
         const jsonData = res.data.resultData;
         if (typeof jsonData == 'object' && jsonData.length > 0) {
@@ -70,16 +61,14 @@ export default function App() {
     <div>
       <header className="header">
         <h3>Jay Devi Mata</h3>
-        <h4 className="counter">{intervalIndex}</h4>
         <span className="top counter-wrapper">
           <span className="bulls"> {niftyVwapCounter.bulls + bankVwapCounter.bulls + finVwapCounter.bulls}</span>
           <span className="bears"> {niftyVwapCounter.bears + bankVwapCounter.bears + finVwapCounter.bears}</span>
         </span>
         {spinner && <span className="loader"></span>}
-
         <span className="top-right counter-wrapper">
-          <span className="bulls"> {niftyVwapCounterM.bulls + bankVwapCounterM.bulls + finVwapCounterM.bulls}</span>
-          <span className="bears"> {niftyVwapCounterM.bears + bankVwapCounterM.bears + finVwapCounterM.bears}</span>
+          {/* <span className="bulls"> {niftyVwapCounterM.bulls + bankVwapCounterM.bulls + finVwapCounterM.bulls}</span>
+          <span className="bears"> {niftyVwapCounterM.bears + bankVwapCounterM.bears + finVwapCounterM.bears}</span> */}
         </span>
       </header>
 
@@ -93,14 +82,10 @@ export default function App() {
               <span className="bulls"> {niftyVwapCounter.bulls}</span>
               <span className="bears"> {niftyVwapCounter.bears}</span>
             </span>
-            <span className="counter-wrapper right">
-              <span className="bulls"> {niftyVwapCounterM.bulls}</span>
-              <span className="bears"> {niftyVwapCounterM.bears}</span>
-            </span>
           </h2>
           <div id="panelsStayOpen-collapseOne" className="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
             <div className="accordion-body">
-              <NiftyComponent handleNifty={handleNifty} handleNiftyM={handleNiftyM} liveNiftyIndex={indexData.niftyIndex} />
+              <NiftyComponent handleNifty={handleNifty} liveNiftyIndex={indexData.niftyIndex} />
             </div>
           </div>
         </div>
@@ -113,14 +98,10 @@ export default function App() {
               <span className="bulls">  {bankVwapCounter.bulls}</span>
               <span className="bears"> {bankVwapCounter.bears}</span>
             </span>
-            <span className="counter-wrapper right">
-              <span className="bulls">  {bankVwapCounterM.bulls}</span>
-              <span className="bears"> {bankVwapCounterM.bears}</span>
-            </span>
           </h2>
           <div id="panelsStayOpen-collapseTwo" className="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
             <div className="accordion-body">
-              <BankComponent handleBank={handleBank} handleBankM={handleBankM} liveBankIndex={indexData.bankIndex} />
+              <BankComponent handleBank={handleBank} liveBankIndex={indexData.bankIndex} />
             </div>
           </div>
         </div>
@@ -133,14 +114,10 @@ export default function App() {
               <span className="bulls"> {finVwapCounter.bulls}</span>
               <span className="bears"> {finVwapCounter.bears}</span>
             </span>
-            <span className="counter-wrapper right">
-              <span className="bulls"> {finVwapCounterM.bulls}</span>
-              <span className="bears"> {finVwapCounterM.bears}</span>
-            </span>
           </h2>
           <div id="panelsStayOpen-collapseThree" className="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
             <div className="accordion-body">
-              <FinComponent handleFin={handleFin} handleFinM={handleFinM} liveFinIndex={indexData.finIndex} />
+              <FinComponent handleFin={handleFin} liveFinIndex={indexData.finIndex} />
             </div>
           </div>
         </div>

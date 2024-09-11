@@ -6,9 +6,7 @@ import { constants } from './constants';
 const dataSet = [];
 let currentNiftyStrikePrice = 0;
 
-export default function NiftyComponent({handleNifty, handleNiftyM, liveNiftyIndex}) {
-  const [intervalIndex, setIntervalIndex] = useState(0);
-  const [intervalIndexM, setIntervalIndexM] = useState(0);
+export default function NiftyComponent({handleNifty, liveNiftyIndex}) {
   const [niftyLiveData, setNiftyLiveData] = useState(dataSet);
   const formatIndex = (num) => {
     if(num){
@@ -31,9 +29,13 @@ export default function NiftyComponent({handleNifty, handleNiftyM, liveNiftyInde
     console.log('current Nifty Strike Price : ', currentNiftyStrikePrice);
     let bears = 0;
     let bulls = 0;
-    setIntervalIndexM(intervalIndex + 1);
-    const niftyUrl = constants.PROXY_URL+constants.NIFTY_W;
-    axios.get(niftyUrl)
+    const niftyUrl = constants.NIFTY_W;
+    const headers = {
+      headers: {
+        "Access-Control-Allow-Origin": "*"
+      },
+    }
+    axios.get(niftyUrl, headers)
       .then(res => {
         const jsonData = res.data.resultData.opDatas;
         if (jsonData.length > 0) {
@@ -77,65 +79,63 @@ export default function NiftyComponent({handleNifty, handleNiftyM, liveNiftyInde
 
       })
   }
-  const getLiveDataM = () => {
-    currentNiftyStrikePrice = formatIndex(liveNiftyIndex);
-    const niftyTableDataTemp = [];
-    const lowerLimit = currentNiftyStrikePrice - 700;
-    const upperLimit = currentNiftyStrikePrice + 700;
-    let bears = 0;
-    let bulls = 0;
-    setIntervalIndex(intervalIndexM + 1);
-    axios.get(constants.PROXY_URL+constants.NIFTY_M)
-      .then(res => {
-        const jsonData = res.data.resultData.opDatas;
-        if (typeof jsonData == 'object' && jsonData.length > 0) {
+  // const getLiveDataM = () => {
+  //   currentNiftyStrikePrice = formatIndex(liveNiftyIndex);
+  //   const niftyTableDataTemp = [];
+  //   const lowerLimit = currentNiftyStrikePrice - 700;
+  //   const upperLimit = currentNiftyStrikePrice + 700;
+  //   let bears = 0;
+  //   let bulls = 0;
+  //   setIntervalIndex(intervalIndexM + 1);
+  //   axios.get(constants.PROXY_URL+constants.NIFTY_M)
+  //     .then(res => {
+  //       const jsonData = res.data.resultData.opDatas;
+  //       if (typeof jsonData == 'object' && jsonData.length > 0) {
 
-          jsonData.filter((d, index) => {
-            const currentStrike = d['strike_price'];
-            const callPrice = d['calls_ltp'];
-            const callVwap = d['calls_average_price'];
-            const callDirection = d['calls_builtup'];
-            const putDirection = d['puts_builtup'];
-            const putPrice = d['puts_ltp'];
-            const putVwap = d['puts_average_price'];
+  //         jsonData.filter((d, index) => {
+  //           const currentStrike = d['strike_price'];
+  //           const callPrice = d['calls_ltp'];
+  //           const callVwap = d['calls_average_price'];
+  //           const callDirection = d['calls_builtup'];
+  //           const putDirection = d['puts_builtup'];
+  //           const putPrice = d['puts_ltp'];
+  //           const putVwap = d['puts_average_price'];
 
-            if (currentStrike > lowerLimit && currentStrike < upperLimit) {
-              const callBuildup = callPrice > callVwap ? 'BULLISH' : 'BEARISH';
-              const putBuildup = putPrice > putVwap ? 'BEARISH' : 'BULLISH';
-              const singleRow = {
-                STRIKE: currentStrike,
-                CALL_LTP: callPrice,
-                CALL_VWAP: callVwap,
-                CALL_DIR: callDirection,
-                CALL_BUILD: callBuildup,
-                PUT_LTP: putPrice,
-                PUT_VWAP: putVwap,
-                PUT_DIR: putDirection,
-                PUT_BUILD: putBuildup
-              }
-              niftyTableDataTemp.push(singleRow);
+  //           if (currentStrike > lowerLimit && currentStrike < upperLimit) {
+  //             const callBuildup = callPrice > callVwap ? 'BULLISH' : 'BEARISH';
+  //             const putBuildup = putPrice > putVwap ? 'BEARISH' : 'BULLISH';
+  //             const singleRow = {
+  //               STRIKE: currentStrike,
+  //               CALL_LTP: callPrice,
+  //               CALL_VWAP: callVwap,
+  //               CALL_DIR: callDirection,
+  //               CALL_BUILD: callBuildup,
+  //               PUT_LTP: putPrice,
+  //               PUT_VWAP: putVwap,
+  //               PUT_DIR: putDirection,
+  //               PUT_BUILD: putBuildup
+  //             }
+  //             niftyTableDataTemp.push(singleRow);
 
-              if(callBuildup == 'BEARISH') {bears++}
-              if(putBuildup == 'BEARISH') {bears++}
-              if(callBuildup == 'BULLISH') {bulls++}
-              if(putBuildup == 'BULLISH') {bulls++}
+  //             if(callBuildup == 'BEARISH') {bears++}
+  //             if(putBuildup == 'BEARISH') {bears++}
+  //             if(callBuildup == 'BULLISH') {bulls++}
+  //             if(putBuildup == 'BULLISH') {bulls++}
             
-            }
-          });
-          handleNiftyM({
-            bears:bears,
-            bulls:bulls
-          })
-        }
+  //           }
+  //         });
+  //         handleNiftyM({
+  //           bears:bears,
+  //           bulls:bulls
+  //         })
+  //       }
 
-      })
-  }
+  //     })
+  // }
   useEffect(() => {
     const interValConfig = setInterval(getLiveData, constants.INTERVAL_TIME);
-    const interValConfigM = setInterval(getLiveDataM, constants.INTERVAL_TIME);
     return () => {
       clearInterval(interValConfig);
-      clearInterval(interValConfigM);
     };
   })
 
