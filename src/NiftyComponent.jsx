@@ -29,13 +29,8 @@ export default function NiftyComponent({handleNifty, liveNiftyIndex}) {
     console.log('current Nifty Strike Price : ', currentNiftyStrikePrice);
     let bears = 0;
     let bulls = 0;
-    const niftyUrl = constants.NIFTY_W;
-    const headers = {
-      headers: {
-        "Access-Control-Allow-Origin": "*"
-      },
-    }
-    axios.get(niftyUrl, headers)
+    const niftyUrl = constants.PROXY_URL+constants.NIFTY_W;
+    axios.get(niftyUrl)
       .then(res => {
         const jsonData = res.data.resultData.opDatas;
         if (jsonData.length > 0) {
