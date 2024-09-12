@@ -60,7 +60,7 @@ export default function App() {
 
     <div>
       <header className="header">
-        <h3>Jay Devi Mata</h3>
+        <h3>SARA Traders</h3>
         <span className="top counter-wrapper">
           <span className="bulls"> {niftyVwapCounter.bulls + bankVwapCounter.bulls + finVwapCounter.bulls}</span>
           <span className="bears"> {niftyVwapCounter.bears + bankVwapCounter.bears + finVwapCounter.bears}</span>
