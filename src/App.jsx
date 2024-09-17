@@ -66,6 +66,10 @@ export default function App() {
     };
   })
 
+  useEffect(()=> {
+    getIndexData();
+  }, []);
+
   return (
 
     <div>

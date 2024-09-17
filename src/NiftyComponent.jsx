@@ -145,6 +145,12 @@ export default function NiftyComponent({handleNifty, handleNiftyM, liveNiftyInde
       clearInterval(interValConfigM);
     };
   })
+  useEffect(()=> {
+    setTimeout(()=>{
+      getLiveData();
+      getLiveDataM();
+    }, 1000)
+  }, []);
 
   return (
     <div>

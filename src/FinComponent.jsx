@@ -142,6 +142,13 @@ export default function FinComponent({ handleFin, handleFinM, liveFinIndex }) {
     };
   })
 
+  useEffect(()=> {
+    setTimeout(()=>{
+      getLiveData();
+      getLiveDataM();
+    }, 1000)
+  }, []);
+  
   const percentageDiff = (vwap, ltp) => {
     if (ltp < 0.5) { ltp = 1 }
     const diff = (vwap / ltp) * 100;

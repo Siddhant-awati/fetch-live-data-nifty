@@ -149,6 +149,13 @@ export default function BankComponent({ handleBank, handleBankM, liveBankIndex }
     };
   })
 
+  useEffect(()=> {
+    setTimeout(()=>{
+      getLiveData();
+      getLiveDataM();
+    }, 1000)
+  }, []);
+  
   return (
     <div>
       {niftyLiveData.length > 0 && <table className="table table-bordered table-sm">

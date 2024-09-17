@@ -180,12 +180,13 @@ function triggerDataFetchIndex() {
   });
   counterI++;
 }
-setInterval(triggerDataFetchNifty, intervalTime);
-setInterval(triggerDataFetchFin, intervalTime);
-setInterval(triggerDataFetchBank, intervalTime);
-setInterval(triggerDataFetchIndex, intervalTime);
 
+function callAll(){
+  triggerDataFetchBank();
+  triggerDataFetchFin();
+  triggerDataFetchIndex();
+  triggerDataFetchNifty();
+}
 
-
-
-
+setInterval(callAll, intervalTime);
+callAll();
