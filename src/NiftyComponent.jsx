@@ -1,21 +1,17 @@
 
-import { response } from "./response";
-import { bankNiftyResponse } from "./bankNiftyResponse";
 import './App.css'
 import { useEffect, useState } from "react";
-import axios from 'axios';
 import { constants } from './constants';
-
 
 const dataSet = [];
 let currentNiftyStrikePrice = 0;
 
-export default function NiftyComponent({handleNifty, handleNiftyM, liveNiftyIndex}) {
+export default function NiftyComponent({ handleNifty, handleNiftyM, liveNiftyIndex }) {
   const [intervalIndex, setIntervalIndex] = useState(0);
   const [intervalIndexM, setIntervalIndexM] = useState(0);
   const [niftyLiveData, setNiftyLiveData] = useState(dataSet);
   const formatIndex = (num) => {
-    if(num){
+    if (num) {
       const rounded = Math.round(num);
       const nearestStrike = rounded - (rounded % 50)
       return nearestStrike
@@ -23,68 +19,65 @@ export default function NiftyComponent({handleNifty, handleNiftyM, liveNiftyInde
     return num;
   }
   const percentageDiff = (vwap, ltp) => {
-    if(ltp < 0.5) {ltp = 1}
+    if (ltp < 0.5) { ltp = 1 }
     const diff = (vwap / ltp) * 100;
     return Math.round(diff) + '%';
   }
-  const getLiveData = () => {
-    const filePath = './src/DATA/nifty' + intervalIndex + '.txt';
+  const fetchData = async () => {
     currentNiftyStrikePrice = formatIndex(liveNiftyIndex);
     const niftyTableDataTemp = [];
     const lowerLimit = currentNiftyStrikePrice - 700;
     const upperLimit = currentNiftyStrikePrice + 700;
-    console.log('currentNiftyStrikePrice : ', currentNiftyStrikePrice);
     let bears = 0;
     let bulls = 0;
     setIntervalIndexM(intervalIndex + 1);
-    axios.get(filePath)
-      .then(res => {
-        const jsonData = res.data;
-        if (typeof jsonData == 'object' && jsonData.length > 0) {
-
-          jsonData.filter((d, index) => {
-            const currentStrike = d['strike_price'];
-            const callPrice = d['calls_ltp'];
-            const callVwap = d['calls_average_price'];
-            const callDirection = d['calls_builtup'];
-            const putDirection = d['puts_builtup'];
-            const putPrice = d['puts_ltp'];
-            const putVwap = d['puts_average_price'];
-
-            if (currentStrike > lowerLimit && currentStrike < upperLimit) {
-              const callBuildup = callPrice > callVwap ? 'BULLISH' : 'BEARISH';
-              const putBuildup = putPrice > putVwap ? 'BEARISH' : 'BULLISH';
-              const singleRow = {
-                STRIKE: currentStrike,
-                CALL_LTP: callPrice,
-                CALL_VWAP: callVwap,
-                CALL_DIR: callDirection,
-                CALL_BUILD: callBuildup,
-                PUT_LTP: putPrice,
-                PUT_VWAP: putVwap,
-                PUT_DIR: putDirection,
-                PUT_BUILD: putBuildup
-              }
-              niftyTableDataTemp.push(singleRow);
-
-              if(callBuildup == 'BEARISH') {bears++}
-              if(putBuildup == 'BEARISH') {bears++}
-              if(callBuildup == 'BULLISH') {bulls++}
-              if(putBuildup == 'BULLISH') {bulls++}
-            
+    try {
+      const response = await fetch('https://nifty-api-data.onrender.com/api/nifty-weekly');
+      const data = await response.json();
+      const jsonData = data.resultData.opDatas;
+      if (typeof jsonData == 'object' && jsonData.length > 0) {
+        jsonData.filter((d, index) => {
+          const currentStrike = d['strike_price'];
+          const callPrice = d['calls_ltp'];
+          const callVwap = d['calls_average_price'];
+          const callDirection = d['calls_builtup'];
+          const putDirection = d['puts_builtup'];
+          const putPrice = d['puts_ltp'];
+          const putVwap = d['puts_average_price'];
+          if (currentStrike > lowerLimit && currentStrike < upperLimit) {
+            const callBuildup = callPrice > callVwap ? 'BULLISH' : 'BEARISH';
+            const putBuildup = putPrice > putVwap ? 'BEARISH' : 'BULLISH';
+            const singleRow = {
+              STRIKE: currentStrike,
+              CALL_LTP: callPrice,
+              CALL_VWAP: callVwap,
+              CALL_DIR: callDirection,
+              CALL_BUILD: callBuildup,
+              PUT_LTP: putPrice,
+              PUT_VWAP: putVwap,
+              PUT_DIR: putDirection,
+              PUT_BUILD: putBuildup
             }
-          });
-          setNiftyLiveData(niftyTableDataTemp);
-          handleNifty({
-            bears:bears,
-            bulls:bulls
-          })
-        }
+            niftyTableDataTemp.push(singleRow);
+            if (callBuildup == 'BEARISH') { bears++ }
+            if (putBuildup == 'BEARISH') { bears++ }
+            if (callBuildup == 'BULLISH') { bulls++ }
+            if (putBuildup == 'BULLISH') { bulls++ }
 
-      })
-  }
-  const getLiveDataM = () => {
-    const filePath = './src/DATA/niftyM' + intervalIndexM + '.txt';
+          }
+        });
+        setNiftyLiveData(niftyTableDataTemp);
+        handleNifty({
+          bears: bears,
+          bulls: bulls
+        })
+      }
+    } catch (error) {
+      console.error('Error fetching stock data:', error);
+    }
+  };
+
+  const fetchDataM = async () => {
     currentNiftyStrikePrice = formatIndex(liveNiftyIndex);
     const niftyTableDataTemp = [];
     const lowerLimit = currentNiftyStrikePrice - 700;
@@ -92,63 +85,65 @@ export default function NiftyComponent({handleNifty, handleNiftyM, liveNiftyInde
     let bears = 0;
     let bulls = 0;
     setIntervalIndex(intervalIndexM + 1);
-    axios.get(filePath)
-      .then(res => {
-        const jsonData = res.data;
-        if (typeof jsonData == 'object' && jsonData.length > 0) {
 
-          jsonData.filter((d, index) => {
-            const currentStrike = d['strike_price'];
-            const callPrice = d['calls_ltp'];
-            const callVwap = d['calls_average_price'];
-            const callDirection = d['calls_builtup'];
-            const putDirection = d['puts_builtup'];
-            const putPrice = d['puts_ltp'];
-            const putVwap = d['puts_average_price'];
+    try {
+      const response = await fetch('https://nifty-api-data.onrender.com/api/nifty-monthly');
+      const data = await response.json();
+      const jsonData = data.resultData.opDatas;
+      if (typeof jsonData == 'object' && jsonData.length > 0) {
+        jsonData.filter((d, index) => {
+          const currentStrike = d['strike_price'];
+          const callPrice = d['calls_ltp'];
+          const callVwap = d['calls_average_price'];
+          const callDirection = d['calls_builtup'];
+          const putDirection = d['puts_builtup'];
+          const putPrice = d['puts_ltp'];
+          const putVwap = d['puts_average_price'];
 
-            if (currentStrike > lowerLimit && currentStrike < upperLimit) {
-              const callBuildup = callPrice > callVwap ? 'BULLISH' : 'BEARISH';
-              const putBuildup = putPrice > putVwap ? 'BEARISH' : 'BULLISH';
-              const singleRow = {
-                STRIKE: currentStrike,
-                CALL_LTP: callPrice,
-                CALL_VWAP: callVwap,
-                CALL_DIR: callDirection,
-                CALL_BUILD: callBuildup,
-                PUT_LTP: putPrice,
-                PUT_VWAP: putVwap,
-                PUT_DIR: putDirection,
-                PUT_BUILD: putBuildup
-              }
-              niftyTableDataTemp.push(singleRow);
-
-              if(callBuildup == 'BEARISH') {bears++}
-              if(putBuildup == 'BEARISH') {bears++}
-              if(callBuildup == 'BULLISH') {bulls++}
-              if(putBuildup == 'BULLISH') {bulls++}
-            
+          if (currentStrike > lowerLimit && currentStrike < upperLimit) {
+            const callBuildup = callPrice > callVwap ? 'BULLISH' : 'BEARISH';
+            const putBuildup = putPrice > putVwap ? 'BEARISH' : 'BULLISH';
+            const singleRow = {
+              STRIKE: currentStrike,
+              CALL_LTP: callPrice,
+              CALL_VWAP: callVwap,
+              CALL_DIR: callDirection,
+              CALL_BUILD: callBuildup,
+              PUT_LTP: putPrice,
+              PUT_VWAP: putVwap,
+              PUT_DIR: putDirection,
+              PUT_BUILD: putBuildup
             }
-          });
-          handleNiftyM({
-            bears:bears,
-            bulls:bulls
-          })
-        }
+            niftyTableDataTemp.push(singleRow);
+            if (callBuildup == 'BEARISH') { bears++ }
+            if (putBuildup == 'BEARISH') { bears++ }
+            if (callBuildup == 'BULLISH') { bulls++ }
+            if (putBuildup == 'BULLISH') { bulls++ }
+          }
+        });
+        handleNiftyM({
+          bears: bears,
+          bulls: bulls
+        })
+      }
 
-      })
-  }
+    } catch (error) {
+      console.error('Error fetching stock data:', error);
+    }
+  };
+
   useEffect(() => {
-    const interValConfig = setInterval(getLiveData, constants.INTERVAL_TIME);
-    const interValConfigM = setInterval(getLiveDataM, constants.INTERVAL_TIME);
+    const interValConfig = setInterval(fetchData, constants.INTERVAL_TIME);
+    const interValConfigM = setInterval(fetchDataM, constants.INTERVAL_TIME);
     return () => {
       clearInterval(interValConfig);
       clearInterval(interValConfigM);
     };
   })
-  useEffect(()=> {
-    setTimeout(()=>{
-      getLiveData();
-      getLiveDataM();
+  useEffect(() => {
+    setTimeout(() => {
+      fetchData();
+      fetchDataM();
     }, 1000)
   }, []);
 
