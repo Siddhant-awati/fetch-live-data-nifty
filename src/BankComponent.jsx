@@ -1,6 +1,4 @@
 
-import { response } from "./response";
-import { bankNiftyResponse } from "./bankNiftyResponse";
 import './App.css'
 import { useEffect, useState } from "react";
 import axios from 'axios';
@@ -16,7 +14,7 @@ export default function BankComponent({ handleBank, handleBankM, liveBankIndex }
   const formatIndex = (num) => {
     if (num) {
       const rounded = Math.round(num);
-      const nearestStrike = rounded - (rounded % 50)
+      const nearestStrike = rounded - (rounded % 100)
       return nearestStrike
     }
     return num;

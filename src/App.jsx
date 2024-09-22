@@ -103,10 +103,14 @@ export default function App() {
   return (
 
     <div>
-      <h3>Jay Devi Mata</h3>
+      <h3>Devi</h3>
 
       <header className="header">
         <h4 className="counter">{intervalIndex}</h4>
+        <p className="counter-title">
+          <span>Weekly</span>
+          <span>Monthly</span>
+        </p>
         <div className="wrapper-div">
           <span className="top counter-wrapper">
             <span className="bulls"> {niftyVwapCounter.bulls + bankVwapCounter.bulls + finVwapCounter.bulls}</span>
@@ -127,7 +131,10 @@ export default function App() {
             <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
               NIFTY <span className="orange">{Math.floor(indexData.nifty.indexPrice)}
                 <span className={indexData.nifty.tagName}>
-                  {indexData.nifty.changeValue} ({indexData.nifty.changePerc}%)
+                  <span className="blink">
+                    {indexData.fin.tagName === 'greenish' && <span className="arrow">&#8593;</span>}
+                    {indexData.fin.tagName === 'reddish' && <span className="arrow">&#8595;</span>}
+                    {indexData.nifty.changeValue} ({indexData.nifty.changePerc}%)</span>
                 </span>
               </span>
             </button>
@@ -153,7 +160,11 @@ export default function App() {
             <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
               BANK NIFTY <span className="orange">{Math.floor(indexData.bank.indexPrice)}
                 <span className={indexData.bank.tagName}>
-                  {indexData.bank.changeValue} ({indexData.bank.changePerc}%)
+                  <span className="blink">
+                    {indexData.fin.tagName === 'greenish' && <span className="arrow">&#8593;</span>}
+                    {indexData.fin.tagName === 'reddish' && <span className="arrow">&#8595;</span>}
+                    {indexData.bank.changeValue} ({indexData.bank.changePerc}%)
+                  </span>
                 </span>
               </span>
             </button>
@@ -179,7 +190,11 @@ export default function App() {
             <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
               FIN NIFTY <span className="orange">{Math.floor(indexData.fin.indexPrice)}
                 <span className={indexData.fin.tagName}>
-                  {indexData.fin.changeValue} ({indexData.fin.changePerc}%)
+                  <span className="blink">
+                    {indexData.fin.tagName === 'greenish' && <span className="arrow">&#8593;</span>}
+                    {indexData.fin.tagName === 'reddish' && <span className="arrow">&#8595;</span>}
+                    {indexData.fin.changeValue} ({indexData.fin.changePerc}%)
+                  </span>
                 </span>
               </span>
             </button>

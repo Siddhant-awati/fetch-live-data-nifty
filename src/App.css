@@ -6,7 +6,7 @@ body {
   padding: 5px;
   font-size: 12px;
   font-family: system-ui;
-  background-color: #03045e;
+  background-color: #003049;
 }
 
 .header {
@@ -25,7 +25,7 @@ h3 {
   text-align: center;
   margin: 0;
   padding: 15px 0;
-  color: #caf0f8;
+  color: #fdf0d5;
   font-size: 30px;
 }
 
@@ -40,6 +40,7 @@ h3 {
 .table-bordered tr td {
   text-align: center;
 }
+
 .table-bordered tr {
   background-color: #fff;
 }
@@ -51,7 +52,7 @@ h3 {
 }
 
 .table-bordered tr.active {
-  border: 3px solid #00b4d8;
+  border: 4px solid #00b4d8;
 }
 
 button.btn {
@@ -83,12 +84,12 @@ span.counter-wrapper.right {
 
 
 span.top.counter-wrapper {
-  top: 0;
+  top: 20px;
 }
 
 span.top-right.counter-wrapper {
   left: 0;
-  top: 0;
+  top: 20px;
   margin-left: 20px;
 }
 
@@ -140,31 +141,41 @@ h4.counter {
 }
 
 span.orange {
-  padding: 10px;
+  padding: 10px 5px;
   position: absolute;
-  right: 40px;
-  min-width: 220px;
+  right: 30px;
+  min-width: 250px;
   text-align: center;
   border: 2px solid #86b7fe;
-  background-color: white;
+  background-color: #fefae0;
 }
-span.greenish{
+
+span.greenish {
   display: inline-block;
-    font-weight: normal;
-    color: #009a54;
-    padding-left: 10px;
+  position: relative;
+  color: #009a54;
+  padding-left: 30px;
 }
-span.reddish{
+
+span.reddish {
   display: inline-block;
-    font-weight: normal;
-    color: #e70318;
-    padding-left: 10px;
+  position: relative;
+  color: #e70318;
+  padding-left: 30px;
+}
+
+span.arrow {
+  position: absolute;
+  font-size: 25px;
+  top: -5px;
+  left: 5px;
 }
 
 .accordion.top {
   margin-top: -20px;
 }
-.wrapper-div{
+
+.wrapper-div {
   display: flex;
   justify-content: space-between;
 }
@@ -223,5 +234,28 @@ span.reddish{
 
   100% {
     transform: rotate(-360deg);
+  }
+}
+
+
+p.counter-title {
+  position: absolute;
+  color: #fdf0d5;
+  display: flex;
+  width: 100%;
+  margin: 0;
+  padding: 0 10px;
+  top: 5px;
+  font-size: 18px;
+  justify-content: space-between;
+}
+
+.blink {
+  animation: blinker 2s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0.4;
   }
 }
