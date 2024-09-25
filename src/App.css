@@ -35,20 +35,36 @@ h3 {
   padding: 10px;
   font-size: 12px;
   text-align: center;
+  vertical-align: middle;
 }
 
 .table-bordered tr td {
   text-align: center;
+  padding: 10px 5px;
+  vertical-align: middle;
 }
 
 .table-bordered tr {
   background-color: #fff;
 }
 
+.table-bordered tr:hover td {
+  background-color: #fefae0;
+}
 
 .table-bordered td {
   border: 1px solid #90e0ef;
-  font-size: 12px;
+  font-size: 11px;
+}
+
+.open-interest.table-bordered td {
+  font-size: 14px;
+}
+td.bold{
+  font-weight: bold;
+}
+.table-bordered tr td.strike-price {
+  background-color: #fefae0;
 }
 
 .table-bordered tr.active {

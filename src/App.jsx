@@ -80,7 +80,6 @@ export default function App() {
           setSpinner(false);
         }, 1000);
         setIndexData(temp);
-        console.log(temp);
       }
 
     } catch (error) {
