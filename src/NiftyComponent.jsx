@@ -214,7 +214,7 @@ export default function NiftyComponent({ handleNifty, handleNiftyM, liveNiftyInd
           <button className="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">VWAP</button>
         </li>
         <li className="nav-item" role="presentation">
-          <button className="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Open Interest</button>
+          <button className="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">OI</button>
         </li>
       </ul>
       <p className='pcr-data'>

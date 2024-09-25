@@ -216,7 +216,7 @@ export default function BankComponent({ handleBank, handleBankM, liveBankIndex }
           <button className="nav-link active" id="home-tab0" data-bs-toggle="tab" data-bs-target="#home-tab0-pane" type="button" role="tab" aria-controls="home-tab0-pane" aria-selected="true">VWAP</button>
         </li>
         <li className="nav-item" role="presentation">
-          <button className="nav-link" id="profile-tab0" data-bs-toggle="tab" data-bs-target="#profile-tab0-pane" type="button" role="tab" aria-controls="profile-tab0-pane" aria-selected="false">Open Interest</button>
+          <button className="nav-link" id="profile-tab0" data-bs-toggle="tab" data-bs-target="#profile-tab0-pane" type="button" role="tab" aria-controls="profile-tab0-pane" aria-selected="false">OI</button>
         </li>
       </ul>
       <p className='pcr-data'>
