@@ -141,11 +141,10 @@ h4.counter {
 }
 
 span.orange {
-  padding: 10px 5px;
+  padding: 10px 5px 10px 10px;
   position: absolute;
   right: 30px;
-  min-width: 250px;
-  text-align: center;
+  min-width: 270px;
   border: 2px solid #86b7fe;
   background-color: #fefae0;
 }
@@ -256,6 +255,6 @@ p.counter-title {
 
 @keyframes blinker {
   50% {
-    opacity: 0.4;
+    opacity: 0.3;
   }
 }

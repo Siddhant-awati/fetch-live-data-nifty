@@ -132,8 +132,8 @@ export default function App() {
               NIFTY <span className="orange">{Math.floor(indexData.nifty.indexPrice)}
                 <span className={indexData.nifty.tagName}>
                   <span className="blink">
-                    {indexData.fin.tagName === 'greenish' && <span className="arrow">&#8593;</span>}
-                    {indexData.fin.tagName === 'reddish' && <span className="arrow">&#8595;</span>}
+                    {indexData.nifty.tagName === 'greenish' && <span className="arrow">&#8593;</span>}
+                    {indexData.nifty.tagName === 'reddish' && <span className="arrow">&#8595;</span>}
                     {indexData.nifty.changeValue} ({indexData.nifty.changePerc}%)</span>
                 </span>
               </span>
@@ -161,8 +161,8 @@ export default function App() {
               BANK NIFTY <span className="orange">{Math.floor(indexData.bank.indexPrice)}
                 <span className={indexData.bank.tagName}>
                   <span className="blink">
-                    {indexData.fin.tagName === 'greenish' && <span className="arrow">&#8593;</span>}
-                    {indexData.fin.tagName === 'reddish' && <span className="arrow">&#8595;</span>}
+                    {indexData.bank.tagName === 'greenish' && <span className="arrow">&#8593;</span>}
+                    {indexData.bank.tagName === 'reddish' && <span className="arrow">&#8595;</span>}
                     {indexData.bank.changeValue} ({indexData.bank.changePerc}%)
                   </span>
                 </span>
