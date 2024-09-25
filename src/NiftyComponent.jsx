@@ -202,7 +202,7 @@ export default function NiftyComponent({ handleNifty, handleNiftyM, liveNiftyInd
   return (
     <div>
       <table className="table table-bordered table-sm open-interest">
-      <thead>
+        <thead>
           <tr>
             <th scope="col">Call Change OI</th>
             <th scope="col">Call OI</th>
