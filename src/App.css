@@ -308,7 +308,17 @@ p.counter-title {
   font-size: 14px;
 }
 
-.pcr-data span {
-  border: 1px solid #e5e5e5;
-  padding: 5px;
+
+.pcr-data span.circle {
+  display: inline-block;
+  padding: 5px 10px;
+  color: #fff;
+}
+
+.pcr-data span.red span.circle {
+  background: #ff0000;
+}
+
+.pcr-data span.green span.circle {
+  background: #008900;
 }

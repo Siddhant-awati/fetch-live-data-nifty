@@ -218,8 +218,12 @@ export default function NiftyComponent({ handleNifty, handleNiftyM, liveNiftyInd
         </li>
       </ul>
       <p className='pcr-data'>
-        <span>PCR Total: {(Math.round(pcrTotalOI * 100) / 100).toFixed(2)}</span>
-        <span>PCR Change:  {(Math.round(pcrChangeOI * 100) / 100).toFixed(2)}</span>
+        <span className={(Math.round(pcrTotalOI * 100) / 100).toFixed(2) >= 1 ? 'green' : 'red'}>PCR Total:
+          <span className='circle'> {(Math.round(pcrTotalOI * 100) / 100).toFixed(2)} </span>
+        </span>
+        <span className={(Math.round(pcrChangeOI * 100) / 100).toFixed(2) >= 1 ? 'green' : 'red'}>PCR Change:
+          <span className='circle'> {(Math.round(pcrChangeOI * 100) / 100).toFixed(2)}</span>
+        </span>
       </p>
       <div className="tab-content" id="myTabContent">
         <div className="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabIndex="0">

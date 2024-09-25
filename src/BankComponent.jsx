@@ -220,8 +220,12 @@ export default function BankComponent({ handleBank, handleBankM, liveBankIndex }
         </li>
       </ul>
       <p className='pcr-data'>
-        <span>PCR Total: {(Math.round(pcrTotalOI * 100) / 100).toFixed(2)}</span>
-        <span>PCR Change:  {(Math.round(pcrChangeOI * 100) / 100).toFixed(2)}</span>
+        <span className={(Math.round(pcrTotalOI * 100) / 100).toFixed(2) >= 1 ? 'green' : 'red'}>PCR Total:
+          <span className='circle'> {(Math.round(pcrTotalOI * 100) / 100).toFixed(2)} </span>
+        </span>
+        <span className={(Math.round(pcrChangeOI * 100) / 100).toFixed(2) >= 1 ? 'green' : 'red'}>PCR Change:
+          <span className='circle'> {(Math.round(pcrChangeOI * 100) / 100).toFixed(2)}</span>
+        </span>
       </p>
       <div className="tab-content" id="myTabContent0">
         <div className="tab-pane fade show active" id="home-tab0-pane" role="tabpanel" aria-labelledby="home-tab0" tabIndex="0">
