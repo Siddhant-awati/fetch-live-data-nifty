@@ -40,7 +40,7 @@ h3 {
 
 .table-bordered tr td {
   text-align: center;
-  padding: 10px 5px;
+  padding: 5px;
   vertical-align: middle;
 }
 
@@ -49,17 +49,33 @@ h3 {
 }
 
 .table-bordered tr:hover td {
-  background-color: #fefae0;
+  color: #001aff;
 }
 
 .table-bordered td {
   border: 1px solid #90e0ef;
-  font-size: 13px;
+  font-size: 12px;
 }
 
-td.bold{
+.table-bordered td.highest-call {
+  background: #006e00;
+  color: #fff;
+}
+
+.table-bordered td.highest-put {
+  background: #cd0000;
+  color: #fff;
+}
+
+.table-bordered tr:hover td.highest-call,
+.table-bordered tr:hover td.highest-put {
+  color: #fff;
+}
+
+td.bold {
   font-weight: bold;
 }
+
 .table-bordered tr td.strike-price {
   background-color: #fefae0;
 }
@@ -273,6 +289,26 @@ p.counter-title {
 }
 
 
-.nav-pills .nav-link{
+.nav-pills .nav-link {
   font-size: 16px;
+}
+
+.main-container {
+  position: relative;
+}
+
+.pcr-data {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50%;
+  display: flex;
+  justify-content: space-evenly;
+  margin: 0;
+  font-size: 14px;
+}
+
+.pcr-data span {
+  border: 1px solid #e5e5e5;
+  padding: 5px;
 }

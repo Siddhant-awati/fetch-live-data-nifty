@@ -17,12 +17,16 @@ let itm_puts_change_oi = 0
 let otm_calls_oi = 0;
 let otm_calls_change_oi = 0;
 let otm_puts_oi = 0;
-let otm_puts_change_oi = 0
+let otm_puts_change_oi = 0;
+let call_highest_oi = 0;
+let put_highest_oi = 0;
 
 export default function NiftyComponent({ handleNifty, handleNiftyM, liveNiftyIndex }) {
   const [intervalIndex, setIntervalIndex] = useState(0);
   const [intervalIndexM, setIntervalIndexM] = useState(0);
   const [niftyLiveData, setNiftyLiveData] = useState(dataSet);
+  const [pcrTotalOI, setPcrTotalOI] = useState(0);
+  const [pcrChangeOI, setPcrChangeOI] = useState(0);
   const formatIndex = (num) => {
     if (num) {
       const rounded = Math.round(num);
@@ -62,7 +66,8 @@ export default function NiftyComponent({ handleNifty, handleNiftyM, liveNiftyInd
         otm_calls_change_oi = 0;
         otm_puts_oi = 0;
         otm_puts_change_oi = 0
-
+        call_highest_oi = 0;
+        put_highest_oi = 0;
         jsonData.filter((d, index) => {
           const currentStrike = d['strike_price'];
           const callPrice = d['calls_ltp'];
@@ -111,10 +116,13 @@ export default function NiftyComponent({ handleNifty, handleNiftyM, liveNiftyInd
               otm_puts_oi += d.puts_oi;
               otm_puts_change_oi += d.puts_change_oi;
             }
-
+            call_highest_oi = d.calls_oi > call_highest_oi ? d.calls_oi : call_highest_oi;
+            put_highest_oi = d.puts_oi > put_highest_oi ? d.puts_oi : put_highest_oi;
           }
         });
         setNiftyLiveData(niftyTableDataTemp);
+        setPcrTotalOI(total_puts_oi / total_calls_oi);
+        setPcrChangeOI(total_puts_change_oi / total_calls_change_oi);
         handleNifty({
           bears: bears,
           bulls: bulls
@@ -200,7 +208,7 @@ export default function NiftyComponent({ handleNifty, handleNiftyM, liveNiftyInd
   }, []);
 
   return (
-    <div>
+    <div className='main-container'>
       <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
         <li className="nav-item" role="presentation">
           <button className="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">VWAP</button>
@@ -209,6 +217,10 @@ export default function NiftyComponent({ handleNifty, handleNiftyM, liveNiftyInd
           <button className="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Open Interest</button>
         </li>
       </ul>
+      <p className='pcr-data'>
+        <span>PCR Total: {(Math.round(pcrTotalOI * 100) / 100).toFixed(2)}</span>
+        <span>PCR Change:  {(Math.round(pcrChangeOI * 100) / 100).toFixed(2)}</span>
+      </p>
       <div className="tab-content" id="myTabContent">
         <div className="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabIndex="0">
           {niftyLiveData.length > 0 &&
@@ -235,7 +247,6 @@ export default function NiftyComponent({ handleNifty, handleNiftyM, liveNiftyInd
                   const active = item.STRIKE == currentNiftyStrikePrice ? 'active' : '';
                   const boldVwapPut = item.PUT_BUILD == 'BULLISH' ? 'bold' : '';
                   const boldVwapCall = item.CALL_BUILD == 'BEARISH' ? 'bold' : '';
-                  console.log('item : ', item);
 
                   return (
                     <tr className={active} key={index}>
@@ -319,7 +330,6 @@ export default function NiftyComponent({ handleNifty, handleNiftyM, liveNiftyInd
                   const active = item.STRIKE == currentNiftyStrikePrice ? 'active' : '';
                   const boldVwapPut = item.PUT_BUILD == 'BULLISH' ? 'bold' : '';
                   const boldVwapCall = item.CALL_BUILD == 'BEARISH' ? 'bold' : '';
-                  console.log('item : ', item);
 
                   return (
                     <tr className={active} key={index}>
@@ -329,13 +339,13 @@ export default function NiftyComponent({ handleNifty, handleNiftyM, liveNiftyInd
                       <td className={item.CALLS_CHANGE_OI < 0 ? 'table-success' : ''}>
                         {format(item.CALLS_CHANGE_OI)}
                       </td>
-                      <td>
+                      <td className={call_highest_oi === item.CALLS_OI ? 'highest-put' : ''}>
                         {format(item.CALLS_OI)}
                       </td>
                       <td className='strike-price'>
                         {item.STRIKE}
                       </td>
-                      <td>
+                      <td className={put_highest_oi === item.PUTS_OI ? 'highest-call' : ''}>
                         {format(item.PUTS_OI)}
                       </td>
                       <td className={item.PUTS_CHANGE_OI < 0 ? 'table-danger' : ''}>
