@@ -203,118 +203,156 @@ export default function BankComponent({ handleBank, handleBankM, liveBankIndex }
 
   return (
     <div>
-      <table className="table table-bordered table-sm open-interest">
-        <thead>
-          <tr>
-            <th scope="col">Call Change OI</th>
-            <th scope="col">Call OI</th>
-            <th scope="col"></th>
-            <th scope="col">Put OI</th>
-            <th scope="col">Put Change OI</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>{format(total_calls_change_oi)}</td>
-            <td>{format(total_calls_oi)}</td>
-            <td className='bold'>TOTAL OPEN INTEREST</td>
-            <td>{format(total_puts_oi)}</td>
-            <td>{format(total_puts_change_oi)}</td>
-          </tr>
-          <tr>
-            <td>{format(itm_calls_change_oi)}</td>
-            <td>{format(itm_calls_oi)}</td>
-            <td className='bold'>IN THE MONEY</td>
-            <td>{format(itm_puts_oi)}</td>
-            <td>{format(itm_puts_change_oi)}</td>
-          </tr>
-          <tr>
-            <td>{format(otm_calls_change_oi)}</td>
-            <td>{format(otm_calls_oi)}</td>
-            <td className='bold'>OUT THE MONEY</td>
-            <td>{format(otm_puts_oi)}</td>
-            <td>{format(otm_puts_change_oi)}</td>
-          </tr>
-        </tbody>
-      </table>
-      {niftyLiveData.length > 0 && <table className="table table-bordered table-sm">
-        <thead>
-          <tr>
-            <th scope="col">Call LTP</th>
-            <th scope="col">Call VWAP</th>
-            <th scope="col">Call VWAP TREND</th>
-            <th scope="col">Call DIRECTION</th>
-            <th scope="col">Call Change OI</th>
-            <th scope="col">Call OI</th>
-            <th scope="col">STRIKE PRICE</th>
-            <th scope="col">Put OI</th>
-            <th scope="col">Put Change OI</th>
-            <th scope="col">Put DIRECTION</th>
-            <th scope="col">Put VWAP TREND</th>
-            <th scope="col">Put VWAP</th>
-            <th scope="col">Put LTP</th>
-          </tr>
-        </thead>
-        <tbody>
-          {niftyLiveData.map((item, index) => {
-            const callLabels = ['Call Buying', 'Call Short Covering', 'Put Writing',];
-            const putLabels = ['Put Buying', 'Put Short Covering', 'Call Writing',];
-            const cellColorPut = item.PUT_BUILD == 'BULLISH' ? 'table-success' : 'table-danger';
-            const cellColorCall = item.CALL_BUILD == 'BULLISH' ? 'table-success' : 'table-danger';
-            const callBuildup = callLabels.includes(item.CALL_DIR) ? 'table-success' : 'table-danger';
-            const putBuildup = putLabels.includes(item.PUT_DIR) ? 'table-danger' : 'table-success';
-            const active = item.STRIKE == currentNiftyStrikePrice ? 'active' : '';
-            const boldVwapPut = item.PUT_BUILD == 'BULLISH' ? 'bold' : '';
-            const boldVwapCall = item.CALL_BUILD == 'BEARISH' ? 'bold' : '';
-            console.log('item : ', item);
+      <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
+        <li className="nav-item" role="presentation">
+          <button className="nav-link active" id="home-tab0" data-bs-toggle="tab" data-bs-target="#home-tab0-pane" type="button" role="tab" aria-controls="home-tab0-pane" aria-selected="true">VWAP</button>
+        </li>
+        <li className="nav-item" role="presentation">
+          <button className="nav-link" id="profile-tab0" data-bs-toggle="tab" data-bs-target="#profile-tab0-pane" type="button" role="tab" aria-controls="profile-tab0-pane" aria-selected="false">Open Interest</button>
+        </li>
+      </ul>
+      <div className="tab-content" id="myTabContent0">
+        <div className="tab-pane fade show active" id="home-tab0-pane" role="tabpanel" aria-labelledby="home-tab0" tabIndex="0">
+          {niftyLiveData.length > 0 &&
+            <table className="table table-bordered table-sm">
+              <thead>
+                <tr>
+                  <th scope="col">Call LTP</th>
+                  <th scope="col">Call VWAP</th>
+                  <th scope="col">Call VWAP TREND</th>
+                  <th scope="col">STRIKE PRICE</th>
+                  <th scope="col">Put VWAP TREND</th>
+                  <th scope="col">Put VWAP</th>
+                  <th scope="col">Put LTP</th>
+                </tr>
+              </thead>
+              <tbody>
+                {niftyLiveData.map((item, index) => {
+                  const callLabels = ['Call Buying', 'Call Short Covering', 'Put Writing',];
+                  const putLabels = ['Put Buying', 'Put Short Covering', 'Call Writing',];
+                  const cellColorPut = item.PUT_BUILD == 'BULLISH' ? 'table-success' : 'table-danger';
+                  const cellColorCall = item.CALL_BUILD == 'BULLISH' ? 'table-success' : 'table-danger';
+                  const callBuildup = callLabels.includes(item.CALL_DIR) ? 'table-success' : 'table-danger';
+                  const putBuildup = putLabels.includes(item.PUT_DIR) ? 'table-danger' : 'table-success';
+                  const active = item.STRIKE == currentNiftyStrikePrice ? 'active' : '';
+                  const boldVwapPut = item.PUT_BUILD == 'BULLISH' ? 'bold' : '';
+                  const boldVwapCall = item.CALL_BUILD == 'BEARISH' ? 'bold' : '';
+                  console.log('item : ', item);
 
-            return (
-              <tr className={active} key={index}>
-                <td>
-                  {item.CALL_LTP}
-                </td>
-                <td className={boldVwapCall}>
-                  {item.CALL_VWAP} ({percentageDiff(item.CALL_VWAP, item.CALL_LTP)})
-                </td>
-                <td className={cellColorCall}>
-                  {item.CALL_BUILD}
-                </td>
-                <td className={callBuildup}>
-                  {item.CALL_DIR}
-                </td>
-                <td className={item.CALLS_CHANGE_OI < 0 ? 'table-success' : ''}>
-                  {format(item.CALLS_CHANGE_OI)}
-                </td>
-                <td>
-                  {format(item.CALLS_OI)}
-                </td>
-                <td className='strike-price'>
-                  {item.STRIKE}
-                </td>
-                <td>
-                  {format(item.PUTS_OI)}
-                </td>
-                <td className={item.PUTS_CHANGE_OI < 0 ? 'table-danger' : ''}>
-                  {format(item.PUTS_CHANGE_OI)}
-                </td>
-                <td className={putBuildup}>
-                  {item.PUT_DIR}
-                </td>
-                <td className={cellColorPut}>
-                  {item.PUT_BUILD}
-                </td>
-                <td className={boldVwapPut}>
-                  {item.PUT_VWAP} ({percentageDiff(item.PUT_VWAP, item.PUT_LTP)})
-                </td>
-                <td>
-                  {item.PUT_LTP}
-                </td>
-              </tr>
-            )
-          })}
+                  return (
+                    <tr className={active} key={index}>
+                      <td>
+                        {item.CALL_LTP}
+                      </td>
+                      <td className={boldVwapCall}>
+                        {item.CALL_VWAP} ({percentageDiff(item.CALL_VWAP, item.CALL_LTP)})
+                      </td>
+                      <td className={cellColorCall}>
+                        {item.CALL_BUILD}
+                      </td>
+                      <td className='strike-price'>
+                        {item.STRIKE}
+                      </td>
+                      <td className={cellColorPut}>
+                        {item.PUT_BUILD}
+                      </td>
+                      <td className={boldVwapPut}>
+                        {item.PUT_VWAP} ({percentageDiff(item.PUT_VWAP, item.PUT_LTP)})
+                      </td>
+                      <td>
+                        {item.PUT_LTP}
+                      </td>
+                    </tr>
+                  )
+                })}
 
-        </tbody>
-      </table>}
+              </tbody>
+            </table>}
+        </div>
+        <div className="tab-pane fade" id="profile-tab0-pane" role="tabpanel" aria-labelledby="profile-tab0" tabIndex="0">
+          {niftyLiveData.length > 0 &&
+            <table className="table table-bordered table-sm">
+              <thead>
+                <tr>
+                  <th scope="col">Call DIRECTION</th>
+                  <th scope="col">Call Change OI</th>
+                  <th scope="col">Call OI</th>
+                  <th scope="col">STRIKE PRICE</th>
+                  <th scope="col">Put OI</th>
+                  <th scope="col">Put Change OI</th>
+                  <th scope="col">Put DIRECTION</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td></td>
+                  <td>{format(total_calls_change_oi)}</td>
+                  <td>{format(total_calls_oi)}</td>
+                  <td className='bold'>TOTAL OPEN INTEREST</td>
+                  <td>{format(total_puts_oi)}</td>
+                  <td>{format(total_puts_change_oi)}</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>{format(itm_calls_change_oi)}</td>
+                  <td>{format(itm_calls_oi)}</td>
+                  <td className='bold'>IN THE MONEY</td>
+                  <td>{format(itm_puts_oi)}</td>
+                  <td>{format(itm_puts_change_oi)}</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>{format(otm_calls_change_oi)}</td>
+                  <td>{format(otm_calls_oi)}</td>
+                  <td className='bold'>OUT THE MONEY</td>
+                  <td>{format(otm_puts_oi)}</td>
+                  <td>{format(otm_puts_change_oi)}</td>
+                  <td></td>
+                </tr>
+                {niftyLiveData.map((item, index) => {
+                  const callLabels = ['Call Buying', 'Call Short Covering', 'Put Writing',];
+                  const putLabels = ['Put Buying', 'Put Short Covering', 'Call Writing',];
+                  const cellColorPut = item.PUT_BUILD == 'BULLISH' ? 'table-success' : 'table-danger';
+                  const cellColorCall = item.CALL_BUILD == 'BULLISH' ? 'table-success' : 'table-danger';
+                  const callBuildup = callLabels.includes(item.CALL_DIR) ? 'table-success' : 'table-danger';
+                  const putBuildup = putLabels.includes(item.PUT_DIR) ? 'table-danger' : 'table-success';
+                  const active = item.STRIKE == currentNiftyStrikePrice ? 'active' : '';
+                  const boldVwapPut = item.PUT_BUILD == 'BULLISH' ? 'bold' : '';
+                  const boldVwapCall = item.CALL_BUILD == 'BEARISH' ? 'bold' : '';
+                  console.log('item : ', item);
+
+                  return (
+                    <tr className={active} key={index}>
+                      <td className={callBuildup}>
+                        {item.CALL_DIR}
+                      </td>
+                      <td className={item.CALLS_CHANGE_OI < 0 ? 'table-success' : ''}>
+                        {format(item.CALLS_CHANGE_OI)}
+                      </td>
+                      <td>
+                        {format(item.CALLS_OI)}
+                      </td>
+                      <td className='strike-price'>
+                        {item.STRIKE}
+                      </td>
+                      <td>
+                        {format(item.PUTS_OI)}
+                      </td>
+                      <td className={item.PUTS_CHANGE_OI < 0 ? 'table-danger' : ''}>
+                        {format(item.PUTS_CHANGE_OI)}
+                      </td>
+                      <td className={putBuildup}>
+                        {item.PUT_DIR}
+                      </td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>}
+        </div>
+      </div>
     </div>
   );
 

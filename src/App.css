@@ -54,12 +54,9 @@ h3 {
 
 .table-bordered td {
   border: 1px solid #90e0ef;
-  font-size: 11px;
+  font-size: 13px;
 }
 
-.open-interest.table-bordered td {
-  font-size: 14px;
-}
 td.bold{
   font-weight: bold;
 }
@@ -273,4 +270,9 @@ p.counter-title {
   50% {
     opacity: 0.3;
   }
+}
+
+
+.nav-pills .nav-link{
+  font-size: 16px;
 }
