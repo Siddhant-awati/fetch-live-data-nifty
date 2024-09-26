@@ -18,9 +18,11 @@ export default function NiftyPCR() {
         const data = await response.json();
         setPcrData(data);
         const uniquePcr = [];
-        await data.forEach(value => {
-            if (!uniquePcr.includes(value.pcr)) {
-                uniquePcr.push(value.pcr);
+        await data.forEach((value, index) => {
+            if (index % 3 === 0) {
+                if (!uniquePcr.includes(value.pcr)) {
+                    uniquePcr.push(value.pcr);
+                }
             }
         });
         setHighestNifty(Math.max(...uniquePcr));
@@ -31,24 +33,32 @@ export default function NiftyPCR() {
         const data = await response.json();
         setPcrBankData(data);
         const uniquePcr = [];
-        await data.forEach(value => {
-            if (!uniquePcr.includes(value.pcr)) {
-                uniquePcr.push(value.pcr);
+        await data.forEach((value, index) => {
+            if (index % 3 === 0) {
+                if (!uniquePcr.includes(value.pcr)) {
+                    uniquePcr.push(value.pcr);
+                }
             }
         });
         setHighestBank(Math.max(...uniquePcr));
+        setlowestBank(Math.min(...uniquePcr));
+
     }
     const fetchDataFin = async () => {
         const response = await fetch('https://nifty-api-data.onrender.com/api/fin-pcr');
         const data = await response.json();
         setPcrFinData(data);
         const uniquePcr = [];
-        await data.forEach(value => {
-            if (!uniquePcr.includes(value.pcr)) {
-                uniquePcr.push(value.pcr);
+        await data.forEach((value, index) => {
+            if (index % 3 === 0) {
+                if (!uniquePcr.includes(value.pcr)) {
+                    uniquePcr.push(value.pcr);
+                }
             }
         });
         setHighestFin(Math.max(...uniquePcr));
+        setlowestFin(Math.min(...uniquePcr));
+        console.log(Math.min(...uniquePcr));
     }
 
     const fetchAll = async () => {
@@ -117,9 +127,12 @@ export default function NiftyPCR() {
                 <tbody>
                     {pcrDataBank.length > 0 && pcrDataBank.map((item, index) => {
                         if (index % 3 === 0) {
+                            const highest = (item.pcr === highestBank) ? 'highest' : '';
+                            const lowest = (item.pcr === lowestBank) ? 'lowest' : '';
                             return (
                                 <tr key={index} className={item.pcr >= 1 ? 'green' : 'red'}>
-                                    <td className="pcr-cell">{item.pcr}</td>
+                                    <td className={`pcr-cell ${highest} ${lowest}`}>{item.pcr}
+                                    </td>
                                 </tr>
                             )
                         }
@@ -136,9 +149,12 @@ export default function NiftyPCR() {
                 <tbody>
                     {pcrDataFin.length > 0 && pcrDataFin.map((item, index) => {
                         if (index % 3 === 0) {
+                            const highest = (item.pcr === highestFin) ? 'highest' : '';
+                            const lowest = (item.pcr === lowestFin) ? 'lowest' : '';
                             return (
                                 <tr key={index} className={item.pcr >= 1 ? 'green' : 'red'}>
-                                    <td className="pcr-cell">{item.pcr}</td>
+                                    <td className={`pcr-cell ${highest} ${lowest}`}>{item.pcr}
+                                    </td>
                                 </tr>
                             )
                         }
