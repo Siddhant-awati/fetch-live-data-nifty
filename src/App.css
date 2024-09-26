@@ -339,9 +339,22 @@ table.table-pcr tr:nth-child(odd) {
   font-size: 14px;
   font-weight: bold;
 }
-.pcr-wrapper .table-bordered tr.green td{
+
+.pcr-wrapper .table-bordered tr.green td {
   color: #009a54;
 }
-.pcr-wrapper .table-bordered tr.red td{
-  color:#e70318
+
+.pcr-wrapper .table-bordered tr.red td {
+  color: #e70318
+}
+
+.pcr-wrapper .table-bordered tr.green td.highest {
+  background-color: #009a54;
+  color: #fff;
+}
+
+.pcr-wrapper .table-bordered tr.green td.lowest,
+.pcr-wrapper .table-bordered tr.red td.lowest {
+  background-color: #e70318;
+  color: #fff;
 }
