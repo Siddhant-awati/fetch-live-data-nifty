@@ -322,3 +322,26 @@ p.counter-title {
 .pcr-data span.green span.circle {
   background: #008900;
 }
+
+.pcr-wrapper {
+  background-color: #fff;
+  margin-top: 20px;
+  display: flex;
+  padding-bottom: 50px;
+}
+
+table.table-pcr tr:nth-child(odd) {
+  background-color: #fefae0;
+}
+
+.pcr-wrapper .table-bordered tr td,
+.pcr-wrapper .table-bordered tr th {
+  font-size: 14px;
+  font-weight: bold;
+}
+.pcr-wrapper .table-bordered tr.green td{
+  color: #009a54;
+}
+.pcr-wrapper .table-bordered tr.red td{
+  color:#e70318
+}

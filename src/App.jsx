@@ -3,6 +3,7 @@ import NiftyComponent from './NiftyComponent';
 import BankComponent from './BankComponent';
 import FinComponent from './FinComponent';
 import { constants } from './constants';
+import NiftyPCR from './NiftyPCR';
 
 const tempCounter = { bears: 0, bulls: 0 };
 
@@ -215,7 +216,7 @@ export default function App() {
           </div>
         </div>
       </div>
-
+    <NiftyPCR></NiftyPCR>
     </div>
   );
 }
