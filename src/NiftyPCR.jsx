@@ -8,17 +8,17 @@ export default function NiftyPCR() {
     const [pcrDataFin, setPcrFinData] = useState([]);
 
     const fetchData = async () => {
-        const response = await fetch('http://localhost:9000/api/nifty-pcr');
+        const response = await fetch('https://nifty-api-data.onrender.com/api/nifty-pcr');
         const data = await response.json();
         setPcrData(data);
     }
     const fetchDataBank = async () => {
-        const response = await fetch('http://localhost:9000/api/bank-pcr');
+        const response = await fetch('https://nifty-api-data.onrender.com/api/bank-pcr');
         const data = await response.json();
         setPcrBankData(data);
     }
     const fetchDataFin = async () => {
-        const response = await fetch('http://localhost:9000/api/fin-pcr');
+        const response = await fetch('https://nifty-api-data.onrender.com/api/fin-pcr');
         const data = await response.json();
         setPcrFinData(data);
     }
