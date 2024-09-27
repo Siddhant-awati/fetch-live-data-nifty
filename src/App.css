@@ -358,3 +358,13 @@ table.table-pcr tr:nth-child(odd) {
   background-color: #e70318;
   color: #fff;
 }
+
+td span.highest-change-call {
+  color: #e70318;
+  font-weight: bold;
+}
+
+td span.highest-change-put {
+  font-weight: bold;
+  color: #009006;
+}

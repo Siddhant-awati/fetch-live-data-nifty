@@ -105,8 +105,8 @@ export default function NiftyPCR() {
                 <tbody>
                     {pcrData.length > 0 && pcrData.map((item, index) => {
                         if (index % 3 === 0) {
-                            const highest = (item.pcr === highestNifty) ? 'highest' : '';
-                            const lowest = (item.pcr === lowesttNifty) ? 'lowest' : '';
+                            const highest = (item.pcr === highestNifty) ? 'highest blink' : '';
+                            const lowest = (item.pcr === lowesttNifty) ? 'lowest blink' : '';
                             return (
                                 <tr key={index} className={item.pcr >= 1 ? 'green' : 'red'}>
                                     <td className={`pcr-cell ${highest} ${lowest}`}>{item.pcr}
@@ -127,8 +127,8 @@ export default function NiftyPCR() {
                 <tbody>
                     {pcrDataBank.length > 0 && pcrDataBank.map((item, index) => {
                         if (index % 3 === 0) {
-                            const highest = (item.pcr === highestBank) ? 'highest' : '';
-                            const lowest = (item.pcr === lowestBank) ? 'lowest' : '';
+                            const highest = (item.pcr === highestBank) ? 'highest blink' : '';
+                            const lowest = (item.pcr === lowestBank) ? 'lowest blink' : '';
                             return (
                                 <tr key={index} className={item.pcr >= 1 ? 'green' : 'red'}>
                                     <td className={`pcr-cell ${highest} ${lowest}`}>{item.pcr}
@@ -149,8 +149,8 @@ export default function NiftyPCR() {
                 <tbody>
                     {pcrDataFin.length > 0 && pcrDataFin.map((item, index) => {
                         if (index % 3 === 0) {
-                            const highest = (item.pcr === highestFin) ? 'highest' : '';
-                            const lowest = (item.pcr === lowestFin) ? 'lowest' : '';
+                            const highest = (item.pcr === highestFin) ? 'highest blink' : '';
+                            const lowest = (item.pcr === lowestFin) ? 'lowest blink' : '';
                             return (
                                 <tr key={index} className={item.pcr >= 1 ? 'green' : 'red'}>
                                     <td className={`pcr-cell ${highest} ${lowest}`}>{item.pcr}

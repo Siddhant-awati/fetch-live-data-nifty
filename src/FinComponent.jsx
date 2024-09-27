@@ -27,6 +27,11 @@ export default function FinComponent({ handleFin, handleFinM, liveFinIndex }) {
   const [niftyLiveData, setNiftyLiveData] = useState(dataSet);
   const [pcrTotalOI, setPcrTotalOI] = useState(0);
   const [pcrChangeOI, setPcrChangeOI] = useState(0);
+  const [highestCallOI, setHighestCallOI] = useState([]);
+  const [highestCallChangeOI, setHighestCallChangeOI] = useState([]);
+  const [highestPutOI, setHighestPutOI] = useState([]);
+  const [highestPutChangeOI, setHighestPutChangeOI] = useState([]);
+
   const formatIndex = (num) => {
     if (num) {
       const rounded = Math.round(num);
@@ -42,6 +47,10 @@ export default function FinComponent({ handleFin, handleFinM, liveFinIndex }) {
   }
   const fetchData = async () => {
     let currentNiftyStrikePrice = 0;
+    const arrayCallChnageOI = [];
+    const arrayCallOI = [];
+    const arrayPutChnageOI = [];
+    const arrayPutOI = [];
     currentNiftyStrikePrice = formatIndex(liveFinIndex);
     const niftyTableDataTemp = [];
     const lowerLimit = currentNiftyStrikePrice - 700;
@@ -104,6 +113,11 @@ export default function FinComponent({ handleFin, handleFinM, liveFinIndex }) {
             total_calls_change_oi += d.calls_change_oi;
             total_puts_oi += d.puts_oi;
             total_puts_change_oi += d.puts_change_oi;
+            arrayCallChnageOI.push(d.calls_change_oi);
+            arrayCallOI.push(d.calls_oi);
+            arrayPutChnageOI.push(d.puts_change_oi);
+            arrayPutOI.push(d.puts_oi);
+
             if (currentStrike <= currentNiftyStrikePrice) {
               itm_calls_oi += d.calls_oi;
               itm_calls_change_oi += d.calls_change_oi;
@@ -123,6 +137,15 @@ export default function FinComponent({ handleFin, handleFinM, liveFinIndex }) {
         setNiftyLiveData(niftyTableDataTemp);
         setPcrTotalOI(total_puts_oi / total_calls_oi);
         setPcrChangeOI(total_puts_change_oi / total_calls_change_oi);
+        const a1 = arrayCallChnageOI.sort((a, b) => b - a);
+        const a2 = arrayCallOI.sort((a, b) => b - a);
+        const a3 = arrayPutChnageOI.sort((a, b) => b - a);
+        const a4 = arrayPutOI.sort((a, b) => b - a);
+        setHighestCallChangeOI(a1.slice(0, 3));
+        setHighestCallOI(a2.slice(0, 3));
+        setHighestPutChangeOI(a3.slice(0, 3));
+        setHighestPutOI(a4.slice(0, 3));
+
         handleFin({
           bears: bears,
           bulls: bulls
@@ -341,19 +364,21 @@ export default function FinComponent({ handleFin, handleFinM, liveFinIndex }) {
                         {item.CALL_DIR}
                       </td>
                       <td className={item.CALLS_CHANGE_OI < 0 ? 'table-success' : ''}>
-                        {format(item.CALLS_CHANGE_OI)}
+                        <span className={highestCallChangeOI.includes(item.CALLS_CHANGE_OI) ? 'highest-change-call blink' : ''}>
+                          {format(item.CALLS_CHANGE_OI)}
+                        </span>
                       </td>
-                      <td className={call_highest_oi === item.CALLS_OI ? 'highest-put' : ''}>
+                      <td className={highestCallOI.includes(item.CALLS_OI) ? 'highest-put' : ''}>
                         {format(item.CALLS_OI)}
                       </td>
                       <td className='strike-price'>
                         {item.STRIKE}
                       </td>
-                      <td className={put_highest_oi === item.PUTS_OI ? 'highest-call' : ''}>
+                      <td className={highestPutOI.includes(item.PUTS_OI) ? 'highest-call' : ''}>
                         {format(item.PUTS_OI)}
                       </td>
                       <td className={item.PUTS_CHANGE_OI < 0 ? 'table-danger' : ''}>
-                        {format(item.PUTS_CHANGE_OI)}
+                        <span className={highestPutChangeOI.includes(item.PUTS_CHANGE_OI) ? 'highest-change-put blink' : ''}>{format(item.PUTS_CHANGE_OI)}</span>
                       </td>
                       <td className={putBuildup}>
                         {item.PUT_DIR}
