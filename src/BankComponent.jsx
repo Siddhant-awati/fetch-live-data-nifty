@@ -242,7 +242,7 @@ export default function BankComponent({ handleBank, handleBankM, liveBankIndex }
           <button className="nav-link active" id="home-tab0" data-bs-toggle="tab" data-bs-target="#home-tab0-pane" type="button" role="tab" aria-controls="home-tab0-pane" aria-selected="true">VWAP</button>
         </li>
         <li className="nav-item" role="presentation">
-          <button className="nav-link" id="profile-tab0" data-bs-toggle="tab" data-bs-target="#profile-tab0-pane" type="button" role="tab" aria-controls="profile-tab0-pane" aria-selected="false">OI</button>
+          <button className="nav-link" id="profile-tab0" data-bs-toggle="tab" data-bs-target="#profile-tab0-pane" type="button" role="tab" aria-controls="profile-tab0-pane" aria-selected="false">OPEN INT</button>
         </li>
       </ul>
       <p className='pcr-data'>
@@ -362,16 +362,16 @@ export default function BankComponent({ handleBank, handleBankM, liveBankIndex }
                   const active = item.STRIKE == currentNiftyStrikePrice ? 'active' : '';
                   const boldVwapPut = item.PUT_BUILD == 'BULLISH' ? 'bold' : '';
                   const boldVwapCall = item.CALL_BUILD == 'BEARISH' ? 'bold' : '';
+                  const callTag = highestCallChangeOI.includes(item.CALLS_CHANGE_OI) ? 'highest-change-call blink' : '';
+                  const putTag = highestPutChangeOI.includes(item.PUTS_CHANGE_OI) ? 'highest-change-put blink' : '';
 
                   return (
                     <tr className={active} key={index}>
                       <td className={callBuildup}>
                         {item.CALL_DIR}
                       </td>
-                      <td className={item.CALLS_CHANGE_OI < 0 ? 'table-success' : ''}>
-                        <span className={highestCallChangeOI.includes(item.CALLS_CHANGE_OI) ? 'highest-change-call blink' : ''}>
-                          {format(item.CALLS_CHANGE_OI)}
-                        </span>
+                      <td className={item.CALLS_CHANGE_OI < 0 ? 'table-success ' : '' + callTag}>
+                        {format(item.CALLS_CHANGE_OI)}
                       </td>
                       <td className={highestCallOI.includes(item.CALLS_OI) ? 'highest-put' : ''}>
                         {format(item.CALLS_OI)}
@@ -382,8 +382,8 @@ export default function BankComponent({ handleBank, handleBankM, liveBankIndex }
                       <td className={highestPutOI.includes(item.PUTS_OI) ? 'highest-call' : ''}>
                         {format(item.PUTS_OI)}
                       </td>
-                      <td className={item.PUTS_CHANGE_OI < 0 ? 'table-danger' : ''}>
-                        <span className={highestPutChangeOI.includes(item.PUTS_CHANGE_OI) ? 'highest-change-put blink' : ''}>{format(item.PUTS_CHANGE_OI)}</span>
+                      <td className={item.PUTS_CHANGE_OI < 0 ? 'table-danger ' : '' + putTag}>
+                        {format(item.PUTS_CHANGE_OI)}
                       </td>
                       <td className={putBuildup}>
                         {item.PUT_DIR}
