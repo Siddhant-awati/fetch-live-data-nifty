@@ -344,6 +344,7 @@ table.table-pcr tr:nth-child(odd) {
   color: #e70318
 }
 
+.pcr-wrapper .table-bordered tr.red td.highest,
 .pcr-wrapper .table-bordered tr.green td.highest {
   background-color: #009a54;
   color: #fff;

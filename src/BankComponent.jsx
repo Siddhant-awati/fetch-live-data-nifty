@@ -57,8 +57,8 @@ export default function BankComponent({ handleBank, handleBankM, liveBankIndex }
 
     currentNiftyStrikePrice = formatIndex(liveBankIndex);
     const niftyTableDataTemp = [];
-    const lowerLimit = currentNiftyStrikePrice - 1400;
-    const upperLimit = currentNiftyStrikePrice + 1400;
+    const lowerLimit = currentNiftyStrikePrice - 1600;
+    const upperLimit = currentNiftyStrikePrice + 1600;
     let bears = 0;
     let bulls = 0;
     setIntervalIndexM(intervalIndex + 1);
@@ -164,8 +164,8 @@ export default function BankComponent({ handleBank, handleBankM, liveBankIndex }
   const fetchDataM = async () => {
     currentNiftyStrikePrice = formatIndex(liveBankIndex);
     const niftyTableDataTemp = [];
-    const lowerLimit = currentNiftyStrikePrice - 1400;
-    const upperLimit = currentNiftyStrikePrice + 1400;
+    const lowerLimit = currentNiftyStrikePrice - 1600;
+    const upperLimit = currentNiftyStrikePrice + 1600;
     let bears = 0;
     let bulls = 0;
     setIntervalIndex(intervalIndexM + 1);

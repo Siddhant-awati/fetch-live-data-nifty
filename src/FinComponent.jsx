@@ -53,8 +53,8 @@ export default function FinComponent({ handleFin, handleFinM, liveFinIndex }) {
     const arrayPutOI = [];
     currentNiftyStrikePrice = formatIndex(liveFinIndex);
     const niftyTableDataTemp = [];
-    const lowerLimit = currentNiftyStrikePrice - 700;
-    const upperLimit = currentNiftyStrikePrice + 700;
+    const lowerLimit = currentNiftyStrikePrice - 800;
+    const upperLimit = currentNiftyStrikePrice + 800;
     let bears = 0;
     let bulls = 0;
     setIntervalIndexM(intervalIndex + 1);
@@ -159,8 +159,8 @@ export default function FinComponent({ handleFin, handleFinM, liveFinIndex }) {
   const fetchDataM = async () => {
     currentNiftyStrikePrice = formatIndex(liveFinIndex);
     const niftyTableDataTemp = [];
-    const lowerLimit = currentNiftyStrikePrice - 700;
-    const upperLimit = currentNiftyStrikePrice + 700;
+    const lowerLimit = currentNiftyStrikePrice - 800;
+    const upperLimit = currentNiftyStrikePrice + 800;
     let bears = 0;
     let bulls = 0;
     setIntervalIndex(intervalIndexM + 1);
