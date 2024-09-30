@@ -58,7 +58,6 @@ export default function NiftyPCR() {
         });
         setHighestFin(Math.max(...uniquePcr));
         setlowestFin(Math.min(...uniquePcr));
-        console.log(Math.min(...uniquePcr));
     }
 
     const fetchAll = async () => {

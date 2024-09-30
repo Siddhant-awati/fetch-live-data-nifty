@@ -241,11 +241,11 @@ export default function NiftyComponent({ handleNifty, handleNiftyM, liveNiftyInd
         </li>
       </ul>
       <p className='pcr-data'>
-        <span className={(Math.round(pcrTotalOI * 100) / 100).toFixed(2) >= 1 ? 'green' : 'red'}>PCR Total:
-          <span className='circle'> {(Math.round(pcrTotalOI * 100) / 100).toFixed(2)} </span>
+        <span className={pcrTotalOI.toFixed(4) >= 1 ? 'green' : 'red'}>PCR Total:
+          <span className='circle blink'> {pcrTotalOI.toFixed(4)} </span>
         </span>
-        <span className={(Math.round(pcrChangeOI * 100) / 100).toFixed(2) >= 1 ? 'green' : 'red'}>PCR Change:
-          <span className='circle'> {(Math.round(pcrChangeOI * 100) / 100).toFixed(2)}</span>
+        <span className={pcrChangeOI.toFixed(4) >= 1 ? 'green' : 'red'}>PCR Change:
+          <span className='circle blink'> {pcrChangeOI.toFixed(4)}</span>
         </span>
       </p>
       <div className="tab-content" id="myTabContent">
@@ -359,14 +359,14 @@ export default function NiftyComponent({ handleNifty, handleNiftyM, liveNiftyInd
                   const boldVwapCall = item.CALL_BUILD == 'BEARISH' ? 'bold' : '';
                   const callTag = highestCallChangeOI.includes(item.CALLS_CHANGE_OI) ? 'highest-change-call blink' : '';
                   const putTag = highestPutChangeOI.includes(item.PUTS_CHANGE_OI) ? 'highest-change-put blink' : '';
-                  
+
                   return (
                     <tr className={active} key={index}>
                       <td className={callBuildup}>
                         {item.CALL_DIR}
                       </td>
                       <td className={item.CALLS_CHANGE_OI < 0 ? 'table-success ' : '' + callTag}>
-                          {format(item.CALLS_CHANGE_OI)}
+                        {format(item.CALLS_CHANGE_OI)}
                       </td>
                       <td className={highestCallOI.includes(item.CALLS_OI) ? 'highest-put' : ''}>
                         {format(item.CALLS_OI)}
