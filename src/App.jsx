@@ -19,6 +19,10 @@ export default function App() {
   const [bankLivePCR, setBankLivePCR] = useState({ total: 0, change: 0 });
   const [finLivePCR, setFinLivePCR] = useState({ total: 0, change: 0 });
 
+  const [latestNiftyPCR, setLatestNiftyPCR] = useState(0);
+  const [latestBankPCR, setLatestBankPCR] = useState(0);
+  const [latestFinPCR, setLatestFinPCR] = useState(0);
+
   const [intervalIndex, setIntervalIndex] = useState(0);
   const [spinner, setSpinner] = useState(false);
   const [indexData, setIndexData] = useState({
@@ -33,6 +37,9 @@ export default function App() {
   const handleBankLivePCR = (data) => setBankLivePCR(data);
   const handleFinLivePCR = (data) => setFinLivePCR(data);
 
+  const handleLatestNiftyPCR = (data) => setLatestNiftyPCR(data);
+  const handleLatestBankPCR = (data) => setLatestBankPCR(data);
+  const handleLatestFinPCR = (data) => setLatestFinPCR(data);
 
   const handleNiftyM = (data) => setNiftyVwapCounterM(data);
   const handleBankM = (data) => setBankVwapCounterM(data);
@@ -136,6 +143,7 @@ export default function App() {
           <thead>
             <tr>
               <th></th>
+              <th scope="col">LIVE PCR</th>
               <th scope="col">TOTAL PCR</th>
               <th scope="col">CHANGE PCR</th>
             </tr>
@@ -143,16 +151,25 @@ export default function App() {
           <tbody>
             <tr>
               <td className="bold">NIFTY</td>
+              <td className={latestNiftyPCR >= 1 ? 'up' : 'down'}>
+                {latestNiftyPCR}
+              </td>
               <td className={niftyLivePCR.total >= 1 ? 'up' : 'down'}>{niftyLivePCR.total.toFixed(4)}</td>
               <td className={niftyLivePCR.change >= 1 ? 'up' : 'down'}>{niftyLivePCR.change.toFixed(4)}</td>
             </tr>
             <tr>
               <td className="bold">BANK NIFTY</td>
+              <td className={latestBankPCR >= 1 ? 'up' : 'down'}>
+                {latestBankPCR}
+              </td>
               <td className={bankLivePCR.total >= 1 ? 'up' : 'down'}>{bankLivePCR.total.toFixed(4)}</td>
               <td className={bankLivePCR.change >= 1 ? 'up' : 'down'}>{bankLivePCR.change.toFixed(4)}</td>
             </tr>
             <tr>
               <td className="bold">FIN NIFTY</td>
+              <td className={latestFinPCR >= 1 ? 'up' : 'down'}>
+                {latestFinPCR}
+              </td>
               <td className={finLivePCR.total >= 1 ? 'up' : 'down'}>{finLivePCR.total.toFixed(4)}</td>
               <td className={finLivePCR.change >= 1 ? 'up' : 'down'}>{finLivePCR.change.toFixed(4)}</td>
             </tr>
@@ -251,7 +268,7 @@ export default function App() {
           </div>
         </div>
       </div>
-      <NiftyPCR></NiftyPCR>
+      <NiftyPCR handleLatestNiftyPCR={handleLatestNiftyPCR} handleLatestBankPCR={handleLatestBankPCR} handleLatestFinPCR={handleLatestFinPCR}></NiftyPCR>
     </div>
   );
 }

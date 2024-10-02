@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { constants } from './constants';
 
 
-export default function NiftyPCR() {
+export default function NiftyPCR({handleLatestNiftyPCR, handleLatestBankPCR, handleLatestFinPCR}) {
     const [pcrData, setPcrData] = useState([]);
     const [pcrDataBank, setPcrBankData] = useState([]);
     const [pcrDataFin, setPcrFinData] = useState([]);
@@ -17,6 +17,7 @@ export default function NiftyPCR() {
         const response = await fetch('https://nifty-api-data.onrender.com/api/nifty-pcr');
         const data = await response.json();
         setPcrData(data);
+        handleLatestNiftyPCR(data.at(-1).pcr);
         const uniquePcr = [];
         await data.forEach((value, index) => {
             if (index % 3 === 0) {
@@ -32,6 +33,8 @@ export default function NiftyPCR() {
         const response = await fetch('https://nifty-api-data.onrender.com/api/bank-pcr');
         const data = await response.json();
         setPcrBankData(data);
+        handleLatestBankPCR(data.at(-1).pcr);
+
         const uniquePcr = [];
         await data.forEach((value, index) => {
             if (index % 3 === 0) {
@@ -48,6 +51,8 @@ export default function NiftyPCR() {
         const response = await fetch('https://nifty-api-data.onrender.com/api/fin-pcr');
         const data = await response.json();
         setPcrFinData(data);
+        handleLatestFinPCR(data.at(-1).pcr);
+
         const uniquePcr = [];
         await data.forEach((value, index) => {
             if (index % 3 === 0) {
