@@ -11,7 +11,7 @@ body {
 
 .header {
   position: relative;
-  height: 110px;
+  height: 260px;
   padding-top: 15px;
 }
 
@@ -366,4 +366,24 @@ td.highest-change-put {
 
 button.nav-link {
   background-color: #9e9e9e4d;
+}
+
+table.pcr-table {
+  margin-top: 30px;
+}
+
+table.pcr-table.table-bordered tr td {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+table.pcr-table td.down {
+  color: #fff;
+  background-color: #ff0000;
+}
+
+table.pcr-table td.up {
+  background-color: #008900;
+  color: #fff;
+
 }

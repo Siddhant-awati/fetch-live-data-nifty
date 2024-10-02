@@ -15,6 +15,10 @@ export default function App() {
   const [bankVwapCounterM, setBankVwapCounterM] = useState(tempCounter);
   const [finVwapCounterM, setFinVwapCounterM] = useState(tempCounter);
 
+  const [niftyLivePCR, setNiftyLivePCR] = useState({ total: 0, change: 0 });
+  const [bankLivePCR, setBankLivePCR] = useState({ total: 0, change: 0 });
+  const [finLivePCR, setFinLivePCR] = useState({ total: 0, change: 0 });
+
   const [intervalIndex, setIntervalIndex] = useState(0);
   const [spinner, setSpinner] = useState(false);
   const [indexData, setIndexData] = useState({
@@ -24,6 +28,11 @@ export default function App() {
   const handleNifty = (data) => setNiftyVwapCounter(data);
   const handleBank = (data) => setBankVwapCounter(data);
   const handleFin = (data) => setFinVwapCounter(data);
+
+  const handleNiftyLivePCR = (data) => setNiftyLivePCR(data);
+  const handleBankLivePCR = (data) => setBankLivePCR(data);
+  const handleFinLivePCR = (data) => setFinLivePCR(data);
+
 
   const handleNiftyM = (data) => setNiftyVwapCounterM(data);
   const handleBankM = (data) => setBankVwapCounterM(data);
@@ -123,6 +132,32 @@ export default function App() {
             <span className="bears"> {niftyVwapCounterM.bears + bankVwapCounterM.bears + finVwapCounterM.bears}</span>
           </span>
         </div>
+        <table className="table table-bordered table-sm pcr-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th scope="col">TOTAL PCR</th>
+              <th scope="col">CHANGE PCR</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td className="bold">NIFTY</td>
+              <td className={niftyLivePCR.total >= 1 ? 'up' : 'down'}>{niftyLivePCR.total.toFixed(4)}</td>
+              <td className={niftyLivePCR.change >= 1 ? 'up' : 'down'}>{niftyLivePCR.change.toFixed(4)}</td>
+            </tr>
+            <tr>
+              <td className="bold">BANK NIFTY</td>
+              <td className={bankLivePCR.total >= 1 ? 'up' : 'down'}>{bankLivePCR.total.toFixed(4)}</td>
+              <td className={bankLivePCR.change >= 1 ? 'up' : 'down'}>{bankLivePCR.change.toFixed(4)}</td>
+            </tr>
+            <tr>
+              <td className="bold">FIN NIFTY</td>
+              <td className={finLivePCR.total >= 1 ? 'up' : 'down'}>{finLivePCR.total.toFixed(4)}</td>
+              <td className={finLivePCR.change >= 1 ? 'up' : 'down'}>{finLivePCR.change.toFixed(4)}</td>
+            </tr>
+          </tbody>
+        </table>
       </header>
 
       <div className="accordion top" id="accordionPanelsStayOpenExample">
@@ -151,7 +186,7 @@ export default function App() {
           </h2>
           <div id="panelsStayOpen-collapseOne" className="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
             <div className="accordion-body">
-              <NiftyComponent handleNifty={handleNifty} handleNiftyM={handleNiftyM} liveNiftyIndex={indexData.nifty.indexPrice} />
+              <NiftyComponent handleNifty={handleNifty} handleNiftyM={handleNiftyM} liveNiftyIndex={indexData.nifty.indexPrice} handleNiftyLivePCR={handleNiftyLivePCR} />
             </div>
           </div>
         </div>
@@ -181,7 +216,7 @@ export default function App() {
           </h2>
           <div id="panelsStayOpen-collapseTwo" className="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
             <div className="accordion-body">
-              <BankComponent handleBank={handleBank} handleBankM={handleBankM} liveBankIndex={indexData.bank.indexPrice} />
+              <BankComponent handleBank={handleBank} handleBankM={handleBankM} liveBankIndex={indexData.bank.indexPrice} handleBankLivePCR={handleBankLivePCR} />
             </div>
           </div>
         </div>
@@ -211,12 +246,12 @@ export default function App() {
           </h2>
           <div id="panelsStayOpen-collapseThree" className="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
             <div className="accordion-body">
-              <FinComponent handleFin={handleFin} handleFinM={handleFinM} liveFinIndex={indexData.fin.indexPrice} />
+              <FinComponent handleFin={handleFin} handleFinM={handleFinM} liveFinIndex={indexData.fin.indexPrice} handleFinLivePCR={handleFinLivePCR} />
             </div>
           </div>
         </div>
       </div>
-    <NiftyPCR></NiftyPCR>
+      <NiftyPCR></NiftyPCR>
     </div>
   );
 }

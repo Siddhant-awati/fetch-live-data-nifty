@@ -22,7 +22,7 @@ let otm_puts_change_oi = 0;
 let call_highest_oi = 0;
 let put_highest_oi = 0;
 
-export default function BankComponent({ handleBank, handleBankM, liveBankIndex }) {
+export default function BankComponent({ handleBank, handleBankM, liveBankIndex, handleBankLivePCR }) {
 
   const [intervalIndex, setIntervalIndex] = useState(0);
   const [intervalIndexM, setIntervalIndexM] = useState(0);
@@ -154,7 +154,13 @@ export default function BankComponent({ handleBank, handleBankM, liveBankIndex }
         handleBank({
           bears: bears,
           bulls: bulls
-        })
+        });
+        handleBankLivePCR(
+          {
+            total: total_puts_oi / total_calls_oi,
+            change: total_puts_change_oi / total_calls_change_oi
+          }
+        )
       }
     } catch (error) {
       console.error('Error fetching stock data:', error);
