@@ -329,12 +329,12 @@ p.counter-title {
   margin-top: 20px;
   display: flex;
   padding-bottom: 10px;
-  max-height: 500px;
+  max-height: 600px;
   overflow: auto;
 }
 
 .tab-pane {
-  max-height: 500px;
+  max-height: 600px;
   overflow: auto;
 }
 
@@ -408,4 +408,8 @@ h2.chart-title{
   color: #fff;
   font-size: 20px;
   padding: 10px 0;
+}
+div.chart-wrapper{
+  padding: 10px;
+  padding-bottom: 40px;
 }

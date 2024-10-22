@@ -357,14 +357,16 @@ export default function NiftyPCR({ handleLatestNiftyPCR, handleLatestBankPCR, ha
                     </tbody>
                 </table>
             </div>
-            <h2 className="chart-title">NIFTY PCR Chart</h2>
-            {chartDataNifty.length > 1 && loadNiftyChart()}
+            <div className="chart-wrapper">
+                <h2 className="chart-title">NIFTY PCR Chart</h2>
+                {chartDataNifty.length > 1 && loadNiftyChart()}
 
-            <h2 className="chart-title">BANK_NIFTY PCR Chart</h2>
-            {chartDataBank.length > 1 && loadBankChart()}
+                <h2 className="chart-title">BANK_NIFTY PCR Chart</h2>
+                {chartDataBank.length > 1 && loadBankChart()}
 
-            <h2 className="chart-title">FIN_NIFTY PCR Chart</h2>
-            {chartDataFin.length > 1 && loadFinChart()}
+                <h2 className="chart-title">FIN_NIFTY PCR Chart</h2>
+                {chartDataFin.length > 1 && loadFinChart()}
+            </div>
         </section>
     )
 }
