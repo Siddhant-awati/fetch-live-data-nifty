@@ -328,7 +328,7 @@ p.counter-title {
   background-color: #fff;
   margin-top: 20px;
   display: flex;
-  padding-bottom: 50px;
+  padding-bottom: 10px;
   max-height: 500px;
   overflow: auto;
 }
@@ -398,4 +398,14 @@ table.pcr-table td.up {
   background-color: #008900;
   color: #fff;
 
+}
+section.main{
+  background-color: #fff;
+}
+h2.chart-title{
+  text-align: center;
+  background: #0077b6;
+  color: #fff;
+  font-size: 20px;
+  padding: 10px 0;
 }
