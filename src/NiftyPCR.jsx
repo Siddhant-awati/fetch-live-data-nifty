@@ -1,11 +1,35 @@
 import { useEffect, useState } from "react";
 import { constants } from './constants';
+
 import { Line } from 'react-chartjs-2';
-import { Chart, registerables } from 'chart.js';
-import 'chartjs-plugin-annotation';
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend,
+    Filler, // Import Filler plugin
+} from 'chart.js';
+import annotationPlugin from 'chartjs-plugin-annotation';
 
-Chart.register(...registerables);
+// Register the necessary plugins
+ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend,
+    Filler, // Register Filler plugin
+    annotationPlugin
+);
 
+
+const emaPeriod = 40; // You can adjust this period value
 
 export default function NiftyPCR({ handleLatestNiftyPCR, handleLatestBankPCR, handleLatestFinPCR }) {
     const [pcrData, setPcrData] = useState([]);
@@ -52,15 +76,44 @@ export default function NiftyPCR({ handleLatestNiftyPCR, handleLatestBankPCR, ha
 
     }
     const loadNiftyChart = () => {
+        const calculateEMA = (data, period) => {
+            const emaArray = [];
+            const alpha = 2 / (period + 1);
+            let previousEMA = data[0]; // Starting EMA is the first data point
+
+            data.forEach((currentPrice, index) => {
+                if (index === 0) {
+                    emaArray.push(previousEMA); // The first EMA value is the first price
+                } else {
+                    const currentEMA = (currentPrice * alpha) + (previousEMA * (1 - alpha));
+                    emaArray.push(currentEMA);
+                    previousEMA = currentEMA;
+                }
+            });
+
+            return emaArray;
+        };
+
+        const pcrData = chartDataNifty.map(item => item.pcr);
+        const emaData = calculateEMA(pcrData, emaPeriod);
+
         const data = {
             labels: chartDataNifty.map(item => item.time),
             datasets: [
                 {
                     label: 'PCR Data',
-                    data: chartDataNifty.map(item => item.pcr),
+                    data: pcrData,
                     borderColor: 'rgba(75, 192, 192, 1)',
                     backgroundColor: 'rgba(75, 192, 192, 0.2)',
                     fill: true,
+                },
+                {
+                    label: `EMA (${emaPeriod})`,
+                    data: emaData,
+                    borderColor: 'orange',
+                    borderWidth: 1,
+                    backgroundColor: 'orange',
+                    fill: false,
                 },
             ],
         };
@@ -83,7 +136,7 @@ export default function NiftyPCR({ handleLatestNiftyPCR, handleLatestBankPCR, ha
                             type: 'line',
                             yMin: yMid,
                             yMax: yMid,
-                            borderColor: 'red',
+                            borderColor: 'black',
                             borderWidth: 2,
                             label: {
                                 content: 'Mid Point',
@@ -97,7 +150,7 @@ export default function NiftyPCR({ handleLatestNiftyPCR, handleLatestBankPCR, ha
             },
         };
 
-        return <Line data={data} options={options} />;
+        return <Line data={data} options={options} />
     }
     const fetchDataBank = async () => {
         const response = await fetch('https://nifty-api-data.onrender.com/api/bank-pcr');
@@ -129,15 +182,44 @@ export default function NiftyPCR({ handleLatestNiftyPCR, handleLatestBankPCR, ha
         setlowestBank(Math.min(...uniquePcr));
     }
     const loadBankChart = () => {
+        const calculateEMA = (data, period) => {
+            const emaArray = [];
+            const alpha = 2 / (period + 1);
+            let previousEMA = data[0]; // Starting EMA is the first data point
+
+            data.forEach((currentPrice, index) => {
+                if (index === 0) {
+                    emaArray.push(previousEMA); // The first EMA value is the first price
+                } else {
+                    const currentEMA = (currentPrice * alpha) + (previousEMA * (1 - alpha));
+                    emaArray.push(currentEMA);
+                    previousEMA = currentEMA;
+                }
+            });
+
+            return emaArray;
+        };
+
+        const pcrData = chartDataBank.map(item => item.pcr);
+        const emaData = calculateEMA(pcrData, emaPeriod);
+
         const data = {
             labels: chartDataBank.map(item => item.time),
             datasets: [
                 {
                     label: 'PCR Data',
-                    data: chartDataBank.map(item => item.pcr),
+                    data: pcrData,
                     borderColor: 'rgba(75, 192, 192, 1)',
                     backgroundColor: 'rgba(75, 192, 192, 0.2)',
                     fill: true,
+                },
+                {
+                    label: `EMA (${emaPeriod})`,
+                    data: emaData,
+                    borderColor: 'orange',
+                    borderWidth: 1,
+                    backgroundColor: 'orange',
+                    fill: false,
                 },
             ],
         };
@@ -160,7 +242,7 @@ export default function NiftyPCR({ handleLatestNiftyPCR, handleLatestBankPCR, ha
                             type: 'line',
                             yMin: yMid,
                             yMax: yMid,
-                            borderColor: 'red',
+                            borderColor: 'black',
                             borderWidth: 2,
                             label: {
                                 content: 'Mid Point',
@@ -206,15 +288,44 @@ export default function NiftyPCR({ handleLatestNiftyPCR, handleLatestBankPCR, ha
         setlowestFin(Math.min(...uniquePcr));
     }
     const loadFinChart = () => {
+        const calculateEMA = (data, period) => {
+            const emaArray = [];
+            const alpha = 2 / (period + 1);
+            let previousEMA = data[0]; // Starting EMA is the first data point
+
+            data.forEach((currentPrice, index) => {
+                if (index === 0) {
+                    emaArray.push(previousEMA); // The first EMA value is the first price
+                } else {
+                    const currentEMA = (currentPrice * alpha) + (previousEMA * (1 - alpha));
+                    emaArray.push(currentEMA);
+                    previousEMA = currentEMA;
+                }
+            });
+
+            return emaArray;
+        };
+
+        const pcrData = chartDataFin.map(item => item.pcr);
+        const emaData = calculateEMA(pcrData, emaPeriod);
+
         const data = {
             labels: chartDataFin.map(item => item.time),
             datasets: [
                 {
                     label: 'PCR Data',
-                    data: chartDataFin.map(item => item.pcr),
+                    data: pcrData,
                     borderColor: 'rgba(75, 192, 192, 1)',
                     backgroundColor: 'rgba(75, 192, 192, 0.2)',
                     fill: true,
+                },
+                {
+                    label: `EMA (${emaPeriod})`,
+                    data: emaData,
+                    borderColor: 'orange',
+                    borderWidth: 1,
+                    backgroundColor: 'orange',
+                    fill: false,
                 },
             ],
         };
@@ -237,7 +348,7 @@ export default function NiftyPCR({ handleLatestNiftyPCR, handleLatestBankPCR, ha
                             type: 'line',
                             yMin: yMid,
                             yMax: yMid,
-                            borderColor: 'red',
+                            borderColor: 'black',
                             borderWidth: 2,
                             label: {
                                 content: 'Mid Point',
@@ -250,7 +361,6 @@ export default function NiftyPCR({ handleLatestNiftyPCR, handleLatestBankPCR, ha
                 },
             },
         };
-
         return <Line data={data} options={options} />;
     }
 
