@@ -29,7 +29,8 @@ ChartJS.register(
 );
 
 
-const emaPeriod = 40; // You can adjust this period value
+const emaPeriod = 20;
+const emaPeriod1 = 50;
 
 export default function NiftyPCR({ handleLatestNiftyPCR, handleLatestBankPCR, handleLatestFinPCR }) {
     const [pcrData, setPcrData] = useState([]);
@@ -96,6 +97,7 @@ export default function NiftyPCR({ handleLatestNiftyPCR, handleLatestBankPCR, ha
 
         const pcrData = chartDataNifty.map(item => item.pcr);
         const emaData = calculateEMA(pcrData, emaPeriod);
+        const emaData1 = calculateEMA(pcrData, emaPeriod1);
 
         const data = {
             labels: chartDataNifty.map(item => item.time),
@@ -105,16 +107,25 @@ export default function NiftyPCR({ handleLatestNiftyPCR, handleLatestBankPCR, ha
                     data: pcrData,
                     borderColor: 'rgba(75, 192, 192, 1)',
                     backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderWidth: 3,
                     fill: true,
                 },
                 {
                     label: `EMA (${emaPeriod})`,
                     data: emaData,
-                    borderColor: 'orange',
+                    borderColor: 'rgb(64, 0, 255)',
                     borderWidth: 1,
-                    backgroundColor: 'orange',
+                    backgroundColor: 'rgb(64, 0, 255)',
                     fill: false,
                 },
+                {
+                    label: `EMA (${emaPeriod1})`,
+                    data: emaData1,
+                    borderColor: 'rgb(0, 179, 0)',
+                    borderWidth: 1,
+                    backgroundColor: 'rgb(0, 179, 0)',
+                    fill: false,
+                }
             ],
         };
 
@@ -136,7 +147,7 @@ export default function NiftyPCR({ handleLatestNiftyPCR, handleLatestBankPCR, ha
                             type: 'line',
                             yMin: yMid,
                             yMax: yMid,
-                            borderColor: 'black',
+                            borderColor: '#000066',
                             borderWidth: 2,
                             label: {
                                 content: 'Mid Point',
@@ -202,6 +213,7 @@ export default function NiftyPCR({ handleLatestNiftyPCR, handleLatestBankPCR, ha
 
         const pcrData = chartDataBank.map(item => item.pcr);
         const emaData = calculateEMA(pcrData, emaPeriod);
+        const emaData1 = calculateEMA(pcrData, emaPeriod1);
 
         const data = {
             labels: chartDataBank.map(item => item.time),
@@ -216,11 +228,19 @@ export default function NiftyPCR({ handleLatestNiftyPCR, handleLatestBankPCR, ha
                 {
                     label: `EMA (${emaPeriod})`,
                     data: emaData,
-                    borderColor: 'orange',
+                    borderColor: 'rgb(64, 0, 255)',
                     borderWidth: 1,
-                    backgroundColor: 'orange',
+                    backgroundColor: 'rgb(64, 0, 255)',
                     fill: false,
                 },
+                {
+                    label: `EMA (${emaPeriod1})`,
+                    data: emaData1,
+                    borderColor: 'rgb(0, 179, 0)',
+                    borderWidth: 1,
+                    backgroundColor: 'rgb(0, 179, 0)',
+                    fill: false,
+                }
             ],
         };
 
@@ -242,7 +262,7 @@ export default function NiftyPCR({ handleLatestNiftyPCR, handleLatestBankPCR, ha
                             type: 'line',
                             yMin: yMid,
                             yMax: yMid,
-                            borderColor: 'black',
+                            borderColor: '#000066',
                             borderWidth: 2,
                             label: {
                                 content: 'Mid Point',
@@ -308,6 +328,7 @@ export default function NiftyPCR({ handleLatestNiftyPCR, handleLatestBankPCR, ha
 
         const pcrData = chartDataFin.map(item => item.pcr);
         const emaData = calculateEMA(pcrData, emaPeriod);
+        const emaData1 = calculateEMA(pcrData, emaPeriod1);
 
         const data = {
             labels: chartDataFin.map(item => item.time),
@@ -322,11 +343,19 @@ export default function NiftyPCR({ handleLatestNiftyPCR, handleLatestBankPCR, ha
                 {
                     label: `EMA (${emaPeriod})`,
                     data: emaData,
-                    borderColor: 'orange',
+                    borderColor: 'rgb(64, 0, 255)',
                     borderWidth: 1,
-                    backgroundColor: 'orange',
+                    backgroundColor: 'rgb(64, 0, 255)',
                     fill: false,
                 },
+                {
+                    label: `EMA (${emaPeriod1})`,
+                    data: emaData1,
+                    borderColor: 'rgb(0, 179, 0)',
+                    borderWidth: 1,
+                    backgroundColor: 'rgb(0, 179, 0)',
+                    fill: false,
+                }
             ],
         };
 
@@ -348,7 +377,7 @@ export default function NiftyPCR({ handleLatestNiftyPCR, handleLatestBankPCR, ha
                             type: 'line',
                             yMin: yMid,
                             yMax: yMid,
-                            borderColor: 'black',
+                            borderColor: '#000066',
                             borderWidth: 2,
                             label: {
                                 content: 'Mid Point',
