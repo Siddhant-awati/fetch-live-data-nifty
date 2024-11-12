@@ -280,7 +280,7 @@ p.counter-title {
 
 @keyframes blinker {
   50% {
-    opacity: 0.5;
+    opacity: 0.7;
   }
 }
 
@@ -368,12 +368,9 @@ table.table-pcr tr:nth-child(odd) {
   color: #fff;
 }
 
+td.highest-change-put,
 td.highest-change-call {
-  background-color: #ffccde;
-}
-
-td.highest-change-put {
-  background-color: #b0ffb3;
+  background-color: #c7deff;
 }
 
 button.nav-link {
@@ -399,17 +396,20 @@ table.pcr-table td.up {
   color: #fff;
 
 }
-section.main{
+
+section.main {
   background-color: #fff;
 }
-h2.chart-title{
+
+h2.chart-title {
   text-align: center;
   background: #0077b6;
   color: #fff;
   font-size: 20px;
   padding: 10px 0;
 }
-div.chart-wrapper{
+
+div.chart-wrapper {
   padding: 10px;
   padding-bottom: 40px;
 }
