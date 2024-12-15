@@ -30,8 +30,8 @@ ChartJS.register(
 
 
 const emaPeriod = 10;
-const emaPeriod1 = 30;
-const emaPeriod2 = 50;
+const emaPeriod1 = 20;
+const emaPeriod2 = 30;
 
 export default function NiftyPCR({ handleLatestNiftyPCR, handleLatestBankPCR, handleLatestFinPCR }) {
     const [pcrData, setPcrData] = useState([]);
@@ -107,8 +107,8 @@ export default function NiftyPCR({ handleLatestNiftyPCR, handleLatestBankPCR, ha
                 {
                     label: 'PCR Data',
                     data: pcrData,
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 0.7)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.1)',
                     borderWidth: 3,
                     fill: true,
                 },
@@ -116,24 +116,21 @@ export default function NiftyPCR({ handleLatestNiftyPCR, handleLatestBankPCR, ha
                     label: `EMA (${emaPeriod})`,
                     data: emaData,
                     borderColor: 'rgb(64, 0, 255)',
-                    borderWidth: 1,
-                    backgroundColor: 'rgb(64, 0, 255)',
+                    borderWidth: 1.5,
                     fill: false,
                 },
                 {
                     label: `EMA (${emaPeriod1})`,
                     data: emaData1,
                     borderColor: 'rgb(0, 179, 0)',
-                    borderWidth: 1,
-                    backgroundColor: 'rgb(0, 179, 0)',
+                    borderWidth: 1.5,
                     fill: false,
                 },
                 {
                     label: `EMA (${emaPeriod2})`,
                     data: emaData2,
                     borderColor: 'rgb(255 145 7)', 
-                    borderWidth: 1,
-                    backgroundColor: 'rgb(255 145 7)',
+                    borderWidth: 1.5,
                     fill: false,
                 }
             ],
@@ -233,32 +230,30 @@ export default function NiftyPCR({ handleLatestNiftyPCR, handleLatestBankPCR, ha
                 {
                     label: 'PCR Data',
                     data: pcrData,
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 0.7)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.1)',
+                    borderWidth: 3,
                     fill: true,
                 },
                 {
                     label: `EMA (${emaPeriod})`,
                     data: emaData,
                     borderColor: 'rgb(64, 0, 255)',
-                    borderWidth: 1,
-                    backgroundColor: 'rgb(64, 0, 255)',
+                    borderWidth: 1.5,
                     fill: false,
                 },
                 {
                     label: `EMA (${emaPeriod1})`,
                     data: emaData1,
                     borderColor: 'rgb(0, 179, 0)',
-                    borderWidth: 1,
-                    backgroundColor: 'rgb(0, 179, 0)',
+                    borderWidth: 1.5,
                     fill: false,
                 },
                 {
                     label: `EMA (${emaPeriod2})`,
                     data: emaData2,
                     borderColor: 'rgb(255 145 7)', 
-                    borderWidth: 1,
-                    backgroundColor: 'rgb(255 145 7)',
+                    borderWidth: 1.5,
                     fill: false,
                 }
             ],
@@ -357,32 +352,30 @@ export default function NiftyPCR({ handleLatestNiftyPCR, handleLatestBankPCR, ha
                 {
                     label: 'PCR Data',
                     data: pcrData,
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 0.7)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.1)',
+                    borderWidth: 3,
                     fill: true,
                 },
                 {
                     label: `EMA (${emaPeriod})`,
                     data: emaData,
                     borderColor: 'rgb(64, 0, 255)',
-                    borderWidth: 1,
-                    backgroundColor: 'rgb(64, 0, 255)',
+                    borderWidth: 1.5,
                     fill: false,
                 },
                 {
                     label: `EMA (${emaPeriod1})`,
                     data: emaData1,
                     borderColor: 'rgb(0, 179, 0)',
-                    borderWidth: 1,
-                    backgroundColor: 'rgb(0, 179, 0)',
+                    borderWidth: 1.5,
                     fill: false,
                 },
                 {
                     label: `EMA (${emaPeriod2})`,
                     data: emaData2,
                     borderColor: 'rgb(255 145 7)', 
-                    borderWidth: 1,
-                    backgroundColor: 'rgb(255 145 7)',
+                    borderWidth: 1.5,
                     fill: false,
                 }
             ],
