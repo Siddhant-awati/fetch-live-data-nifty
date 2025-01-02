@@ -89,55 +89,53 @@ export default function BankComponent({ handleBank, handleBankM, liveBankIndex, 
           const putDirection = d['puts_builtup'];
           const putPrice = d['puts_ltp'];
           const putVwap = d['puts_average_price'];
-          if (currentStrike > lowerLimit && currentStrike < upperLimit) {
-            const callBuildup = callPrice > callVwap ? 'BULLISH' : 'BEARISH';
-            const putBuildup = putPrice > putVwap ? 'BEARISH' : 'BULLISH';
-            const singleRow = {
-              STRIKE: currentStrike,
-              CALL_LTP: callPrice,
-              CALL_VWAP: callVwap,
-              CALL_DIR: callDirection,
-              CALL_BUILD: callBuildup,
-              PUT_LTP: putPrice,
-              PUT_VWAP: putVwap,
-              PUT_DIR: putDirection,
-              PUT_BUILD: putBuildup,
-              CALLS_OI: d.calls_oi,
-              CALLS_CHANGE_OI: d.calls_change_oi,
-              PUTS_OI: d.puts_oi,
-              PUTS_CHANGE_OI: d.puts_change_oi
-            }
-            niftyTableDataTemp.push(singleRow);
-            if (callBuildup == 'BEARISH') { bears++ }
-            if (putBuildup == 'BEARISH') { bears++ }
-            if (callBuildup == 'BULLISH') { bulls++ }
-            if (putBuildup == 'BULLISH') { bulls++ }
-
-            total_calls_oi += d.calls_oi;
-            total_calls_change_oi += d.calls_change_oi;
-            total_puts_oi += d.puts_oi;
-            total_puts_change_oi += d.puts_change_oi;
-
-            arrayCallChnageOI.push(d.calls_change_oi);
-            arrayCallOI.push(d.calls_oi);
-            arrayPutChnageOI.push(d.puts_change_oi);
-            arrayPutOI.push(d.puts_oi);
-
-            if (currentStrike <= currentNiftyStrikePrice) {
-              itm_calls_oi += d.calls_oi;
-              itm_calls_change_oi += d.calls_change_oi;
-              itm_puts_oi += d.puts_oi;
-              itm_puts_change_oi += d.puts_change_oi;
-            }
-            else {
-              otm_calls_oi += d.calls_oi;
-              otm_calls_change_oi += d.calls_change_oi;
-              otm_puts_oi += d.puts_oi;
-              otm_puts_change_oi += d.puts_change_oi;
-            }
-            call_highest_oi = d.calls_oi > call_highest_oi ? d.calls_oi : call_highest_oi;
-            put_highest_oi = d.puts_oi > put_highest_oi ? d.puts_oi : put_highest_oi;
+          const callBuildup = callPrice > callVwap ? 'BULLISH' : 'BEARISH';
+          const putBuildup = putPrice > putVwap ? 'BEARISH' : 'BULLISH';
+          const singleRow = {
+            STRIKE: currentStrike,
+            CALL_LTP: callPrice,
+            CALL_VWAP: callVwap,
+            CALL_DIR: callDirection,
+            CALL_BUILD: callBuildup,
+            PUT_LTP: putPrice,
+            PUT_VWAP: putVwap,
+            PUT_DIR: putDirection,
+            PUT_BUILD: putBuildup,
+            CALLS_OI: d.calls_oi,
+            CALLS_CHANGE_OI: d.calls_change_oi,
+            PUTS_OI: d.puts_oi,
+            PUTS_CHANGE_OI: d.puts_change_oi
           }
+          niftyTableDataTemp.push(singleRow);
+          if (callBuildup == 'BEARISH') { bears++ }
+          if (putBuildup == 'BEARISH') { bears++ }
+          if (callBuildup == 'BULLISH') { bulls++ }
+          if (putBuildup == 'BULLISH') { bulls++ }
+
+          total_calls_oi += d.calls_oi;
+          total_calls_change_oi += d.calls_change_oi;
+          total_puts_oi += d.puts_oi;
+          total_puts_change_oi += d.puts_change_oi;
+
+          arrayCallChnageOI.push(d.calls_change_oi);
+          arrayCallOI.push(d.calls_oi);
+          arrayPutChnageOI.push(d.puts_change_oi);
+          arrayPutOI.push(d.puts_oi);
+
+          if (currentStrike <= currentNiftyStrikePrice) {
+            itm_calls_oi += d.calls_oi;
+            itm_calls_change_oi += d.calls_change_oi;
+            itm_puts_oi += d.puts_oi;
+            itm_puts_change_oi += d.puts_change_oi;
+          }
+          else {
+            otm_calls_oi += d.calls_oi;
+            otm_calls_change_oi += d.calls_change_oi;
+            otm_puts_oi += d.puts_oi;
+            otm_puts_change_oi += d.puts_change_oi;
+          }
+          call_highest_oi = d.calls_oi > call_highest_oi ? d.calls_oi : call_highest_oi;
+          put_highest_oi = d.puts_oi > put_highest_oi ? d.puts_oi : put_highest_oi;
         });
         setNiftyLiveData(niftyTableDataTemp);
         setPcrTotalOI(total_puts_oi / total_calls_oi);
@@ -190,30 +188,28 @@ export default function BankComponent({ handleBank, handleBankM, liveBankIndex, 
           const putPrice = d['puts_ltp'];
           const putVwap = d['puts_average_price'];
 
-          if (currentStrike > lowerLimit && currentStrike < upperLimit) {
-            const callBuildup = callPrice > callVwap ? 'BULLISH' : 'BEARISH';
-            const putBuildup = putPrice > putVwap ? 'BEARISH' : 'BULLISH';
-            const singleRow = {
-              STRIKE: currentStrike,
-              CALL_LTP: callPrice,
-              CALL_VWAP: callVwap,
-              CALL_DIR: callDirection,
-              CALL_BUILD: callBuildup,
-              PUT_LTP: putPrice,
-              PUT_VWAP: putVwap,
-              PUT_DIR: putDirection,
-              PUT_BUILD: putBuildup,
-              CALLS_OI: d.calls_oi,
-              CALLS_CHANGE_OI: d.calls_change_oi,
-              PUTS_OI: d.puts_oi,
-              PUTS_CHANGE_OI: d.puts_change_oi
-            }
-            niftyTableDataTemp.push(singleRow);
-            if (callBuildup == 'BEARISH') { bears++ }
-            if (putBuildup == 'BEARISH') { bears++ }
-            if (callBuildup == 'BULLISH') { bulls++ }
-            if (putBuildup == 'BULLISH') { bulls++ }
+          const callBuildup = callPrice > callVwap ? 'BULLISH' : 'BEARISH';
+          const putBuildup = putPrice > putVwap ? 'BEARISH' : 'BULLISH';
+          const singleRow = {
+            STRIKE: currentStrike,
+            CALL_LTP: callPrice,
+            CALL_VWAP: callVwap,
+            CALL_DIR: callDirection,
+            CALL_BUILD: callBuildup,
+            PUT_LTP: putPrice,
+            PUT_VWAP: putVwap,
+            PUT_DIR: putDirection,
+            PUT_BUILD: putBuildup,
+            CALLS_OI: d.calls_oi,
+            CALLS_CHANGE_OI: d.calls_change_oi,
+            PUTS_OI: d.puts_oi,
+            PUTS_CHANGE_OI: d.puts_change_oi
           }
+          niftyTableDataTemp.push(singleRow);
+          if (callBuildup == 'BEARISH') { bears++ }
+          if (putBuildup == 'BEARISH') { bears++ }
+          if (callBuildup == 'BULLISH') { bulls++ }
+          if (putBuildup == 'BULLISH') { bulls++ }
         });
         handleBankM({
           bears: bears,
