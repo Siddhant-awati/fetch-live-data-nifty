@@ -30,8 +30,8 @@ ChartJS.register(
 
 
 const emaPeriod = 10;
-const emaPeriod1 = 20;
-const emaPeriod2 = 30;
+const emaPeriod1 = 30;
+const emaPeriod2 = 50;
 
 export default function NiftyPCR({ handleLatestNiftyPCR, handleLatestBankPCR, handleLatestFinPCR }) {
     const [pcrData, setPcrData] = useState([]);
