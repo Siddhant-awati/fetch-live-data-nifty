@@ -1,6 +1,3 @@
 export const constants = {
-    NIFTY_CURRENT: 25250,
-    BANK_CURRENT: 51300,
-    FIN_CURRENT: 23650,
-    INTERVAL_TIME: 10000
-}
+  INTERVAL_TIME: 10000,
+};

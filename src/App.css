@@ -27,8 +27,20 @@ h3 {
   padding: 15px 0;
   color: #fdf0d5;
   font-size: 30px;
+  width: 100%;
+  position: absolute;
 }
-
+h3 span {
+  background-color: white;
+  width: 60px;
+  border-radius: 50%;
+  height: 60px;
+  text-align: center;
+  line-height: 60px;
+  display: inline-block;
+  font-size: 1.2rem;
+  color: black;
+}
 .table-bordered thead th {
   background: #0077b6;
   color: white;
@@ -107,7 +119,6 @@ span.counter-wrapper.right {
   margin-left: 20px;
 }
 
-
 span.top.counter-wrapper {
   top: 20px;
 }
@@ -150,19 +161,6 @@ span.bears {
 
 div.accordion-body {
   padding: 0;
-}
-
-h4.counter {
-  position: absolute;
-  top: -65px;
-  background-color: white;
-  width: 60px;
-  border-radius: 50%;
-  height: 60px;
-  vertical-align: middle;
-  text-align: center;
-  line-height: 60px;
-  font-size: 1.4rem;
 }
 
 span.orange {
@@ -209,24 +207,24 @@ span.arrow {
   height: 48px;
   border-width: 3px;
   border-style: dashed solid solid dotted;
-  border-color: #FF3D00 #FF3D00 transparent #FF3D00;
+  border-color: #ff3d00 #ff3d00 transparent #ff3d00;
   border-radius: 50%;
   display: inline-block;
   position: fixed;
   box-sizing: border-box;
-  animation: rotation 1s linear infinite;
-  top: 11px;
-  left: 11px;
+  animation: rotation 2s linear infinite;
+  top: 40px;
+  left: 190px;
 }
 
 .loader::after {
-  content: '';
+  content: "";
   box-sizing: border-box;
   position: absolute;
   left: 20px;
   top: 31px;
   border: 10px solid transparent;
-  border-right-color: #FF3D00;
+  border-right-color: #ff3d00;
   transform: rotate(-40deg);
 }
 
@@ -239,7 +237,6 @@ span.arrow {
     transform: rotate(360deg);
   }
 }
-
 
 @keyframes rotation {
   0% {
@@ -260,7 +257,6 @@ span.arrow {
     transform: rotate(-360deg);
   }
 }
-
 
 p.counter-title {
   position: absolute;
@@ -284,7 +280,6 @@ p.counter-title {
   }
 }
 
-
 .nav-pills .nav-link {
   font-size: 16px;
 }
@@ -304,7 +299,7 @@ p.counter-title {
   font-size: 14px;
 }
 
-.pcr-data>span {
+.pcr-data > span {
   text-align: right;
 }
 
@@ -353,7 +348,7 @@ table.table-pcr tr:nth-child(odd) {
 }
 
 .pcr-wrapper .table-bordered tr.red td {
-  color: #e70318
+  color: #e70318;
 }
 
 .pcr-wrapper .table-bordered tr.red td.highest,
@@ -394,7 +389,6 @@ table.pcr-table td.down {
 table.pcr-table td.up {
   background-color: #008900;
   color: #fff;
-
 }
 
 section.main {
@@ -411,5 +405,4 @@ h2.chart-title {
 
 div.chart-wrapper {
   padding: 10px;
-  padding-bottom: 40px;
 }
