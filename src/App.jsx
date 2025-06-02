@@ -121,7 +121,7 @@ export default function App() {
       <h3>
         <span className="counter">{intervalIndex}</span>
       </h3>
-      {true && <span className="loader"></span>}
+      {spinner && <span className="loader"></span>}
 
       <header className="header">
         <p className="counter-title">
