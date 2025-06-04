@@ -251,7 +251,10 @@ function VWAP() {
                   <TableRow>
                     <TableCell
                       className="font-semibold"
-                      style={{ backgroundColor: "#0077b6", color: "white" }}
+                      style={{
+                        backgroundColor: "#0077b6",
+                        color: "white",
+                      }}
                     >
                       INDEX
                     </TableCell>
@@ -259,31 +262,47 @@ function VWAP() {
                     <TableCell
                       align="right"
                       className="font-semibold"
-                      style={{ backgroundColor: "#0077b6", color: "white" }}
+                      style={{
+                        backgroundColor: "#0077b6",
+                        color: "white",
+                        textAlign: "center",
+                      }}
                     >
-                      RED Calls
+                      CALL Writing
                     </TableCell>
                     <TableCell
                       align="right"
                       className="font-semibold"
-                      style={{ backgroundColor: "#0077b6", color: "white" }}
+                      style={{
+                        backgroundColor: "#0077b6",
+                        color: "white",
+                        textAlign: "center",
+                      }}
                     >
-                      RED Puts
+                      PUT Buying
                     </TableCell>
                     {/* Green Columns */}
                     <TableCell
                       align="right"
                       className="font-semibold"
-                      style={{ backgroundColor: "#0077b6", color: "white" }}
+                      style={{
+                        backgroundColor: "#0077b6",
+                        color: "white",
+                        textAlign: "center",
+                      }}
                     >
-                      GREEN Calls
+                      CALL Buying
                     </TableCell>
                     <TableCell
                       align="right"
                       className="font-semibold"
-                      style={{ backgroundColor: "#0077b6", color: "white" }}
+                      style={{
+                        backgroundColor: "#0077b6",
+                        color: "white",
+                        textAlign: "center",
+                      }}
                     >
-                      GREEN Puts
+                      PUT Writing
                     </TableCell>
                   </TableRow>
                 </TableHead>
@@ -302,7 +321,10 @@ function VWAP() {
                       <TableCell
                         align="right"
                         className="bg-red-100 text-red-800"
-                        style={{ backgroundColor: "#ffdbdb" }}
+                        style={{
+                          backgroundColor: "#ffdbdb",
+                          textAlign: "center",
+                        }}
                       >
                         {data?.callsLessVwap ?? "N/A"}
                       </TableCell>
@@ -310,7 +332,10 @@ function VWAP() {
                       <TableCell
                         align="right"
                         className="bg-red-100 text-red-800"
-                        style={{ backgroundColor: "#ffdbdb" }}
+                        style={{
+                          backgroundColor: "#ffdbdb",
+                          textAlign: "center",
+                        }}
                       >
                         {data?.putsGreaterVwap ?? "N/A"}
                       </TableCell>
@@ -318,7 +343,10 @@ function VWAP() {
                       <TableCell
                         align="right"
                         className="bg-green-100 text-green-800"
-                        style={{ backgroundColor: "#c7ffc7" }}
+                        style={{
+                          backgroundColor: "#c7ffc7",
+                          textAlign: "center",
+                        }}
                       >
                         {data?.callsGreaterVwap ?? "N/A"}
                       </TableCell>
@@ -326,7 +354,10 @@ function VWAP() {
                       <TableCell
                         align="right"
                         className="bg-green-100 text-green-800"
-                        style={{ backgroundColor: "#c7ffc7" }}
+                        style={{
+                          backgroundColor: "#c7ffc7",
+                          textAlign: "center",
+                        }}
                       >
                         {data?.putsLessVwap ?? "N/A"}
                       </TableCell>
@@ -355,6 +386,7 @@ function VWAP() {
                       style={{
                         fontWeight: "bold",
                         backgroundColor: "rgb(176 208 255)",
+                        textAlign: "center",
                       }}
                     >
                       {totalCounts.callsLessVwap}
@@ -366,6 +398,7 @@ function VWAP() {
                       style={{
                         fontWeight: "bold",
                         backgroundColor: "rgb(176 208 255)",
+                        textAlign: "center",
                       }}
                     >
                       {totalCounts.putsGreaterVwap}
@@ -377,6 +410,7 @@ function VWAP() {
                       style={{
                         fontWeight: "bold",
                         backgroundColor: "rgb(176 208 255)",
+                        textAlign: "center",
                       }}
                     >
                       {totalCounts.callsGreaterVwap}
@@ -388,6 +422,7 @@ function VWAP() {
                       style={{
                         fontWeight: "bold",
                         backgroundColor: "rgb(176 208 255)",
+                        textAlign: "center",
                       }}
                     >
                       {totalCounts.putsLessVwap}
