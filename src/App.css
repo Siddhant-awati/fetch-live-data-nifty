@@ -406,3 +406,10 @@ h2.chart-title {
 div.chart-wrapper {
   padding: 10px;
 }
+h2.vwap {
+  text-align: center;
+  background-color: white;
+  padding: 10px;
+  font-size: 1.3rem;
+  margin: 0;
+}
