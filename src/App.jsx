@@ -7,6 +7,7 @@ import { constants } from "./constants";
 import NiftyPCR from "./NiftyPCR";
 import VWAP from "./VWAP";
 import Builtup from "./Builtup";
+import SentimentDashboard from "./SentimentDashboard";
 
 const tempCounter = { bears: 0, bulls: 0 };
 
@@ -211,7 +212,8 @@ export default function App() {
         </table>
       </header>
       <VWAP />
-      <Builtup />
+      <SentimentDashboard></SentimentDashboard>
+      {/* <Builtup /> */}
       <div className="accordion top" id="accordionPanelsStayOpenExample">
         <div className="accordion-item">
           <h2 className="accordion-header" id="panelsStayOpen-headingOne">
