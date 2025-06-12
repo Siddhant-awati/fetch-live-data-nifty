@@ -219,7 +219,7 @@ function VWAP() {
       <h2 className="vwap">VWAP Analysis</h2>
       <CssBaseline /> {/* Provides a consistent baseline for styling */}
       <div
-        style={{ height: "370px", fontSize: "16px" }}
+        style={{ height: "350px", fontSize: "16px" }}
         className="bg-gray-100 flex flex-col items-center justify-center"
       >
         <Box className="w-full max-w-4xl bg-white p-6 rounded-xl shadow-lg">

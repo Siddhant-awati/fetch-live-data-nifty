@@ -1,0 +1,77 @@
+.dashboard-container {
+  font-family: Arial, sans-serif;
+}
+
+h2.dashboard-title {
+  font-size: 1.3rem;
+  padding: 20px 0;
+  text-align: center;
+  margin: 0;
+  font-weight: normal;
+}
+
+.table-wrapper {
+  margin-bottom: 30px;
+  overflow-x: auto;
+}
+
+.table-title {
+  font-size: 18px;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.dashboard-table {
+  width: 100%;
+  min-width: 600px; /* allows for horizontal scroll on small screens */
+  border-collapse: collapse;
+  text-align: center;
+}
+
+.dashboard-table th,
+.dashboard-table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  white-space: nowrap;
+}
+
+.dashboard-table th {
+  background-color: #f0f0f0;
+  font-weight: bold;
+}
+
+.bearish {
+  background-color: #fceaea;
+}
+
+.bullish {
+  background-color: #e6fce6;
+}
+
+.index-name {
+  font-weight: bold;
+  background-color: #f9f9f9;
+}
+
+.total-row {
+  font-weight: bold;
+  background-color: #e0e0e0;
+}
+
+@media (max-width: 768px) {
+  .dashboard-title {
+    font-size: 20px;
+  }
+
+  .table-title {
+    font-size: 16px;
+  }
+
+  .dashboard-table th,
+  .dashboard-table td {
+    padding: 2px 0;
+    font-size: 14px;
+    white-space: normal;
+    max-width: 10px;
+  }
+}
