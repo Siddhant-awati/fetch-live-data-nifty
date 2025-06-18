@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import "./Dashboard.css";
 
 const API_ENDPOINTS = {
-  NIFTY: "https://nifty-api-data.onrender.com/api/nifty-weekly",
-  SENSEX: "https://nifty-api-data.onrender.com/api/sensex-weekly",
-  FINNIFTY: "https://nifty-api-data.onrender.com/api/fin-weekly",
-  BANKNIFTY: "https://nifty-api-data.onrender.com/api/bank-weekly",
+  NIFTY: "https://nifty-api-data.onrender.com/api/nifty-weekly-20",
+  SENSEX: "https://nifty-api-data.onrender.com/api/sensex-weekly-20",
+  FINNIFTY: "https://nifty-api-data.onrender.com/api/fin-weekly-20",
+  BANKNIFTY: "https://nifty-api-data.onrender.com/api/bank-weekly-20",
 };
 
 const getTimestamp = () => {
