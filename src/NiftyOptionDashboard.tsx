@@ -358,7 +358,7 @@ const NiftyOptionDashboard: React.FC = () => {
         </div>
       )}
 
-      <h1 style={styles.header}>NIFTY Options Chain Dashboard</h1>
+      <h1 style={styles.header}>Trade Summary</h1>
 
       {isLoading ? (
         <div style={styles.loading}>Loading market data...</div>

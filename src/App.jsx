@@ -211,8 +211,6 @@ export default function App() {
           </tbody>
         </table>
       </header>
-      <NiftyOptionDashboard />
-
       <VWAP />
       <SentimentDashboard></SentimentDashboard>
 
@@ -381,6 +379,8 @@ export default function App() {
         handleLatestBankPCR={handleLatestBankPCR}
         handleLatestFinPCR={handleLatestFinPCR}
       ></NiftyPCR> */}
+      <NiftyOptionDashboard />
+
       <Dashboard />
     </div>
   );
