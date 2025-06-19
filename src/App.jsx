@@ -8,7 +8,7 @@ import NiftyPCR from "./NiftyPCR";
 import VWAP from "./VWAP";
 import Builtup from "./Builtup";
 import SentimentDashboard from "./SentimentDashboard";
-
+import NiftyOptionDashboard from "./NiftyOptionDashboard";
 const tempCounter = { bears: 0, bulls: 0 };
 
 export default function App() {
@@ -211,8 +211,11 @@ export default function App() {
           </tbody>
         </table>
       </header>
+      <NiftyOptionDashboard />
+
       <VWAP />
       <SentimentDashboard></SentimentDashboard>
+
       {/* <Builtup /> */}
       <div className="accordion top" id="accordionPanelsStayOpenExample">
         <div className="accordion-item">
@@ -373,11 +376,11 @@ export default function App() {
           </div>
         </div>
       </div>
-      <NiftyPCR
+      {/* <NiftyPCR
         handleLatestNiftyPCR={handleLatestNiftyPCR}
         handleLatestBankPCR={handleLatestBankPCR}
         handleLatestFinPCR={handleLatestFinPCR}
-      ></NiftyPCR>
+      ></NiftyPCR> */}
       <Dashboard />
     </div>
   );
